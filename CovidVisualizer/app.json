@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "CovidVisualizer",
+    "slug": "covidvisualizer",
+    "version": "1.0.0",
+    "sdkVersion": "39.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "package": "pdm.project.covid_visualizer"
+    },
+    "ios": {
+      "bundleIdentifier": "co"
+    }
+  }
+}
