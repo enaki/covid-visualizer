@@ -8,8 +8,11 @@ class NewsScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>News Screen</Text>
-                <StatusBar style="auto" />
+                <Text style={{ fontSize: 30 }}>News Screen</Text>
+                <Text style={{ fontSize: 20 }}>
+                    <Text style={{ fontWeight: 'bold' }}>Today News:</Text>
+                    It finally f*king works
+                </Text>
             </View>
         );
     }
@@ -18,7 +21,7 @@ class NewsScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.primary,
+        backgroundColor: colors.newsScreen.primary,
         alignItems: 'center',
         justifyContent: 'center',
     },

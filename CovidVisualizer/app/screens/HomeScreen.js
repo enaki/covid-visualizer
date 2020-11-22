@@ -9,12 +9,7 @@ class HomeScreen extends React.Component {
         console.log("Test");
         return (
             <View style={styles.container}>
-                <Text>Welcome Screen</Text>
-                <StatusBar style="auto" />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Analytics')}
-                />
+                <Text style={{ fontSize: 30 }}>Welcome Screen</Text>
             </View>
         );
     }
@@ -23,7 +18,7 @@ class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.primary,
+        backgroundColor: colors.homeScreen.primary,
         alignItems: 'center',
         justifyContent: 'center',
     },
