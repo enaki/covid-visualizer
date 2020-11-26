@@ -6,8 +6,7 @@ import AnalyticsScreen from './app/screens/AnalyticsScreen'
 import NewsScreen from './app/screens/NewsScreen'
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createAppContainer } from 'react-navigation';
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { View } from 'react-native'
 
 import colors from './app/config/colors'
@@ -15,59 +14,57 @@ import {NavigationContainer} from "@react-navigation/native";
 
 const tabNavigatorColors = colors.tabNavigator;
 
-const TabNavigator = createMaterialBottomTabNavigator(
-  {
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Icon style={[{ color: tintColor }]} size={25} name={'ios-home'} />
-          </View>
-        ),
-      }
-    },
-    Analytics: {
-      screen: AnalyticsScreen,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Icon style={[{ color: tintColor }]} size={25} name={'ios-person'} />
-          </View>
-        ),
-        activeColor: tabNavigatorColors.activeColor.analytics,
-        inactiveColor: tabNavigatorColors.inactiveColor.analytics,
-        barStyle: { backgroundColor: tabNavigatorColors.barStyle.backgroundColor.analytics },
-      }
-    },
-    News: {
-      screen: NewsScreen,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Icon style={[{ color: tintColor }]} size={25} name={'ios-images'} />
-          </View>
-        ),
-        activeColor: tabNavigatorColors.activeColor.news,
-        inactiveColor: tabNavigatorColors.inactiveColor.news,
-        barStyle: { backgroundColor: tabNavigatorColors.barStyle.backgroundColor.news },
-      }
-    },
-  },
-  {
-    initialRouteName: 'Home',
-    activeColor: tabNavigatorColors.activeColor.home,
-    inactiveColor: tabNavigatorColors.inactiveColor.home,
-    barStyle: { backgroundColor: tabNavigatorColors.barStyle.backgroundColor.home },
-  }
-);
+const TabNavigator = createMaterialBottomTabNavigator();
 
-export default createAppContainer(TabNavigator);
+class App extends React.Component{
+    render() {
+        return(
+            <NavigationContainer>
+                <TabNavigator.Navigator
+                    initialRouteName='Home'
+                    activeColor={tabNavigatorColors.barStyle.backgroundColor.news}
+                    inactiveColor={tabNavigatorColors.inactiveColor.home}
+                    barStyle={{
+                        backgroundColor: tabNavigatorColors.barStyle.backgroundColor.home
+                    }}
+                >
+                    <TabNavigator.Screen
+                        name="Home"
+                        component={HomeScreen}
+                        options={{
+                            tabBarIcon: ({ color }) => (
+                                <View>
+                                    <Icon style={[{ color: color }]} size={25} name={'ios-home'} />
+                                </View>
+                            ),
+                        }}
+                    />
+                    <TabNavigator.Screen
+                        name="Analytics"
+                        component={AnalyticsScreen}
+                        options={{
+                            tabBarIcon: ({ color }) => (
+                                <View>
+                                    <Icon style={[{ color: color }]} size={25} name={'ios-person'} />
+                                </View>
+                            ),
+                        }}
+                    />
+                    <TabNavigator.Screen
+                        name="News"
+                        component={NewsScreen}
+                        options={{
+                            tabBarIcon: ({ color }) => (
+                                <View>
+                                    <Icon style={[{ color: color }]} size={25} name={'ios-images'} />
+                                </View>
+                            ),
+                        }}
+                    />
+                </TabNavigator.Navigator>
+            </NavigationContainer>
+        );
+    }
+}
 
-const App = () => {
-    return(
-        <NavigationContainer>
-
-        </NavigationContainer>
-    );
-};
+export default App;
