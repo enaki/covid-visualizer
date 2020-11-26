@@ -11,6 +11,7 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import { View } from 'react-native'
 
 import colors from './app/config/colors'
+import {NavigationContainer} from "@react-navigation/native";
 
 const tabNavigatorColors = colors.tabNavigator;
 
@@ -63,18 +64,10 @@ const TabNavigator = createMaterialBottomTabNavigator(
 
 export default createAppContainer(TabNavigator);
 
-/*
-export default class App extends React.Component {
-  render() {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Analytics" component={AnalyticsScreen} />
-          <Stack.Screen name="News" component={NewsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+const App = () => {
+    return(
+        <NavigationContainer>
+
+        </NavigationContainer>
     );
-  }
-}
-*/
+};
