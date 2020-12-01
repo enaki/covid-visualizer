@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native'
+import colors from '../config/colors'
 
-
-const HomeScreen = () =>{
+const HomeScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 30 }}>Welcome Screen</Text>
@@ -14,7 +14,7 @@ const HomeScreen = () =>{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: colors.primaryBackground,
         alignItems: 'center',
         justifyContent: 'center',
     },

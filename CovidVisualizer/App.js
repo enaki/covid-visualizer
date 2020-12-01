@@ -10,19 +10,19 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { View } from 'react-native'
 
 import colors from './app/config/colors'
-import {NavigationContainer} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 
 const tabNavigatorColors = colors.tabNavigator;
 
 const TabNavigator = createMaterialBottomTabNavigator();
 
-class App extends React.Component{
+class App extends React.Component {
     render() {
-        return(
+        return (
             <NavigationContainer>
                 <TabNavigator.Navigator
                     initialRouteName='Home'
-                    activeColor={tabNavigatorColors.barStyle.backgroundColor.news}
+                    activeColor={tabNavigatorColors.activeColor.home}
                     inactiveColor={tabNavigatorColors.inactiveColor.home}
                     barStyle={{
                         backgroundColor: tabNavigatorColors.barStyle.backgroundColor.home
@@ -37,6 +37,7 @@ class App extends React.Component{
                                     <Icon style={[{ color: color }]} size={25} name={'ios-home'} />
                                 </View>
                             ),
+
                         }}
                     />
                     <TabNavigator.Screen
@@ -48,7 +49,15 @@ class App extends React.Component{
                                     <Icon style={[{ color: color }]} size={25} name={'ios-person'} />
                                 </View>
                             ),
+
                         }}
+                    /* not working
+                    activeColor={tabNavigatorColors.barStyle.backgroundColor.analytics}
+                    inactiveColor={tabNavigatorColors.inactiveColor.analytics}
+                    barStyle={{
+                        backgroundColor: tabNavigatorColors.barStyle.backgroundColor.analytics
+                    }}
+                    */
                     />
                     <TabNavigator.Screen
                         name="News"
@@ -60,6 +69,13 @@ class App extends React.Component{
                                 </View>
                             ),
                         }}
+                    /* also not working
+                    tabBarOptions={{
+                        activeTintColor: tabNavigatorColors.barStyle.backgroundColor.news,
+                        inactiveTintColor: tabNavigatorColors.inactiveColor.news,
+                        barStyle: { backgroundColor: tabNavigatorColors.barStyle.backgroundColor.news }
+                    }}
+                    */
                     />
                 </TabNavigator.Navigator>
             </NavigationContainer>

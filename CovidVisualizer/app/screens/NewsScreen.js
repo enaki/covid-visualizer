@@ -1,8 +1,9 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native'
+import colors from '../config/colors'
 
 
-const NewsScreen = () =>{
+const NewsScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 30 }}>News Screen</Text>
@@ -17,7 +18,7 @@ const NewsScreen = () =>{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colors.primaryBackground,
         alignItems: 'center',
         justifyContent: 'center',
     },
