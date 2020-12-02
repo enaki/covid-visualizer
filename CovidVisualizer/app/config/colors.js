@@ -1,6 +1,8 @@
 export default {
     primary: "#e8e87d",
     secondary: "#56dadc",
+    primaryBackground: "#f3f3ed",
+    secondaryBackground: "#f9f8f0",
 
     homeScreen: {
         primary: "#caf8bf"

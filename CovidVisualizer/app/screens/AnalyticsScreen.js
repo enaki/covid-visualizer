@@ -1,22 +1,28 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native'
-
 import colors from '../config/colors'
+import WorldMapScreen from './analytics/WorldMapScreen'
+import WorldStatisticsScreen from './analytics/WorldStatisticsScreen'
+import AnalyticsHomeScreen from './analytics/AnalyticsHomeScreen'
+import { createStackNavigator } from '@react-navigation/stack';
 
-class AnalyticsScreen extends React.Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={{ fontSize: 30 }}>Analytics Screen</Text>
-            </View>
-        );
-    }
+const Stack = createStackNavigator();
+
+const AnalyticsScreen = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Analytics" component={AnalyticsHomeScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="World Map" component={WorldMapScreen} />
+            <Stack.Screen name="World Statistics" component={WorldStatisticsScreen} />
+        </Stack.Navigator>
+    );
 }
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.analyticsScreen.primary,
+        backgroundColor: colors.primaryBackground,
         alignItems: 'center',
         justifyContent: 'center',
     },
