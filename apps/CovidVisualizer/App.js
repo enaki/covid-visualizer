@@ -24,9 +24,8 @@ class App extends React.Component {
                     initialRouteName='Home'
                     activeColor={tabNavigatorColors.activeColor.home}
                     inactiveColor={tabNavigatorColors.inactiveColor.home}
-                    barStyle={{
-                        backgroundColor: tabNavigatorColors.barStyle.backgroundColor.home
-                    }}
+                    shifting={true}
+                    labeled={true}
                 >
                     <TabNavigator.Screen
                         name="Home"
@@ -34,10 +33,10 @@ class App extends React.Component {
                         options={{
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'ios-home'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'home'} />
                                 </View>
                             ),
-
+                            tabBarColor: tabNavigatorColors.barStyle.backgroundColor.home,
                         }}
                     />
                     <TabNavigator.Screen
@@ -46,18 +45,11 @@ class App extends React.Component {
                         options={{
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'ios-person'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'analytics-outline'} />
                                 </View>
                             ),
-
+                            tabBarColor: tabNavigatorColors.barStyle.backgroundColor.analytics,
                         }}
-                    /* not working
-                    activeColor={tabNavigatorColors.barStyle.backgroundColor.analytics}
-                    inactiveColor={tabNavigatorColors.inactiveColor.analytics}
-                    barStyle={{
-                        backgroundColor: tabNavigatorColors.barStyle.backgroundColor.analytics
-                    }}
-                    */
                     />
                     <TabNavigator.Screen
                         name="News"
@@ -65,17 +57,11 @@ class App extends React.Component {
                         options={{
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'ios-images'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'newspaper-outline'} />
                                 </View>
                             ),
+                            tabBarColor: tabNavigatorColors.barStyle.backgroundColor.news,
                         }}
-                    /* also not working
-                    tabBarOptions={{
-                        activeTintColor: tabNavigatorColors.barStyle.backgroundColor.news,
-                        inactiveTintColor: tabNavigatorColors.inactiveColor.news,
-                        barStyle: { backgroundColor: tabNavigatorColors.barStyle.backgroundColor.news }
-                    }}
-                    */
                     />
                 </TabNavigator.Navigator>
             </NavigationContainer>
