@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS "continents_latest" (
 	"active_per_one_million"	INTEGER,
 	"recovered_per_one_million"	INTEGER,
 	"critical_per_one_million"	INTEGER,
+	FOREIGN KEY ("id") REFERENCES "continents"("id"),
 	UNIQUE("date","id")
 );
 CREATE TABLE IF NOT EXISTS "countries" (
@@ -74,6 +75,7 @@ CREATE TABLE IF NOT EXISTS "countries_history" (
 	"cases"	INTEGER NOT NULL,
 	"deaths"	INTEGER NOT NULL,
 	"recovered"	INTEGER NOT NULL,
+	FOREIGN KEY ("id") REFERENCES "countries"("id"),
 	UNIQUE("date","id")
 );
 CREATE TABLE IF NOT EXISTS "countries_latest" (
@@ -93,11 +95,10 @@ CREATE TABLE IF NOT EXISTS "countries_latest" (
 	"tests"	INTEGER,
 	"tests_per_one_million"	INTEGER,
 	"population"	INTEGER,
-	"continent_id"	INTEGER,
 	"active_per_one_million"	INTEGER,
 	"recovered_per_one_million"	INTEGER,
 	"critical_per_one_million"	INTEGER,
-	FOREIGN KEY ("continent_id") REFERENCES "continents"("id"),
+	FOREIGN KEY ("id") REFERENCES "countries"("id"),
 	UNIQUE("date","id")
 );
 COMMIT;

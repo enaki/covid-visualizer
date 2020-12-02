@@ -4,8 +4,9 @@ GET_HISTORICAL_world_URL = "https://disease.sh/v3/covid-19/historical/all?lastda
 GET_LATEST_world_URL = "https://disease.sh/v3/covid-19/all"
 
 
-def insert_world_history(db_path):
-    world_history = get_json_from_web(GET_HISTORICAL_world_URL)
+def insert_world_history(db_path, days=None, debug=True):
+    url = "{}?lastdays={}".format(GET_HISTORICAL_world_URL, days if days is not None else "all")
+    world_history = get_json_from_web(url, debug=debug)
     timeline = []
     for date in world_history["cases"].keys():
         split = date.split('/')
@@ -17,16 +18,16 @@ def insert_world_history(db_path):
     world_history_tuples = []
     world_history_sql_script = """INSERT OR REPLACE INTO "world_history" ("date", "cases", "deaths", "recovered") VALUES (?, ?, ?, ?) """
     world_history_tuples.extend([(date["date"], date["cases"],
-                                   date["deaths"], date["recovered"])
-                                  for date in timeline])
+                                  date["deaths"], date["recovered"])
+                                 for date in timeline])
 
     execute_many(world_history_sql_script, world_history_tuples, database_path=db_path,
-                 message="insert world history")
+                 message="insert world history", debug=debug)
 
 
-def insert_latest_world(db_path, yesterday=False, two_days_ago=False):
+def insert_latest_world(db_path, yesterday=False, two_days_ago=False, debug=True):
     url = "{}?yesterday={}&twoDaysAgo={}".format(GET_LATEST_world_URL, 1 if yesterday else 0, 1 if two_days_ago else 0)
-    latest_world = get_json_from_web(url)
+    latest_world = get_json_from_web(url, debug=debug)
     date = 'twoDaysAgo' if two_days_ago else 'yesterday' if yesterday else 'today'
     world_tuples = [
         (date, latest_world["updated"], latest_world["cases"], latest_world["todayCases"], latest_world["deaths"],
@@ -38,5 +39,4 @@ def insert_latest_world(db_path, yesterday=False, two_days_ago=False):
          latest_world["criticalPerOneMillion"], latest_world["affectedCountries"])]
 
     latest_world_sql_script = """INSERT OR REPLACE INTO "world_latest" ("date", "updated", "cases", "today_cases", "deaths", "today_deaths", "recovered", "today_recovered", "active", "critical", "cases_per_one_million", "deaths_per_one_million", "tests", "tests_per_one_million", "population", "active_per_one_million", "recovered_per_one_million", "critical_per_one_million", "affected_countries") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) """
-    execute_many(latest_world_sql_script, world_tuples, database_path=db_path, message="latest world")
-
+    execute_many(latest_world_sql_script, world_tuples, database_path=db_path, message="latest world", debug=debug)
