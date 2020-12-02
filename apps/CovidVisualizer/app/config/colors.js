@@ -4,16 +4,6 @@ export default {
     primaryBackground: "#f3f3ed",
     secondaryBackground: "#f9f8f0",
 
-    homeScreen: {
-        primary: "#caf8bf"
-    },
-    analyticsScreen: {
-        primary: "#e2acd0"
-    },
-    newsScreen: {
-        primary: "#a3c2fa"
-    },
-
     tabNavigator: {
         inactiveColor: {
             home: '#caf8bf',
