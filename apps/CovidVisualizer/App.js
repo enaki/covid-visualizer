@@ -33,7 +33,7 @@ class App extends React.Component {
                         options={{
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'ios-home'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'home'} />
                                 </View>
                             ),
                             tabBarColor: tabNavigatorColors.barStyle.backgroundColor.home,
@@ -45,7 +45,7 @@ class App extends React.Component {
                         options={{
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'ios-person'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'analytics-outline'} />
                                 </View>
                             ),
                             tabBarColor: tabNavigatorColors.barStyle.backgroundColor.analytics,
@@ -57,7 +57,7 @@ class App extends React.Component {
                         options={{
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'ios-images'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'newspaper-outline'} />
                                 </View>
                             ),
                             tabBarColor: tabNavigatorColors.barStyle.backgroundColor.news,
