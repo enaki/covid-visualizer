@@ -1,7 +1,6 @@
 from db_updater.utils import execute_many, get_json_from_web
 from db_updater.utils.db_utils import query
 
-
 GET_HISTORICAL_COUNTRY_DATA_URL = "https://disease.sh/v3/covid-19/historical"
 GET_LATEST_COUNTRY_URL = "https://disease.sh/v3/covid-19/countries"
 
@@ -46,26 +45,29 @@ def insert_countries_history(db_path, days=None, debug=True):
             if debug:
                 print("Error inserting country: {}".format(country["name"]))
 
-    execute_many(countries_history_sql_script, countries_history_tuples, database_path=db_path, message="insert countries history", debug=debug)
+    execute_many(countries_history_sql_script, countries_history_tuples, database_path=db_path,
+                 message="insert countries history", debug=debug)
 
 
 def insert_latest_countries(db_path, yesterday=False, two_days_ago=False, debug=True):
-    url = "{}?yesterday={}&twoDaysAgo={}".format(GET_LATEST_COUNTRY_URL, 1 if yesterday else 0, 1 if two_days_ago else 0)
+    url = "{}?yesterday={}&twoDaysAgo={}".format(GET_LATEST_COUNTRY_URL, 1 if yesterday else 0,
+                                                 1 if two_days_ago else 0)
     latest_countries = get_json_from_web(url, debug=debug)
-    country_id_sql_script = """SELECT id FROM "countries" WHERE name=? """
+
     countries_tuples = []
     date = 'twoDaysAgo' if two_days_ago else 'yesterday' if yesterday else 'today'
     for country in latest_countries:
-        try:
-            _id = query(country_id_sql_script, (country["country"],), db_path)[0][0]
-            countries_tuples.append((_id, date, country["updated"], country["cases"], country["todayCases"], country["deaths"],
-                                    country["todayDeaths"], country["recovered"], country["todayRecovered"], country["active"],
-                                    country["critical"], country["casesPerOneMillion"], country["deathsPerOneMillion"],
-                                    country["tests"], country["testsPerOneMillion"], country["population"],
-                                    country["activePerOneMillion"], country["recoveredPerOneMillion"], country["criticalPerOneMillion"]))
-        except IndexError:
-            print("Error inserting country: {}".format(country["name"]))
+        _id = country["countryInfo"]["_id"]
+        if _id is None:
+            print("Error inserting country: {}".format(country["country"]))
+            continue
+        countries_tuples.append(
+            (_id, date, country["updated"], country["cases"], country["todayCases"], country["deaths"],
+             country["todayDeaths"], country["recovered"], country["todayRecovered"], country["active"],
+             country["critical"], country["casesPerOneMillion"], country["deathsPerOneMillion"],
+             country["tests"], country["testsPerOneMillion"], country["population"],
+             country["activePerOneMillion"], country["recoveredPerOneMillion"], country["criticalPerOneMillion"]))
 
     latest_countries_sql_script = """INSERT OR REPLACE INTO "countries_latest" ("id", "date", "updated", "cases", "today_cases", "deaths", "today_deaths", "recovered", "today_recovered", "active", "critical", "cases_per_one_million", "deaths_per_one_million", "tests", "tests_per_one_million", "population", "active_per_one_million", "recovered_per_one_million", "critical_per_one_million") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) """
-    execute_many(latest_countries_sql_script, countries_tuples, database_path=db_path, message="latest countries", debug=debug)
-
+    execute_many(latest_countries_sql_script, countries_tuples, database_path=db_path, message="latest countries",
+                 debug=debug)

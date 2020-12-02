@@ -33,7 +33,6 @@ def query(script, tuples, database_path, message="data", debug=False):
     conn = sqlite3.connect(database_path)
     cur = conn.cursor()
     row = cur.execute(script, tuples).fetchall()
-    conn.commit()
     conn.close()
     if debug:
         end = time.time()
