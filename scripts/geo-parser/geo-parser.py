@@ -8,15 +8,13 @@ def geo_parse(filename):
     start = time.time()
     with open("input/{}".format(filename), mode="r") as input_file:
         data = json.load(input_file)
-        parsed_data = []
+        parsed_data = {}
         for feature in data["features"]:
             feature_dict = {
                 "type": data["type"],
                 "features": [feature]
             }
-            parsed_data.append({
-                feature["properties"]["iso_a3"]: feature_dict
-            })
+            parsed_data[feature["properties"]["iso_a3"]] = feature_dict
         with open("output/parsed.{}".format(filename), mode="w") as output_file:
             json.dump(parsed_data, output_file, indent=2)
 
