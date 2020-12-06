@@ -5,7 +5,7 @@ import HomeScreen from './app/screens/HomeScreen'
 import AnalyticsScreen from './app/screens/AnalyticsScreen'
 import NewsScreen from './app/screens/NewsScreen'
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { View } from 'react-native'
 
@@ -45,7 +45,7 @@ class App extends React.Component {
                         options={{
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'analytics-outline'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'chart-line'} />
                                 </View>
                             ),
                             tabBarColor: tabNavigatorColors.barStyle.backgroundColor.analytics,
@@ -57,7 +57,7 @@ class App extends React.Component {
                         options={{
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'newspaper-outline'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'newspaper'} />
                                 </View>
                             ),
                             tabBarColor: tabNavigatorColors.barStyle.backgroundColor.news,

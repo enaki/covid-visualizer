@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
 import { SafeAreaView } from 'react-navigation'
 import colors from '../../config/colors'
@@ -8,9 +8,9 @@ const height = Dimensions.get('window').height;
 const geoMaps = require('../../assets/data/parsed.low.geo.json');
 
 function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
