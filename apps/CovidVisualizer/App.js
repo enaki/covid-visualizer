@@ -23,14 +23,15 @@ class App extends React.Component {
                 <TabNavigator.Navigator
                     initialRouteName='Home'
                     activeColor={tabNavigatorColors.activeColor.home}
-                    inactiveColor={tabNavigatorColors.inactiveColor.home}
-                    shifting={true}
+                    inactiveColor={colors.inactiveColor}
                     labeled={true}
+                    shifting={true}
                 >
                     <TabNavigator.Screen
                         name="Home"
                         component={HomeScreen}
                         options={{
+                            tabBarLabel: 'Home',
                             tabBarIcon: ({ color }) => (
                                 <View>
                                     <Icon style={[{ color: color }]} size={25} name={'home'} />
@@ -43,6 +44,7 @@ class App extends React.Component {
                         name="Analytics"
                         component={AnalyticsScreen}
                         options={{
+                            tabBarLabel: 'Analytics',
                             tabBarIcon: ({ color }) => (
                                 <View>
                                     <Icon style={[{ color: color }]} size={25} name={'chart-line'} />
@@ -55,6 +57,7 @@ class App extends React.Component {
                         name="News"
                         component={NewsScreen}
                         options={{
+                            tabBarLabel: 'News',
                             tabBarIcon: ({ color }) => (
                                 <View>
                                     <Icon style={[{ color: color }]} size={25} name={'newspaper'} />
