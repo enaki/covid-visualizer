@@ -6,7 +6,7 @@ const getActivePerMillion = () => {
             'Content-Type': "application/json; charset=utf-8",
         }
     };
-    return fetch("https://10.0.3.2:2020/api/countries/active-per-million", requestOptions)
+    return fetch("http://10.0.2.2:2020/api/countries/active-per-million", requestOptions)
         .then((response) => response.json())
         .then((json) => {
             return json;

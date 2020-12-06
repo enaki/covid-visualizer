@@ -40,7 +40,7 @@ class WorldMapScreen extends React.Component {
                             <Geojson
                                 key={key}
                                 geojson={geoMaps[key]} // geojson of the countries you want to highlight
-                                fillColor={ColorService.colorSpectrum(90)}
+                                fillColor={ColorService.colorSpectrumByCountryKey(key)}
                             />
                         ))
                     }
