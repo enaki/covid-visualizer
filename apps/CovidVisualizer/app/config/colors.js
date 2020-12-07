@@ -3,7 +3,7 @@ export default {
     secondary: "#56dadc",
     primaryBackground: "#f3f3ed",
     secondaryBackground: "#f9f8f0",
-
+    inactiveColor: "#bebbbb",
     tabNavigator: {
         inactiveColor: {
             home: '#caf8bf',
@@ -17,10 +17,10 @@ export default {
         },
         barStyle: {
             backgroundColor: {
-                home: '#709f2d',
+                home: '#184d00',
                 analytics: '#a43d81',
                 news: '#243f7a',
             },
-        },
+        }
     }
 }

@@ -5,7 +5,7 @@ import HomeScreen from './app/screens/HomeScreen'
 import AnalyticsScreen from './app/screens/AnalyticsScreen'
 import NewsScreen from './app/screens/NewsScreen'
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { View } from 'react-native'
 
@@ -23,14 +23,15 @@ class App extends React.Component {
                 <TabNavigator.Navigator
                     initialRouteName='Home'
                     activeColor={tabNavigatorColors.activeColor.home}
-                    inactiveColor={tabNavigatorColors.inactiveColor.home}
-                    shifting={true}
+                    inactiveColor={colors.inactiveColor}
                     labeled={true}
+                    shifting={true}
                 >
                     <TabNavigator.Screen
                         name="Home"
                         component={HomeScreen}
                         options={{
+                            tabBarLabel: 'Home',
                             tabBarIcon: ({ color }) => (
                                 <View>
                                     <Icon style={[{ color: color }]} size={25} name={'home'} />
@@ -43,9 +44,10 @@ class App extends React.Component {
                         name="Analytics"
                         component={AnalyticsScreen}
                         options={{
+                            tabBarLabel: 'Analytics',
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'analytics-outline'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'chart-line'} />
                                 </View>
                             ),
                             tabBarColor: tabNavigatorColors.barStyle.backgroundColor.analytics,
@@ -55,9 +57,10 @@ class App extends React.Component {
                         name="News"
                         component={NewsScreen}
                         options={{
+                            tabBarLabel: 'News',
                             tabBarIcon: ({ color }) => (
                                 <View>
-                                    <Icon style={[{ color: color }]} size={25} name={'newspaper-outline'} />
+                                    <Icon style={[{ color: color }]} size={25} name={'newspaper'} />
                                 </View>
                             ),
                             tabBarColor: tabNavigatorColors.barStyle.backgroundColor.news,
