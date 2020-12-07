@@ -1,8 +1,16 @@
-import {Picker} from '@react-native-picker/picker';
 import React from "react";
 import {Dimensions} from "react-native";
-import { VictoryChart, VictoryTheme, VictoryAxis, VictoryLabel, VictoryLine, VictoryZoomContainer, VictoryStack } from "victory-native";
-import {View} from "react-native-web";
+import {
+    VictoryAxis,
+    VictoryChart,
+    VictoryLabel,
+    VictoryLine,
+    VictoryStack,
+    VictoryTheme,
+    VictoryZoomContainer
+} from "victory-native";
+import BoxContainer from "../../containers/BoxContainer";
+import {VictoryScatter} from "victory-scatter";
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -54,6 +62,7 @@ export default class WorldGraphComponent extends React.Component {
         let dates = [];
         initMonths(dates);
         return (
+            <BoxContainer>
                 <VictoryChart
                     theme={VictoryTheme.material}
                     domainPadding={1}
@@ -65,7 +74,8 @@ export default class WorldGraphComponent extends React.Component {
                             allowZoom={true}
                         />
                     }
-                    padding={chartPadding}
+                    style={styles.tableStyle}
+                    padding={styles.chartPadding}
                     height={Dimensions.get('window').height/2}
                     width={Dimensions.get('window').width}
                 >
@@ -74,7 +84,7 @@ export default class WorldGraphComponent extends React.Component {
                         y={18}
                         text={"COVID19 cases"}
                         textAnchor="middle"
-                        style={tableTitle}
+                        style={styles.tableTitle}
                     />
                     <VictoryAxis
                         label="Months"
@@ -83,8 +93,8 @@ export default class WorldGraphComponent extends React.Component {
                         standalone={false}
                         tickFormat={(x) => {return monthNames[x.getMonth()];}}
                         style={{
-                            axisLabel: tableLabelStyle,
-                            tickLabels: tableTicksStyle,
+                            axisLabel: styles.tableLabelStyle,
+                            tickLabels: styles.tableTicksXStyle,
                         }}
                     />
                     <VictoryAxis
@@ -92,8 +102,8 @@ export default class WorldGraphComponent extends React.Component {
                         label="Number of cases"
                         tickFormat={(x) => {return `${x / 1000}k`;}}
                         style={{
-                            axisLabel: tableLabelStyle,
-                            tickLabels: tableTicksStyle,
+                            axisLabel: styles.tableLabelStyle,
+                            tickLabels: styles.tableTicksYStyle,
                         }}
                     />
                     <VictoryStack>
@@ -106,41 +116,54 @@ export default class WorldGraphComponent extends React.Component {
                                 onLoad: { duration: 1000 }
                             }}
                             style={{
-                                data: { stroke: "red" }
+                                data: { stroke: "#c43a31" }
                             }}
                         />
+
+
                     </VictoryStack>
                 </VictoryChart>
+            </BoxContainer>
         );
     }
 }
 
-const tableLabelStyle = {
-    fontFamily: "inherit",
-    letterSpacing: 10,
-    fontSize: 15,
-    padding: -20,
-    fontStyle: "italic",
-    fill:"green"
-};
-
-const tableTitle = {
-    fontFamily: "inherit",
-    fontSize: 20,
-    fontWeight: "bold",
-    fill:"green"
-};
-
-
-const tableTicksStyle = {
-    fontFamily: "inherit",
-    letterSpacing: 1,
-    fontSize: 14
-};
-
-const chartPadding = {
-    left:50,
-    right: 15,
-    bottom: 30,
-    top: 30
+const styles={
+    tableLabelStyle:{
+        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
+        letterSpacing: 10,
+        fontSize: 15,
+        padding: -20,
+        fontStyle: "italic",
+        fill:"green"
+    },
+    tableTitle:{
+        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
+        fontSize: 20,
+        fontWeight: "bold",
+        fill:"green",
+    },
+    tableTicksXStyle:{
+        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
+        letterSpacing: 1,
+        fontSize: 14,
+        angle: -45,
+        padding: Platform.OS === 'android' ? 10 : 20
+    },
+    tableTicksYStyle:{
+        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
+        letterSpacing: 1,
+        fontSize: 14,
+    },
+    chartPadding:{
+        left:50,
+        right: 40,
+        bottom: 60,
+        top: 40,
+    },
+    tableStyle:{
+        background:{
+            fill:"white"
+        }
+    }
 };

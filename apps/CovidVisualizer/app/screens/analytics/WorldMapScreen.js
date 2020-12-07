@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
 import { SafeAreaView } from 'react-navigation'
 import colors from '../../config/colors'
+import {View} from 'react-native';
 const ColorService = require('../../services/ColorService')
 
 const height = Dimensions.get('window').height;
@@ -19,7 +20,7 @@ class WorldMapScreen extends React.Component {
 
     render() {
         return (
-            <SafeAreaView>
+            <View>
                 <MapView
                     provider={null}
                     style={styles.map}
@@ -45,7 +46,7 @@ class WorldMapScreen extends React.Component {
                         ))
                     }
                 </MapView >
-            </SafeAreaView>
+            </View>
         );
     }
 }

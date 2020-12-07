@@ -1,14 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import colors from '../../config/colors'
 import GradientButton from 'react-native-gradient-buttons';
 
 
 const AnalyticsHomeScreen = ({ navigation }) => {
     return (
-
         <View style={styles.container}>
-
             <GradientButton
                 style={{ marginVertical: 8 }}
                 text="Go To World Statistics"
@@ -61,7 +59,6 @@ const AnalyticsHomeScreen = ({ navigation }) => {
                 impactStyle='Medium'
                 onPressAction={() => alert("Not implemented")}
             />
-
         </View>
     );
 }
