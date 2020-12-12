@@ -3,6 +3,10 @@ import time
 import urllib
 import urllib.request
 
+from unidecode import unidecode
+
+COVID_RO_COUNTIES_URL = "https://covid19.geo-spatial.org/"
+
 
 def get_json_from_web(url=None, debug=True):
     if url is None:
@@ -23,3 +27,80 @@ def get_json_from_web(url=None, debug=True):
         end = time.time()
         print("\tDownloading data finished in {} seconds".format(end - start))
     return data_json
+
+
+def extract_digits(string):
+    return ''.join([char for char in string if char.isdigit()]).rstrip()
+
+
+def dumb_american_format_data_to_normal(string_data):
+    terms = string_data.replace(" ", "-").split("-")
+    return "{}-{}-{} {}".format(terms[2], terms[0], terms[1], terms[3]).rstrip()
+
+
+def get_index_of_first_digit(string):
+    for index in range(len(string)):
+        if string[index].isdigit():
+            return index
+    return -1
+
+
+def extract_romania_counties_data():
+    from bs4 import BeautifulSoup
+    from selenium import webdriver
+    from sys import platform
+
+    driver_path = None
+    if platform == "linux" or platform == "linux2":
+        driver_path = 'webdriver/linux_firefox_geckodriver'
+    elif platform == "win32":
+        driver_path = 'webdriver/win_firefox_geckodriver.exe'
+    browser = webdriver.Firefox(executable_path=driver_path)
+
+    browser.get(COVID_RO_COUNTIES_URL)
+    html = browser.page_source
+    soup = BeautifulSoup(html, 'html.parser')
+    update_tag = soup.select_one("app-footer div").get_text()
+    update_tag = update_tag[get_index_of_first_digit(update_tag):]
+    update_tag = dumb_american_format_data_to_normal(update_tag)
+
+    tables = soup.find_all('table')
+    latest_counties_dict = {}
+    for table in tables:
+        table_name = table.thead.tr.th.get_text()
+        items = table.find_all('span')
+        if "cazuri confirmate" in table_name.lower():
+            for index in range(0, len(items), 4):
+                total_cases = items[index].get_text().strip()
+                new_cases = extract_digits(items[index + 1].get_text())
+                county_name = items[index + 2].get_text().strip().lower()
+                if "necunoscut" not in county_name:
+                    latest_counties_dict[county_name.capitalize()] = {
+                        "total_cases": int(total_cases),
+                        "new_cases": int(new_cases)
+                    }
+                # print("{} : {} {} {}".format(index//4, total_cases, new_cases, county_name))
+        elif "vindecari" in unidecode(table_name.lower()) or "decese" in table_name.lower():
+            # print(table_name)
+            for index in range(0, len(items), 2):
+                recovered = items[index].get_text().strip()
+                county_name = items[index + 1].get_text().strip().lower()
+                if "necunoscut" not in county_name.lower():
+                    latest_counties_dict[county_name.capitalize()]["recovered"] = int(recovered)
+        elif "decese" in table_name.lower():
+            # print(table_name)
+            for index in range(0, len(items), 2):
+                recovered = items[index].get_text().strip()
+                county_name = items[index + 1].get_text().strip().lower()
+                if "necunoscut" not in county_name.lower():
+                    latest_counties_dict[county_name.capitalize()]["deaths"] = int(recovered)
+    browser.close()
+    return {"updated": update_tag,
+            "counties": latest_counties_dict}
+
+
+if __name__ == '__main__':
+    data = extract_romania_counties_data()
+    print(data)
+    with open("ro_counties_latest_data", mode="w", encoding="utf-8") as output:
+        json.dump(data, output, indent=2, ensure_ascii=False)

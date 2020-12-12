@@ -1,0 +1,215 @@
+{
+  "updated": "2020-12-12 20:45:04",
+  "counties": {
+    "București": {
+      "total_cases": 84527,
+      "new_cases": 1156,
+      "recovered": 816
+    },
+    "Cluj": {
+      "total_cases": 25664,
+      "new_cases": 274,
+      "recovered": 205
+    },
+    "Iași": {
+      "total_cases": 23535,
+      "new_cases": 241,
+      "recovered": 374
+    },
+    "Constanța": {
+      "total_cases": 22173,
+      "new_cases": 437,
+      "recovered": 428
+    },
+    "Timiș": {
+      "total_cases": 21993,
+      "new_cases": 262,
+      "recovered": 461
+    },
+    "Brașov": {
+      "total_cases": 21919,
+      "new_cases": 127,
+      "recovered": 527
+    },
+    "Prahova": {
+      "total_cases": 21622,
+      "new_cases": 110,
+      "recovered": 626
+    },
+    "Ilfov": {
+      "total_cases": 19394,
+      "new_cases": 344,
+      "recovered": 168
+    },
+    "Argeș": {
+      "total_cases": 16343,
+      "new_cases": 193,
+      "recovered": 444
+    },
+    "Bihor": {
+      "total_cases": 15868,
+      "new_cases": 146,
+      "recovered": 522
+    },
+    "Sibiu": {
+      "total_cases": 15599,
+      "new_cases": 142,
+      "recovered": 495
+    },
+    "Bacău": {
+      "total_cases": 14717,
+      "new_cases": 126,
+      "recovered": 423
+    },
+    "Suceava": {
+      "total_cases": 14207,
+      "new_cases": 111,
+      "recovered": 703
+    },
+    "Mureș": {
+      "total_cases": 13625,
+      "new_cases": 132,
+      "recovered": 467
+    },
+    "Dolj": {
+      "total_cases": 13551,
+      "new_cases": 77,
+      "recovered": 207
+    },
+    "Dâmbovița": {
+      "total_cases": 13083,
+      "new_cases": 92,
+      "recovered": 384
+    },
+    "Galați": {
+      "total_cases": 12872,
+      "new_cases": 228,
+      "recovered": 323
+    },
+    "Arad": {
+      "total_cases": 12815,
+      "new_cases": 117,
+      "recovered": 511
+    },
+    "Alba": {
+      "total_cases": 11156,
+      "new_cases": 108,
+      "recovered": 287
+    },
+    "Hunedoara": {
+      "total_cases": 10192,
+      "new_cases": 57,
+      "recovered": 435
+    },
+    "Neamț": {
+      "total_cases": 10100,
+      "new_cases": 57,
+      "recovered": 210
+    },
+    "Maramureș": {
+      "total_cases": 9404,
+      "new_cases": 73,
+      "recovered": 334
+    },
+    "Vaslui": {
+      "total_cases": 8915,
+      "new_cases": 61,
+      "recovered": 246
+    },
+    "Vâlcea": {
+      "total_cases": 8898,
+      "new_cases": 64,
+      "recovered": 115
+    },
+    "Olt": {
+      "total_cases": 8342,
+      "new_cases": 75,
+      "recovered": 188
+    },
+    "Buzău": {
+      "total_cases": 7365,
+      "new_cases": 94,
+      "recovered": 191
+    },
+    "Botoșani": {
+      "total_cases": 7113,
+      "new_cases": 90,
+      "recovered": 244
+    },
+    "Brăila": {
+      "total_cases": 6765,
+      "new_cases": 111,
+      "recovered": 300
+    },
+    "Bistrița-năsăud": {
+      "total_cases": 6553,
+      "new_cases": 57,
+      "recovered": 291
+    },
+    "Teleorman": {
+      "total_cases": 6426,
+      "new_cases": 81,
+      "recovered": 65
+    },
+    "Satu mare": {
+      "total_cases": 6382,
+      "new_cases": 60,
+      "recovered": 88
+    },
+    "Vrancea": {
+      "total_cases": 6360,
+      "new_cases": 67,
+      "recovered": 221
+    },
+    "Sălaj": {
+      "total_cases": 5850,
+      "new_cases": 25,
+      "recovered": 154
+    },
+    "Ialomița": {
+      "total_cases": 5597,
+      "new_cases": 76,
+      "recovered": 101
+    },
+    "Caraș-severin": {
+      "total_cases": 5527,
+      "new_cases": 49,
+      "recovered": 283
+    },
+    "Călărași": {
+      "total_cases": 5370,
+      "new_cases": 73,
+      "recovered": 165
+    },
+    "Giurgiu": {
+      "total_cases": 5135,
+      "new_cases": 50,
+      "recovered": 50
+    },
+    "Harghita": {
+      "total_cases": 4981,
+      "new_cases": 9,
+      "recovered": 207
+    },
+    "Gorj": {
+      "total_cases": 4704,
+      "new_cases": 21,
+      "recovered": 226
+    },
+    "Covasna": {
+      "total_cases": 4638,
+      "new_cases": 33,
+      "recovered": 136
+    },
+    "Tulcea": {
+      "total_cases": 4531,
+      "new_cases": 55,
+      "recovered": 115
+    },
+    "Mehedinți": {
+      "total_cases": 4464,
+      "new_cases": 44,
+      "recovered": 162
+    }
+  }
+}

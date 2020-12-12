@@ -1,5 +1,7 @@
-# Byte-compiled / optimized / DLL files
+*.log
 covid.db
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class

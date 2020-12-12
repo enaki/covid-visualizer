@@ -4,6 +4,7 @@ import time
 from multiprocessing import Process
 
 from db_updater.continents import insert_continents, insert_latest_continents
+from db_updater.counties import insert_ro_counties, insert_ro_counties_history
 from db_updater.countries import insert_countries_history, insert_countries, insert_latest_countries
 from db_updater.utils import execute_many, get_json_from_web
 from db_updater.utils.db_utils import delete_data, query, execute_script
@@ -23,8 +24,11 @@ def update_latest_data(database_path, debug=True):
     insert_latest_world(database_path, yesterday=True, debug=debug)
     insert_latest_world(database_path, two_days_ago=True, debug=debug)
 
+    insert_latest_ro_counties(database_path, debug=debug)
+
 
 def update_history_data(database_path, days=None, debug=True):
+    insert_ro_counties_history(database_path, debug=debug)
     insert_countries_history(database_path, days=days, debug=debug)
     insert_world_history(database_path, days=days, debug=debug)
 
@@ -33,6 +37,8 @@ def init_database(database_path, drop_script_path, create_script_path):
     recreate_tables(database_path, drop_script_path, create_script_path)
     insert_continents(database_path)
     insert_countries(database_path)
+    insert_ro_counties(database_path)
+
     update_history_data(database_path)
     update_latest_data(database_path)
 
@@ -76,6 +82,6 @@ if __name__ == '__main__':
     drop_script_path = "../sql_scripts/drop_covid.db.sql"
     create_script_path = "../sql_scripts/covid.db.sql"
     init_database(database_path, drop_script_path, create_script_path)
-    initialize_database_workers(database_path)
+    #initialize_database_workers(database_path)
     while True:
         pass
