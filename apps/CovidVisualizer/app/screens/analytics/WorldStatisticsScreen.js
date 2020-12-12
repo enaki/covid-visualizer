@@ -5,6 +5,7 @@ import colors from '../../config/colors'
 import WorldGraphComponent from "./graphs/WorldGraphComponent";
 import GraphPicker from "./graphs/GraphPicker";
 import BoxContainer from "../containers/BoxContainer";
+import PieGraphComponent from "./graphs/PieGraphComponent";
 
 
 class WorldStatisticsScreen extends React.Component {
@@ -13,7 +14,7 @@ class WorldStatisticsScreen extends React.Component {
             <ScrollView
                 contentContainerStyle={styles.container}
             >
-                <WorldGraphComponent/>
+                <PieGraphComponent/>
                 <WorldGraphComponent/>
                 <WorldGraphComponent/>
                 <GraphPicker/>

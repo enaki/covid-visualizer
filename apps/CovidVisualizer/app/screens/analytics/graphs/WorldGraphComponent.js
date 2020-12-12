@@ -11,6 +11,9 @@ import {
 } from "victory-native";
 import BoxContainer from "../../containers/BoxContainer";
 import {VictoryScatter} from "victory-scatter";
+import tableStyles from "./../../../config/tables/tablestyles";
+
+const styles = tableStyles;
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -128,42 +131,4 @@ export default class WorldGraphComponent extends React.Component {
     }
 }
 
-const styles={
-    tableLabelStyle:{
-        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
-        letterSpacing: 10,
-        fontSize: 15,
-        padding: -20,
-        fontStyle: "italic",
-        fill:"green"
-    },
-    tableTitle:{
-        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
-        fontSize: 20,
-        fontWeight: "bold",
-        fill:"green",
-    },
-    tableTicksXStyle:{
-        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
-        letterSpacing: 1,
-        fontSize: 14,
-        angle: -45,
-        padding: Platform.OS === 'android' ? 10 : 20
-    },
-    tableTicksYStyle:{
-        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
-        letterSpacing: 1,
-        fontSize: 14,
-    },
-    chartPadding:{
-        left:50,
-        right: 40,
-        bottom: 60,
-        top: 40,
-    },
-    tableStyle:{
-        background:{
-            fill:"white"
-        }
-    }
-};
+
