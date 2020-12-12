@@ -45,16 +45,25 @@ def get_index_of_first_digit(string):
     return -1
 
 
-def extract_romania_counties_data():
+def extract_romania_counties_data(web_driver_folder_path):
     from bs4 import BeautifulSoup
     from selenium import webdriver
     from sys import platform
 
+    def normalize_county_name(county: str):
+        if '-' in county:
+            county = "-".join([part.capitalize() for part in county.split("-")])
+        elif ' ' in county:
+            county = " ".join([part.capitalize() for part in county.split()])
+        else:
+            county = county.capitalize()
+        return county
+
     driver_path = None
     if platform == "linux" or platform == "linux2":
-        driver_path = 'webdriver/linux_firefox_geckodriver'
+        driver_path = '{}webdriver/linux_firefox_geckodriver'.format(web_driver_folder_path)
     elif platform == "win32":
-        driver_path = 'webdriver/win_firefox_geckodriver.exe'
+        driver_path = '{}webdriver/win_firefox_geckodriver.exe'.format(web_driver_folder_path)
     browser = webdriver.Firefox(executable_path=driver_path)
 
     browser.get(COVID_RO_COUNTIES_URL)
@@ -73,30 +82,41 @@ def extract_romania_counties_data():
             for index in range(0, len(items), 4):
                 total_cases = items[index].get_text().strip()
                 new_cases = extract_digits(items[index + 1].get_text())
-                county_name = items[index + 2].get_text().strip().lower()
-                if "necunoscut" not in county_name:
-                    latest_counties_dict[county_name.capitalize()] = {
+                county_name = items[index + 2].get_text().strip()
+                if "necunoscut" not in county_name.lower():
+                    county_name = normalize_county_name(county_name)
+                    latest_counties_dict[county_name] = {
                         "total_cases": int(total_cases),
                         "new_cases": int(new_cases)
                     }
                 # print("{} : {} {} {}".format(index//4, total_cases, new_cases, county_name))
-        elif "vindecari" in unidecode(table_name.lower()) or "decese" in table_name.lower():
+        elif "vindecari" in unidecode(table_name.lower()):
             # print(table_name)
             for index in range(0, len(items), 2):
                 recovered = items[index].get_text().strip()
-                county_name = items[index + 1].get_text().strip().lower()
+                county_name = items[index + 1].get_text().strip()
                 if "necunoscut" not in county_name.lower():
-                    latest_counties_dict[county_name.capitalize()]["recovered"] = int(recovered)
+                    county_name = normalize_county_name(county_name)
+                    latest_counties_dict[county_name]["recovered"] = int(recovered)
         elif "decese" in table_name.lower():
             # print(table_name)
             for index in range(0, len(items), 2):
-                recovered = items[index].get_text().strip()
-                county_name = items[index + 1].get_text().strip().lower()
+                deaths = items[index].get_text().strip()
+                county_name = items[index + 1].get_text().strip()
                 if "necunoscut" not in county_name.lower():
-                    latest_counties_dict[county_name.capitalize()]["deaths"] = int(recovered)
+                    county_name = normalize_county_name(county_name)
+                    latest_counties_dict[county_name]["deaths"] = int(deaths)
     browser.close()
+    array_counties = [{
+        "name": key,
+        "total_cases": value["total_cases"],
+        "new_cases": value["new_cases"],
+        "recovered": value["recovered"],
+        "deaths": value["deaths"]
+    } for key, value in latest_counties_dict.items()]
+
     return {"updated": update_tag,
-            "counties": latest_counties_dict}
+            "counties": array_counties}
 
 
 if __name__ == '__main__':

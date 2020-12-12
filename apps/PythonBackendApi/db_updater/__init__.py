@@ -4,10 +4,12 @@ import time
 from multiprocessing import Process
 
 from db_updater.continents import insert_continents, insert_latest_continents
-from db_updater.counties import insert_ro_counties, insert_ro_counties_history
+from db_updater.counties import insert_ro_counties, insert_ro_counties_history, update_latest_ro_counties_data, \
+    update_ro_counties_diacritics, insert_latest_ro_counties
 from db_updater.countries import insert_countries_history, insert_countries, insert_latest_countries
 from db_updater.utils import execute_many, get_json_from_web
 from db_updater.utils.db_utils import delete_data, query, execute_script
+from db_updater.utils.web_utils import extract_romania_counties_data
 from db_updater.world import insert_latest_world, insert_world_history
 
 
@@ -33,14 +35,16 @@ def update_history_data(database_path, days=None, debug=True):
     insert_world_history(database_path, days=days, debug=debug)
 
 
-def init_database(database_path, drop_script_path, create_script_path):
+def init_database(database_path, drop_script_path, create_script_path, web_driver_folder_path):
     recreate_tables(database_path, drop_script_path, create_script_path)
     insert_continents(database_path)
     insert_countries(database_path)
     insert_ro_counties(database_path)
+    update_ro_counties_diacritics(database_path)
 
     update_history_data(database_path)
     update_latest_data(database_path)
+    update_latest_ro_counties_data(database_path, web_driver_folder_path=web_driver_folder_path)
 
 
 def recreate_tables(db_path, drop_script_path, create_script_path):
@@ -81,7 +85,7 @@ if __name__ == '__main__':
     database_path = "../covid.db"
     drop_script_path = "../sql_scripts/drop_covid.db.sql"
     create_script_path = "../sql_scripts/covid.db.sql"
-    init_database(database_path, drop_script_path, create_script_path)
+    init_database(database_path, drop_script_path, create_script_path, "utils/")
     #initialize_database_workers(database_path)
     while True:
         pass

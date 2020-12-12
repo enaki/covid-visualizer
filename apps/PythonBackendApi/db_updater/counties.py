@@ -1,3 +1,4 @@
+from db_updater.utils import extract_romania_counties_data
 from db_updater.utils import get_json_from_web, execute_many
 
 GET_HISTORY_COUNTY_URL = "https://www.graphs.ro/json.php"
@@ -22,11 +23,34 @@ def insert_ro_counties(db_path, debug=True, update_diacritics=True):
         update_ro_counties_diacritics(db_path, debug=debug)
 
 
+def change_old_diacritics(word: str):
+    diacritics_dictionary = {
+        'ş': 'ș',
+        'Ş': 'Ș',
+        'ţ': 'ț',
+        'Ţ': 'Ț'
+    }
+    for key, value in diacritics_dictionary.items():
+        word = word.replace(key, value)
+    return word
+
+
 def update_ro_counties_diacritics(db_path, debug=True):
     counties = get_json_from_web(GET_COUNTIES_URL, debug=debug)
-    counties_tuples = [(county["nume"], county["auto"]) for county in counties["judete"]]
+    counties_tuples = [(change_old_diacritics(county["nume"]), county["auto"]) for county in counties["judete"]]
     counties_sql_script = """UPDATE "counties" SET name=? WHERE county_code=? """
     execute_many(counties_sql_script, counties_tuples, database_path=db_path, message="counties")
+
+
+def update_latest_ro_counties_data(database_path, web_driver_folder_path):
+    latest_counties = extract_romania_counties_data(web_driver_folder_path)
+    counties_tuples = []
+
+    counties_tuples.extend([(county["name"], latest_counties["updated"], county["total_cases"], county["new_cases"],
+                             county["recovered"], county["deaths"]) for county in latest_counties["counties"]])
+    latest_counties_sql_script = """INSERT OR REPLACE INTO "counties_latest" ("id", "date", "cases", "today_cases", "deaths", "recovered") VALUES ((SELECT id FROM counties WHERE name=?), ?, ?, ?, ?, ?)"""
+    print(counties_tuples)
+    execute_many(latest_counties_sql_script, counties_tuples, database_path=database_path, message="counties")
 
 
 def insert_ro_counties_history(db_path, debug=True):
