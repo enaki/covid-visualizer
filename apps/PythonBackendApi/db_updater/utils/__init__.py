@@ -1,4 +1,4 @@
-from .web_utils import get_json_from_web
+from .web_utils import get_json_from_web, extract_romania_counties_data
 from .db_utils import execute_many
 
 

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "world_history" (
 	UNIQUE("date")
 );
 CREATE TABLE IF NOT EXISTS "world_latest" (
-	"date"	TEXT NOT NULL,
+	"date"	TEXT NOT NULL UNIQUE,
 	"updated"	INTEGER NOT NULL,
 	"cases"	INTEGER NOT NULL,
 	"today_cases"	INTEGER NOT NULL,
@@ -98,6 +98,33 @@ CREATE TABLE IF NOT EXISTS "countries_latest" (
 	"active_per_one_million"	INTEGER,
 	"recovered_per_one_million"	INTEGER,
 	"critical_per_one_million"	INTEGER,
+	FOREIGN KEY ("id") REFERENCES "countries"("id"),
+	UNIQUE("date","id")
+);
+CREATE TABLE IF NOT EXISTS "counties" (
+	"id"	INTEGER NOT NULL,
+	"county_code"	TEXT UNIQUE,
+	"name"	TEXT NOT NULL UNIQUE,
+	"population"	INTEGER NOT NULL,
+	"country_id"	INTEGER,
+	FOREIGN KEY ("country_id") REFERENCES "continents"("id"),
+	PRIMARY KEY("id")
+);
+CREATE TABLE IF NOT EXISTS "counties_history" (
+	"id"	INTEGER NOT NULL,
+	"date"	DATE NOT NULL,
+	"total_cases"	INTEGER NOT NULL,
+	"population" INTEGER NOT NULL,
+	FOREIGN KEY ("id") REFERENCES "counties"("id"),
+	UNIQUE("date", "id")
+);
+CREATE TABLE IF NOT EXISTS "counties_latest" (
+	"id"	INTEGER NOT NULL,
+    "date"	TEXT NOT NULL,
+	"cases"	INTEGER NOT NULL,
+	"today_cases"	INTEGER NOT NULL,
+	"deaths"	INTEGER NOT NULL,
+	"recovered"	INTEGER NOT NULL,
 	FOREIGN KEY ("id") REFERENCES "countries"("id"),
 	UNIQUE("date","id")
 );

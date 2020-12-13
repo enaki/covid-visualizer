@@ -3,16 +3,15 @@ import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
 import { SafeAreaView } from 'react-navigation'
 import colors from '../../config/colors'
-import {View} from 'react-native';
-const ColorService = require('../../services/ColorService')
+import { View } from 'react-native';
+const ColorService = require('../../services/color/GenericColorService')
+const WorldColorService = require('../../services/color/MapWorldColorService')
 
 const height = Dimensions.get('window').height;
 const geoMaps = require('../../assets/data/parsed.low.geo.json');
 
 
-
 class WorldMapScreen extends React.Component {
-
     constructor(props) {
         super(props);
         console.log("I am here");
@@ -41,7 +40,7 @@ class WorldMapScreen extends React.Component {
                             <Geojson
                                 key={key}
                                 geojson={geoMaps[key]} // geojson of the countries you want to highlight
-                                fillColor={ColorService.colorSpectrumByCountryKey(key)}
+                                fillColor={WorldColorService.colorSpectrumByCountryKey(key)}
                             />
                         ))
                     }
