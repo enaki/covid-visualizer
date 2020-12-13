@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "7b2a240d-e05a-431c-9fc9-b200584d609c",
+		"name": "PDM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Countries Active Per Million",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2020/api/maps/countries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"maps",
+						"countries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ro Counties :  total_cases/population",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2020/api/maps/regions/ro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"maps",
+						"regions",
+						"ro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ro Counties :  total_cases/population Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2020/api/latest/world",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"latest",
+						"world"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Countries Active Per Million",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2020/api/maps/countries?name=romania",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"maps",
+						"countries"
+					],
+					"query": [
+						{
+							"key": "iso2",
+							"value": "RO",
+							"disabled": true
+						},
+						{
+							"key": "iso3",
+							"value": "ROU",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "romania"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

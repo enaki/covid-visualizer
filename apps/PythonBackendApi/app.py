@@ -1,4 +1,3 @@
-
 from db_updater import init_database, initialize_database_workers
 from routes import app
 

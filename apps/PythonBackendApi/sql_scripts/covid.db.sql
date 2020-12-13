@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "world_history" (
 	UNIQUE("date")
 );
 CREATE TABLE IF NOT EXISTS "world_latest" (
-	"date"	TEXT NOT NULL,
+	"date"	TEXT NOT NULL UNIQUE,
 	"updated"	INTEGER NOT NULL,
 	"cases"	INTEGER NOT NULL,
 	"today_cases"	INTEGER NOT NULL,
