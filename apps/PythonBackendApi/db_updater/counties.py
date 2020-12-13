@@ -69,9 +69,5 @@ def insert_ro_counties_history(db_path, debug=True):
     execute_many(counties_sql_script, counties_tuples, database_path=db_path, message="counties", debug=debug)
 
 
-def insert_latest_ro_counties(database_path, debug=True):
-    pass
-
-
 if __name__ == '__main__':
     pass

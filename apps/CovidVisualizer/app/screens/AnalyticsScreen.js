@@ -5,6 +5,7 @@ import WorldMapScreen from './analytics/WorldMapScreen'
 import WorldStatisticsScreen from './analytics/WorldStatisticsScreen'
 import AnalyticsHomeScreen from './analytics/AnalyticsHomeScreen'
 import { createStackNavigator } from '@react-navigation/stack';
+import RomaniaMapScreen from './analytics/RomaniaMapScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ const AnalyticsScreen = () => {
             <Stack.Screen name="Analytics" component={AnalyticsHomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="World Map" component={WorldMapScreen} />
             <Stack.Screen name="World Statistics" component={WorldStatisticsScreen} />
+            <Stack.Screen name="Romania Map" component={RomaniaMapScreen} />
         </Stack.Navigator>
     );
 }

@@ -57,7 +57,7 @@ const AnalyticsHomeScreen = ({ navigation }) => {
                 radius={15}
                 impact
                 impactStyle='Medium'
-                onPressAction={() => alert("Not implemented")}
+                onPressAction={() => navigation.navigate('Romania Map')}
             />
         </View>
     );
