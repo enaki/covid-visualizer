@@ -2,7 +2,7 @@ import sqlite3
 import time
 
 
-def execute_many(script, tuples, database_path, message="data", method=1, debug=True):
+def execute_many(script, tuples, database_path, message="data", method=2, debug=True):
     start, end = None, None
     if debug:
         start = time.time()
@@ -15,7 +15,12 @@ def execute_many(script, tuples, database_path, message="data", method=1, debug=
         cur.executemany(script, tuples)
     else:
         for item in tuples:
-            cur.execute(script, item)
+            try:
+                cur.execute(script, item)
+            except sqlite3.IntegrityError as e:
+                print(item)
+                continue
+                raise e
 
     conn.commit()
     conn.close()

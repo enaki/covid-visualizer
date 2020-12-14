@@ -1,40 +1,32 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, ScrollView } from 'react-native'
 
 import colors from '../../config/colors'
 import WorldGraphComponent from "./graphs/WorldGraphComponent";
-import {Picker} from "@react-native-picker/picker";
+import GraphPicker from "./graphs/GraphPicker";
+import BoxContainer from "../containers/BoxContainer";
+import PieGraphComponent from "./graphs/PieGraphComponent";
+
 
 class WorldStatisticsScreen extends React.Component {
-    state = {view: 'deaths'};
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={{ fontSize: 30 }}>World Statistics Screen</Text>
+            <ScrollView
+                contentContainerStyle={styles.container}
+            >
+                <PieGraphComponent/>
                 <WorldGraphComponent/>
-                <Picker
-                    selectedValue={this.state.view}
-                    style={{height: 50, width: 150}}
-                    onValueChange={(itemValue, itemIndex) => {
-                        this.setState({view: itemValue});
-                    }
-                    }
-                    mode={"dropdown"}
-                >
-                    <Picker.Item label="Cases" value="cases" />
-                    <Picker.Item label="Deaths" value="deaths" />
-                    <Picker.Item label="Active" value="active" />
-                    <Picker.Item label="Recoveries" value="recoveries" />
-                </Picker>
-            </View>
+                <WorldGraphComponent/>
+                <GraphPicker/>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: colors.secondaryBackground,
+        flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
