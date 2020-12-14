@@ -1,11 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 
 import colors from '../../config/colors'
-import WorldGraphComponent from "./graphs/WorldGraphComponent";
-import GraphPicker from "./graphs/GraphPicker";
-import BoxContainer from "../containers/BoxContainer";
-import PieGraphComponent from "./graphs/PieGraphComponent";
+import WorldGraphComponent from "../graphs/WorldGraphComponent";
+import GraphPicker from "../graphs/GraphPicker";
+import PieGraphComponent from "../graphs/PieGraphComponent";
 
 
 class WorldStatisticsScreen extends React.Component {

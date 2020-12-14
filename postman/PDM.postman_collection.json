@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7b2a240d-e05a-431c-9fc9-b200584d609c",
+		"_postman_id": "d4a0ff63-8c76-4cec-937f-55e8c41566ff",
 		"name": "PDM",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -49,7 +49,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Ro Counties :  total_cases/population Copy",
+			"name": "Get world latest stats",
 			"request": {
 				"method": "GET",
 				"header": [],
