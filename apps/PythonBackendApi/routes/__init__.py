@@ -16,6 +16,7 @@ def hello():
 
 @app.route("/api/maps/countries")
 def get_countries_map_data():
+    # return make_response(jsonify({}))
     script = """SELECT c.name, c.iso2, c.iso3, c.flag, cl.date, cl.updated, cl.cases, cl.today_cases, cl.deaths, cl.today_deaths, cl.recovered, cl.today_recovered, cl.active, cl.critical, cl.cases_per_one_million,
                         cl.deaths_per_one_million, cl.tests, cl.tests_per_one_million, cl.population, cl.active_per_one_million, cl.recovered_per_one_million, cl.critical_per_one_million, c.id
                         FROM countries_latest cl, countries c WHERE cl.id = c.id;"""
@@ -42,6 +43,7 @@ def get_countries_map_data():
 
     data = country_latest_mapper(data)
     return make_response(jsonify(data))
+    #return make_response(jsonify([{}, {}]))
 
 
 @app.route("/api/maps/regions/ro")

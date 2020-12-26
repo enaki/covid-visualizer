@@ -3,9 +3,11 @@ import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
 import { SafeAreaView } from 'react-navigation'
 import colors from '../../config/colors'
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 const ColorService = require('../../services/color/GenericColorService')
-const WorldColorService = require('../../services/color/MapWorldColorService')
+
+const ConnectorService = require('../../services/ConnectorService');
+import worldColorService from '../../services/color/MapWorldColorService';
 
 const height = Dimensions.get('window').height;
 const geoMaps = require('../../assets/data/parsed.low.geo.json');
@@ -14,39 +16,61 @@ const geoMaps = require('../../assets/data/parsed.low.geo.json');
 class WorldMapScreen extends React.Component {
     constructor(props) {
         super(props);
-        console.log("I am here");
+        this.state = {
+            dataIsReturned: false
+        };
+        console.log("->IN WorldMapScreen Constructor");
+    }
+
+    async componentDidMount() {
+        console.log("\n->IN WorldMapScreen componentDidMount");
+        try {
+            data = await ConnectorService.getCountriesActivePerMillion();
+            console.log(data);
+            worldColorService.setData(data);
+            this.setState({ dataIsReturned: true });
+        } catch (err) { throw err }
+        console.log("Data Loaded\n");
     }
 
     render() {
+        console.log("In render WorldMapScreen");
+        console.log(worldColorService.getData());
         return (
             <View>
-                <MapView
-                    provider={null}
-                    style={styles.map}
-                    loadingEnabled={true}
-                    region={{
-                        latitude: 10.0,
-                        longitude: 18,
-                        latitudeDelta: 100,
-                        longitudeDelta: 100
-                    }}
-                    showsBuildings={false}
-                    showsTraffic={false}
-                    showsIndoors={false}
-                    rotateEnabled={false}
-                >
-                    {
-                        Object.keys(geoMaps).map(key => (
-                            <Geojson
-                                key={key}
-                                geojson={geoMaps[key]} // geojson of the countries you want to highlight
-                                fillColor={WorldColorService.colorSpectrumByCountryKey(key)}
-                            />
-                        ))
-                    }
-                </MapView >
+                {
+                    !this.state.dataIsReturned ? <Text>Loading</Text> : this.renderMap()
+                }
             </View>
         );
+    }
+
+    renderMap() {
+        return <MapView
+            provider={null}
+            style={styles.map}
+            loadingEnabled={true}
+            region={{
+                latitude: 10.0,
+                longitude: 18,
+                latitudeDelta: 100,
+                longitudeDelta: 100
+            }}
+            showsBuildings={false}
+            showsTraffic={false}
+            showsIndoors={false}
+            rotateEnabled={false}
+        >
+            {
+                Object.keys(geoMaps).map(key => (
+                    <Geojson
+                        key={key}
+                        geojson={geoMaps[key]} // geojson of the countries you want to highlight
+                        fillColor={worldColorService.colorSpectrumByCountryKey(key)}
+                    />
+                ))
+            }
+        </MapView >
     }
 }
 
