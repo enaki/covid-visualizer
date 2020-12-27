@@ -1,14 +1,16 @@
 import React from "react";
-import {Text} from "react-native";
+import {Text, View} from "react-native";
 
 export default class ContainerText extends React.Component{
     render() {
         return(
-            <Text
-                style={textStyle}
-            >
-                {this.props.text}
-            </Text>
+            <View>
+                <Text
+                    style={textStyle}
+                >
+                    {this.props.text}
+                </Text>
+            </View>
         );
     }
 }

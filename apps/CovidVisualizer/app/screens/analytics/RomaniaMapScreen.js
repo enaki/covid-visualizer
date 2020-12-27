@@ -25,7 +25,7 @@ class RomaniaMapScreen extends React.Component {
         console.log("->IN RomaniaMapScreen componentDidMount");
         try {
             //this.roCountyService = RoCountyColorService;
-            data = await ConnectorService.getRoCountiesActivePerOneHundred();
+            const data = await ConnectorService.getRoCountiesActivePerOneHundred();
             roCountyColorService.setData(data);
             this.setState({ dataIsReturned: true });
         } catch (err) { }

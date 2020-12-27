@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
-import { SafeAreaView } from 'react-navigation'
 import colors from '../../config/colors'
 import { View, Text } from 'react-native';
 const ColorService = require('../../services/color/GenericColorService')
@@ -25,11 +24,12 @@ class WorldMapScreen extends React.Component {
     async componentDidMount() {
         console.log("\n->IN WorldMapScreen componentDidMount");
         try {
-            data = await ConnectorService.getCountriesActivePerMillion();
-            console.log(data);
+            const data = await ConnectorService.getCountriesActivePerMillion();
             worldColorService.setData(data);
-            this.setState({ dataIsReturned: true });
-        } catch (err) { throw err }
+            this.setState({dataIsReturned: true});
+        } catch (err) {
+            throw err
+        }
         console.log("Data Loaded\n");
     }
 

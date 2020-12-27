@@ -10,9 +10,12 @@ const HelpScreen = () => {
         <ScrollView
             contentContainerStyle={styles.container}
         >
-            <Text style={{ fontSize: 30, textAlign:"center" }}>Help Screen</Text>
             <BoxContainer>
-                <ContainerTitle text={"Cum ai fost infectat?"} />
+                <ContainerTitle
+                    text={"Cum ai fost infectat?"}
+                    containerStyle={containerTitleStyle}
+                    titleStyle={titleStyle}
+                />
                 <ContainerText
                     text={"1. Principala cale de transmisie a virusului este calea respiratorie" +
                     "sau prin contactul cu persoane infectate."}
@@ -41,7 +44,11 @@ const HelpScreen = () => {
                 />
             </BoxContainer>
             <BoxContainer>
-                <ContainerTitle text={"Cum pot sa ma protejez?"} />
+                <ContainerTitle
+                    text={"Cum pot sa ma protejez?"}
+                    containerStyle={containerTitleStyle}
+                    titleStyle={titleStyle}
+                />
                 <ContainerText
                     text={"1. Nu calatori in zone afectate."}
                 />
@@ -68,3 +75,21 @@ const styles = StyleSheet.create({
 });
 
 export default HelpScreen;
+
+const titleStyle = {
+    textAlign:"center",
+    fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
+    fontSize: 20,
+    fontWeight: "bold",
+    color:"white",
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+}
+
+const containerTitleStyle = {
+    backgroundColor: "grey",
+    padding: 10,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12
+};
