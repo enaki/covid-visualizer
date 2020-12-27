@@ -19,6 +19,7 @@ class WorldMapScreen extends React.Component {
         this.state = {
             dataIsReturned: false
         };
+        this.componentDidMount().then(r => {});
         console.log("\n[WorldMapScreen] - Constructor");
     }
 
@@ -51,12 +52,6 @@ class WorldMapScreen extends React.Component {
                 data = localData["data"];
             }
             worldColorService.setData(data);
-            //this.setState({ dataIsReturned: true })
-
-            //just for experimenting
-            setTimeout(() => {
-                this.setState({dataIsReturned: true});
-            }, 1000);
         } catch (err) {
             throw err;
         }
@@ -66,14 +61,17 @@ class WorldMapScreen extends React.Component {
     render() {
         console.log("[WorldMapScreen] - IN render callback");
         return (
-            <View style={!this.state.dataIsReturned ? styles.container : {}}>
+            <View style={{}}>
+                {
+                    this.renderMap()
+                }
                 {
                     !this.state.dataIsReturned ?
                         <ActivityIndicator
-                            color='#bc2b78'
                             size="large"
-                            style={styles.activityIndicator} />
-                        : this.renderMap()
+                            color="#bc2b78"
+                            style={styles.activityIndicator}
+                        />: null
                 }
             </View>
         );
@@ -83,7 +81,6 @@ class WorldMapScreen extends React.Component {
         return <MapView
             provider={null}
             style={styles.map}
-            loadingEnabled={true}
             region={{
                 latitude: 10.0,
                 longitude: 18,
@@ -94,6 +91,7 @@ class WorldMapScreen extends React.Component {
             showsTraffic={false}
             showsIndoors={false}
             rotateEnabled={false}
+            onMapReady={ () => {this.setState({ dataIsReturned: true });}}
         >
             {
                 Object.keys(geoMaps).map(key => (
@@ -105,6 +103,7 @@ class WorldMapScreen extends React.Component {
                 ))
             }
         </MapView >
+
     }
 }
 
@@ -112,16 +111,14 @@ const styles = StyleSheet.create({
     map: {
         height
     },
-    container: {
-        flex: 1,
-        backgroundColor: colors.secondaryBackground,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 100,
         alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 

@@ -19,6 +19,7 @@ class RomaniaMapScreen extends React.Component {
         this.state = {
             dataIsReturned: false
         };
+        this.componentDidMount().then(r => {});
         console.log("\n[RomaniaMapScreen] - Constructor");
     }
 
@@ -61,14 +62,17 @@ class RomaniaMapScreen extends React.Component {
     render() {
         console.log("[RomaniaMapScreen] - Call render method ");
         return (
-            <View style={!this.state.dataIsReturned ? styles.container : {}}>
+            <View style={{}}>
+                {
+                    this.renderMap()
+                }
                 {
                     !this.state.dataIsReturned ?
                         <ActivityIndicator
-                            color='#bc2b78'
                             size="large"
-                            style={styles.activityIndicator} />
-                        : this.renderMap()
+                            color="#bc2b78"
+                            style={styles.activityIndicator}
+                        />: null
                 }
             </View>
         );
@@ -78,7 +82,6 @@ class RomaniaMapScreen extends React.Component {
         return <MapView
             provider={null}
             style={styles.map}
-            loadingEnabled={true}
             region={{
                 latitude: 44.21921941263342,
                 longitude: 24.883000218245233,
@@ -89,6 +92,7 @@ class RomaniaMapScreen extends React.Component {
             showsTraffic={false}
             showsIndoors={false}
             rotateEnabled={false}
+            onMapReady={ () => {this.setState({ dataIsReturned: true });}}
         >
             {
                 Object.keys(roCountiesGeoMaps).map(key => (
@@ -107,16 +111,14 @@ const styles = StyleSheet.create({
     map: {
         height
     },
-    container: {
-        flex: 1,
-        backgroundColor: colors.secondaryBackground,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 100,
         alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
