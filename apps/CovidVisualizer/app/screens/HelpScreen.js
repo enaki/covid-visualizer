@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, ScrollView, Text, NativeModules} from 'react-native'
+import {StyleSheet, ScrollView, NativeModules} from 'react-native'
 import colors from '../config/colors'
 import BoxContainer from "./containers/BoxContainer";
 import ContainerTitle from "./containers/titles/ContainerTitle";

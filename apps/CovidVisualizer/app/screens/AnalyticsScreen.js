@@ -1,6 +1,4 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native'
-import colors from '../config/colors'
 import WorldMapScreen from './analytics/WorldMapScreen'
 import WorldStatisticsScreen from './analytics/WorldStatisticsScreen'
 import AnalyticsHomeScreen from './analytics/AnalyticsHomeScreen'

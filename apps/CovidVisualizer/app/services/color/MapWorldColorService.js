@@ -25,7 +25,7 @@ class WorldColorService {
 
     colorSpectrumByCountryKey(key) {
         try {
-            let value = this.world_active_per_million.["countries"][key] / this.world_active_per_million["max"];
+            let value = this.world_active_per_million["countries"][key] / this.world_active_per_million["max"];
             //console.log(Math.log2(1 + scaleValue * value));
             return this.colorSpectrum(Math.log2(1 + this.scaleValue * value));
         }

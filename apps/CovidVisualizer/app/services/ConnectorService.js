@@ -16,10 +16,24 @@ const getActivePerMillion = () => {
         });
 }
 
-const getRoCountiesActivePerOneHundred = async () => {
-    return await fetch('http://10.0.2.2:2020/api/maps/regions/ro')
-        .then(response => response.json())
-        .catch((err)=> console.error(err));
+const getRoCountiesActivePerOneHundred = () => {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': "application/json; charset=utf-8",
+
+        }
+    };
+
+    return fetch("http://10.0.2.2:2020/api/maps/regions/ro", requestOptions)
+        .then((response) => response.json())
+        .then((json) => {
+            return json;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 

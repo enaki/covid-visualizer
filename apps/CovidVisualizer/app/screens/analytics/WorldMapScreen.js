@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
 import colors from '../../config/colors'
-import { ActivityIndicator, View, Text } from 'react-native';
+import { ActivityIndicator, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 
@@ -24,8 +24,8 @@ class WorldMapScreen extends React.Component {
 
     async componentDidMount() {
         console.log("[WorldMapScreen] - componentDidMount");
+        let data;
         try {
-            let data;
             let localData = JSON.parse(await AsyncStorage.getItem("WorldMap"));
             let needUpdate = false;
             if (localData === undefined) {
@@ -44,13 +44,19 @@ class WorldMapScreen extends React.Component {
             console.log("[WorldMapScreen] - Checked data in AsyncStorage. NeedUpdate? " + needUpdate);
             if (needUpdate) {
                 data = await ConnectorService.getCountriesActivePerMillion();
-                AsyncStorage.setItem("WorldMap", JSON.stringify({ "data": data, "updated": moment().valueOf() }));
+                AsyncStorage.setItem("WorldMap", JSON.stringify({"data": data, "updated": moment().valueOf()}));
 
                 console.log("\n\t***AsyncStorage: Setting data WorldMap on " + moment().format('MMMM Do YYYY, HH:mm:ss'));
             } else {
                 data = localData["data"];
             }
             worldColorService.setData(data);
+            //this.setState({ dataIsReturned: true })
+
+            //just for experimenting
+            setTimeout(() => {
+                this.setState({dataIsReturned: true});
+            }, 1000);
         } catch (err) {
             throw err;
         }
