@@ -2,7 +2,9 @@ import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
 import colors from '../../config/colors'
-import { View, Text } from 'react-native';
+import { ActivityIndicator, View, Text } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
 
 const ConnectorService = require('../../services/ConnectorService');
 import roCountyColorService from '../../services/color/MapRoCountyColorService';
@@ -18,28 +20,62 @@ class RomaniaMapScreen extends React.Component {
         this.state = {
             dataIsReturned: false
         };
-        console.log("->IN RomaniaMapScreen Constructor");
+        console.log("\n[RomaniaMapScreen] - Constructor");
     }
 
     async componentDidMount() {
-        console.log("->IN RomaniaMapScreen componentDidMount");
+        console.log("[RomaniaMapScreen] - componentDidMount");
         try {
-            //this.roCountyService = RoCountyColorService;
-            data = await ConnectorService.getRoCountiesActivePerOneHundred();
-            roCountyColorService.setData(data);
-            this.setState({ dataIsReturned: true });
-        } catch (err) { }
+            let localData = JSON.parse(await AsyncStorage.getItem("RoMap"));
+            let needUpdate = false;
+            if (localData == undefined) {
+                needUpdate = true;
+            } else {
+                if (localData["updated"] == undefined || localData["data"] == undefined) {
+                    needUpdate = true;
+                } else {
+                    let seconds = moment().diff(moment(localData["updated"]), 'seconds');
+                    console.log("[RomaniaMapScreen] - Seconds passed since the last update: " + seconds);
+                    if (seconds > 3600) { //o ora
+                        needUpdate = true;
+                    }
+                }
+            }
+            console.log("[RomaniaMapScreen] - Checked data in AsyncStorage. NeedUpdate? " + needUpdate);
+            if (needUpdate) {
+                data = await ConnectorService.getRoCountiesActivePerOneHundred();
+                AsyncStorage.setItem("RoMap", JSON.stringify({ "data": data, "updated": moment().valueOf() }));
 
-        console.log("Data Loaded");
+                console.log("\n\t***AsyncStorage: Setting data RoMap on " + moment().format('MMMM Do YYYY, HH:mm:ss'));
+            } else {
+                data = localData["data"];
+            }
+            roCountyColorService.setData(data);
+            //this.setState({ dataIsReturned: true })
+
+            //just for experimenting
+            setTimeout(() => {
+                this.setState({ dataIsReturned: true });
+            }, 1000);
+        } catch (err) {
+            throw err;
+        }
+
+        console.log("[RomaniaMapScreen] - Data Loaded");
     }
 
 
     render() {
-        console.log("In render Ro counties");
+        console.log("[RomaniaMapScreen] - Call render method ");
         return (
-            <View>
+            <View style={!this.state.dataIsReturned ? styles.container : {}}>
                 {
-                    !this.state.dataIsReturned ? <Text>Loading</Text> : this.renderMap()
+                    !this.state.dataIsReturned ?
+                        <ActivityIndicator
+                            color='#bc2b78'
+                            size="large"
+                            style={styles.activityIndicator} />
+                        : this.renderMap()
                 }
             </View>
         );
@@ -84,6 +120,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    activityIndicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 

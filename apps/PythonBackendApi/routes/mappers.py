@@ -80,3 +80,23 @@ def country_latest_mapper(country_tuples):
                 "critical_per_one_million": country[21],
             }
     return list(countries_dict.values())
+
+
+def counties_latest_mapper(county_tuples):
+    counties_dict = OrderedDict({
+            "country": "Romania",
+            "counties": []
+        })
+    for county in county_tuples:
+        counties_dict["counties"].append({
+            "id": county[0],
+            "county_code": county[1],
+            "name": county[2],
+            "population": county[3],
+            "cases": county[4],
+            "today_cases": county[5],
+            "deaths": county[6],
+            "recovered": county[7],
+            "date": county[8],
+        })
+    return counties_dict
