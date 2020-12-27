@@ -6,8 +6,7 @@ const getActivePerMillion = () => {
             'Content-Type': "application/json; charset=utf-8"
         }
     };
-    console.log("Get active per million");
-    return fetch('http://10.0.2.2:2020/api/maps/countries')
+    return fetch('http://10.0.2.2:2020/api/maps/countries', requestOptions)
         .then((response) => response.json())
         .then((json) => {
             return json;

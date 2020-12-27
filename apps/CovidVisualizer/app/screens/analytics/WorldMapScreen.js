@@ -4,7 +4,8 @@ import MapView, { Geojson } from 'react-native-maps'
 import { SafeAreaView } from 'react-navigation'
 import colors from '../../config/colors'
 import { ActivityIndicator, View, Text } from 'react-native';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
 
 const ConnectorService = require('../../services/ConnectorService');
 import worldColorService from '../../services/color/MapWorldColorService';
@@ -19,28 +20,51 @@ class WorldMapScreen extends React.Component {
         this.state = {
             dataIsReturned: false
         };
-        console.log("->IN WorldMapScreen Constructor");
+        console.log("\n[WorldMapScreen] - Constructor");
     }
 
     async componentDidMount() {
-        console.log("\n->IN WorldMapScreen componentDidMount");
+        console.log("[WorldMapScreen] - componentDidMount");
         try {
-            data = await ConnectorService.getCountriesActivePerMillion();
-            console.log(data);
+            let localData = JSON.parse(await AsyncStorage.getItem("WorldMap"));
+            let needUpdate = false;
+            if (localData == undefined) {
+                needUpdate = true;
+            } else {
+                if (localData["updated"] == undefined || localData["data"] == undefined) {
+                    needUpdate = true;
+                } else {
+                    let seconds = moment().diff(moment(localData["updated"]), 'seconds');
+                    console.log("[WorldMapScreen] - Seconds passed since the last update: " + seconds);
+                    if (seconds > 3600) { //o ora
+                        needUpdate = true;
+                    }
+                }
+            }
+            console.log("[WorldMapScreen] - Checked data in AsyncStorage. NeedUpdate? " + needUpdate);
+            if (needUpdate) {
+                data = await ConnectorService.getCountriesActivePerMillion();
+                AsyncStorage.setItem("WorldMap", JSON.stringify({ "data": data, "updated": moment().valueOf() }));
+
+                console.log("\n\t***AsyncStorage: Setting data WorldMap on " + moment().format('MMMM Do YYYY, HH:mm:ss'));
+            } else {
+                data = localData["data"];
+            }
             worldColorService.setData(data);
             //this.setState({ dataIsReturned: true })
 
             //just for experimenting
             setTimeout(() => {
                 this.setState({ dataIsReturned: true });
-            }, 3000);
-        } catch (err) { throw err }
-        console.log("Data Loaded\n");
+            }, 1000);
+        } catch (err) {
+            throw err;
+        }
+        console.log("[WorldMapScreen] - Data Loaded");
     }
 
     render() {
-        console.log("In render WorldMapScreen");
-        console.log(worldColorService.getData());
+        console.log("[WorldMapScreen] - IN render callback");
         return (
             <View style={!this.state.dataIsReturned ? styles.container : {}}>
                 {

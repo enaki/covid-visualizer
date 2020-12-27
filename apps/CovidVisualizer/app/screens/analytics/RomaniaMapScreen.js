@@ -31,13 +31,17 @@ class RomaniaMapScreen extends React.Component {
             if (localData == undefined) {
                 needUpdate = true;
             } else {
-                let seconds = moment().diff(moment(localData["updated"]), 'seconds');
-                console.log("[RomaniaMapScreen] - Seconds passed since the last update: " + seconds);
-                if (seconds > 3600) { //o ora
+                if (localData["updated"] == undefined || localData["data"] == undefined) {
                     needUpdate = true;
+                } else {
+                    let seconds = moment().diff(moment(localData["updated"]), 'seconds');
+                    console.log("[RomaniaMapScreen] - Seconds passed since the last update: " + seconds);
+                    if (seconds > 3600) { //o ora
+                        needUpdate = true;
+                    }
                 }
             }
-            console.log("[RomaniaMapScreen] - needUpdate " + needUpdate);
+            console.log("[RomaniaMapScreen] - Checked data in AsyncStorage. NeedUpdate? " + needUpdate);
             if (needUpdate) {
                 data = await ConnectorService.getRoCountiesActivePerOneHundred();
                 AsyncStorage.setItem("RoMap", JSON.stringify({ "data": data, "updated": moment().valueOf() }));
@@ -46,7 +50,6 @@ class RomaniaMapScreen extends React.Component {
             } else {
                 data = localData["data"];
             }
-
             roCountyColorService.setData(data);
             //this.setState({ dataIsReturned: true })
 

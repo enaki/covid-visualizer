@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "d4a0ff63-8c76-4cec-937f-55e8c41566ff",
+		"_postman_id": "7b2a240d-e05a-431c-9fc9-b200584d609c",
 		"name": "PDM",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Countries Active Per Million",
+			"name": "Maps Countries - Active Per Million",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -27,7 +27,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Ro Counties :  total_cases/population",
+			"name": "Maps Romania Counies :  100*total_cases/population",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -49,7 +49,7 @@
 			"response": []
 		},
 		{
-			"name": "Get world latest stats",
+			"name": "Get World Latest Data",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -70,12 +70,12 @@
 			"response": []
 		},
 		{
-			"name": "Get Countries Active Per Million",
+			"name": "Get Countries Latest Data",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:2020/api/maps/countries?name=romania",
+					"raw": "http://localhost:2020/api/latest/countries?name=romania",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -83,7 +83,7 @@
 					"port": "2020",
 					"path": [
 						"api",
-						"maps",
+						"latest",
 						"countries"
 					],
 					"query": [
@@ -105,7 +105,28 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Romania Counties Latest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2020/api/latest/ro/counties",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"latest",
+						"ro",
+						"counties"
+					]
+				}
+			},
+			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
