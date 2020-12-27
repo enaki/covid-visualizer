@@ -11,6 +11,7 @@ import { View } from 'react-native'
 
 import colors from './app/config/colors'
 import { NavigationContainer } from "@react-navigation/native";
+import HelpScreen from "./app/screens/HelpScreen";
 
 const tabNavigatorColors = colors.tabNavigator;
 
@@ -22,8 +23,6 @@ class App extends React.Component {
             <NavigationContainer>
                 <TabNavigator.Navigator
                     initialRouteName='Home'
-                    activeColor={tabNavigatorColors.activeColor.home}
-                    inactiveColor={colors.inactiveColor}
                     labeled={true}
                     shifting={true}
                 >
@@ -64,6 +63,19 @@ class App extends React.Component {
                                 </View>
                             ),
                             tabBarColor: tabNavigatorColors.barStyle.backgroundColor.news,
+                        }}
+                    />
+                    <TabNavigator.Screen
+                        name="Help"
+                        component={HelpScreen}
+                        options={{
+                            tabBarLabel: 'Help',
+                            tabBarIcon: ({ color }) => (
+                                <View>
+                                    <Icon style={[{ color: color }]} size={25} name={'phone'} />
+                                </View>
+                            ),
+                            tabBarColor: tabNavigatorColors.barStyle.backgroundColor.help,
                         }}
                     />
                 </TabNavigator.Navigator>

@@ -1,39 +1,42 @@
 let Rainbow = require('../../../node_modules/rainbowvis.js/rainbowvis');
 
-let myROCountyRainbow = new Rainbow();
-myROCountyRainbow.setNumberRange(0, 100);
-//myROCountyRainbow.setSpectrum("#ffeda0", "#feb24c", "#f03b20");
-myROCountyRainbow.setSpectrum("#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15");
+class RoCountyColor {
 
-const ConnectorService = require('../ConnectorService');
+    constructor(props) {
+        this.myROCountyRainbow = new Rainbow();
+        this.myROCountyRainbow.setNumberRange(0, 100);
+        this.myROCountyRainbow.setSpectrum("#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15");
 
-let romania_actives_per_one_hundred = undefined;
+        this.romania_actives_per_one_hundred = {};
+    }
 
-const colorSpectrum = (value) => {
-    return "#" + myROCountyRainbow.colorAt(value);
+    setData(data) {
+        this.romania_actives_per_one_hundred = data;
+    }
+
+    getData() {
+        return this.romania_actives_per_one_hundred;
+    }
+
+    colorSpectrum(value) {
+        return "#" + this.myROCountyRainbow.colorAt(value);
+    }
+
+    colorSpectrumByROCountyKey(key) {
+        try {
+            let value = this.romania_actives_per_one_hundred.counties[key] / this.romania_actives_per_one_hundred["max"];
+            //console.log(100 * value);
+            return this.colorSpectrum(100 * value);
+        }
+        catch (TypeError) {
+            console.log("TypeError");
+            return "#ffffff";
+        }
+    }
 }
 
-const getRomaniaDataFromApiAsync = async () => {
-    try {
-        romania_actives_per_one_hundred = await ConnectorService.getRoCountiesActivePerOneHundred();
-    } catch (error) {
-        console.error("[ERROR-ColorService]: " + error);
-    }
-};
-getRomaniaDataFromApiAsync();
-console.log("[INFO-ColorService]: romania_total_per_one_hundred=" + romania_actives_per_one_hundred);
 
-const colorSpectrumByROCountyKey = (key) => {
-    try {
-        let value = romania_actives_per_one_hundred.counties[key] / romania_actives_per_one_hundred["max"];
-        console.log(100*value);
-        return colorSpectrum(100*value);
-    }
-    catch (TypeError) {
-        return "#ffffff"
-    }
-}
+const roCountyColorService = new RoCountyColor();
+export default roCountyColorService;
 
-module.exports = {
-    "colorSpectrumByROCountyKey": colorSpectrumByROCountyKey,
-}
+
