@@ -3,8 +3,8 @@ import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
 import { SafeAreaView } from 'react-navigation'
 import colors from '../../config/colors'
-import { View, Text } from 'react-native';
-const ColorService = require('../../services/color/GenericColorService')
+import { ActivityIndicator, View, Text } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 const ConnectorService = require('../../services/ConnectorService');
 import worldColorService from '../../services/color/MapWorldColorService';
@@ -28,7 +28,12 @@ class WorldMapScreen extends React.Component {
             data = await ConnectorService.getCountriesActivePerMillion();
             console.log(data);
             worldColorService.setData(data);
-            this.setState({ dataIsReturned: true });
+            //this.setState({ dataIsReturned: true })
+
+            //just for experimenting
+            setTimeout(() => {
+                this.setState({ dataIsReturned: true });
+            }, 3000);
         } catch (err) { throw err }
         console.log("Data Loaded\n");
     }
@@ -37,9 +42,14 @@ class WorldMapScreen extends React.Component {
         console.log("In render WorldMapScreen");
         console.log(worldColorService.getData());
         return (
-            <View>
+            <View style={!this.state.dataIsReturned ? styles.container : {}}>
                 {
-                    !this.state.dataIsReturned ? <Text>Loading</Text> : this.renderMap()
+                    !this.state.dataIsReturned ?
+                        <ActivityIndicator
+                            color='#bc2b78'
+                            size="large"
+                            style={styles.activityIndicator} />
+                        : this.renderMap()
                 }
             </View>
         );
@@ -84,6 +94,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    activityIndicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 
