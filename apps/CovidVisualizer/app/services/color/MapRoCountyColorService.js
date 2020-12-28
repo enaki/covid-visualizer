@@ -24,7 +24,7 @@ class RoCountyColor {
 
     colorSpectrumByROCountyKey(key) {
         try {
-            let value = this.romania_actives_per_one_hundred.counties[key] / this.romania_actives_per_one_hundred["max"];
+            let value = this.romania_actives_per_one_hundred["counties"][key] / this.romania_actives_per_one_hundred["max"];
             //console.log(100 * value);
             return this.colorSpectrum(100 * value);
         }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ActivityIndicator, View } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
-import colors from '../../config/colors'
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 
@@ -15,12 +14,12 @@ const roCountiesGeoMaps = require('../../assets/data/parsed.ro_counties.geo.json
 class RomaniaMapScreen extends React.Component {
 
     constructor(props) {
+        console.log("\n[RomaniaMapScreen] - Constructor");
         super(props);
         this.state = {
             dataIsReturned: false
         };
-        this.componentDidMount().then(r => {});
-        console.log("\n[RomaniaMapScreen] - Constructor");
+        this.componentDidMount().then(() => {console.log('[RomaniaMapScreen] - componentDidMount executed.');});
     }
 
     async componentDidMount() {
@@ -29,10 +28,10 @@ class RomaniaMapScreen extends React.Component {
         try {
             let localData = JSON.parse(await AsyncStorage.getItem("RoMap"));
             let needUpdate = false;
-            if (localData === undefined) {
+            if (localData == null) {
                 needUpdate = true;
             } else {
-                if (localData["updated"] === undefined || localData["data"] === undefined) {
+                if (localData["updated"] == null || localData["data"] == null) {
                     needUpdate = true;
                 } else {
                     let seconds = moment().diff(moment(localData["updated"]), 'seconds');
@@ -79,31 +78,33 @@ class RomaniaMapScreen extends React.Component {
     }
 
     renderMap() {
-        return <MapView
-            provider={null}
-            style={styles.map}
-            region={{
-                latitude: 44.21921941263342,
-                longitude: 24.883000218245233,
-                latitudeDelta: 10,
-                longitudeDelta: 10
-            }}
-            showsBuildings={false}
-            showsTraffic={false}
-            showsIndoors={false}
-            rotateEnabled={false}
-            onMapReady={ () => {this.setState({ dataIsReturned: true });}}
-        >
-            {
-                Object.keys(roCountiesGeoMaps).map(key => (
-                    <Geojson
-                        key={key}
-                        geojson={roCountiesGeoMaps[key]} // geojson of the countries you want to highlight
-                        fillColor={roCountyColorService.colorSpectrumByROCountyKey(key)}
-                    />
-                ))
-            }
-        </MapView >
+        return (
+            <MapView
+                provider={null}
+                style={styles.map}
+                region={{
+                    latitude: 44.21921941263342,
+                    longitude: 24.883000218245233,
+                    latitudeDelta: 10,
+                    longitudeDelta: 10
+                }}
+                showsBuildings={false}
+                showsTraffic={false}
+                showsIndoors={false}
+                rotateEnabled={false}
+                onMapReady={ () => {this.setState({ dataIsReturned: true });}}
+            >
+                {
+                    Object.keys(roCountiesGeoMaps).map(key => (
+                        <Geojson
+                            key={key}
+                            geojson={roCountiesGeoMaps[key]} // geojson of the countries you want to highlight
+                            fillColor={roCountyColorService.colorSpectrumByROCountyKey(key)}
+                        />
+                    ))
+                }
+            </MapView >
+        );
     }
 }
 

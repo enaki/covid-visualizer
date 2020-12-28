@@ -3,7 +3,6 @@ import { StyleSheet, ScrollView } from 'react-native'
 
 import colors from '../../config/colors'
 import WorldGraphComponent from "../graphs/WorldGraphComponent";
-import GraphPicker from "../graphs/GraphPicker";
 import PieGraphComponent from "../graphs/PieGraphComponent";
 
 
@@ -16,7 +15,6 @@ class WorldStatisticsScreen extends React.Component {
                 <PieGraphComponent/>
                 <WorldGraphComponent/>
                 <WorldGraphComponent/>
-                <GraphPicker/>
             </ScrollView>
         );
     }

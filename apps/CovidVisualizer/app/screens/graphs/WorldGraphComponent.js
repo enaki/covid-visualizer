@@ -13,6 +13,7 @@ import {
 import BoxContainer from "../containers/BoxContainer";
 import tableStyles from "../../config/tables/tablestyles";
 import GraphTitle from "../containers/titles/GraphTitle";
+import GraphPicker from "./GraphPicker";
 
 const styles = tableStyles;
 
