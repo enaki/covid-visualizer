@@ -4,7 +4,7 @@ import MapView, { Geojson } from 'react-native-maps'
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 
-const ConnectorService = require('../../services/ConnectorService');
+import ConnectorService from "../../services/ConnectorService";
 import roCountyColorService from '../../services/color/MapRoCountyColorService';
 
 const height = Dimensions.get('window').height;
@@ -17,9 +17,9 @@ class RomaniaMapScreen extends React.Component {
         console.log("\n[RomaniaMapScreen] - Constructor");
         super(props);
         this.state = {
-            dataIsReturned: false
+            loadingData: true,
+            loadingMap: true
         };
-        this.componentDidMount().then(() => {console.log('[RomaniaMapScreen] - componentDidMount executed.');});
     }
 
     async componentDidMount() {
@@ -51,6 +51,7 @@ class RomaniaMapScreen extends React.Component {
                 data = localData["data"];
             }
             roCountyColorService.setData(data);
+            this.setState({ loadingData: false });
         } catch (err) {
             throw err;
         }
@@ -63,10 +64,16 @@ class RomaniaMapScreen extends React.Component {
         return (
             <View style={{}}>
                 {
-                    this.renderMap()
+                    this.state.loadingData ?
+                        <ActivityIndicator
+                            size="large"
+                            color="#bc2b78"
+                            style={styles.activityIndicator}
+                        />:
+                        this.renderMap()
                 }
                 {
-                    !this.state.dataIsReturned ?
+                    this.state.loadingMap ?
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
@@ -92,7 +99,7 @@ class RomaniaMapScreen extends React.Component {
                 showsTraffic={false}
                 showsIndoors={false}
                 rotateEnabled={false}
-                onMapReady={ () => {this.setState({ dataIsReturned: true });}}
+                onMapReady={ () => {this.setState({ loadingMap: false });}}
             >
                 {
                     Object.keys(roCountiesGeoMaps).map(key => (

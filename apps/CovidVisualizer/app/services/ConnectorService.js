@@ -7,9 +7,11 @@ class ConnectorService{
                 'Content-Type': "application/json; charset=utf-8"
             }
         }
+        this.IP = "10.0.2.2";
+        this.HOST = "2020";
     }
     getCountriesActivePerMillion(){
-        return fetch('http://10.0.2.2:2020/api/maps/countries', this.requestOptions)
+        return fetch(`http://${this.IP}:${this.HOST}/api/maps/countries`, this.requestOptions)
             .then((response) => response.json())
             .then((json) => {
                 return json;
@@ -19,7 +21,7 @@ class ConnectorService{
             });
     }
     getRoCountiesActivePerOneHundred(){
-        return fetch("http://10.0.2.2:2020/api/maps/regions/ro", this.requestOptions)
+        return fetch(`http://${this.IP}:${this.HOST}/api/maps/regions/ro`, this.requestOptions)
             .then((response) => response.json())
             .then((json) => {
                 return json;
@@ -29,7 +31,17 @@ class ConnectorService{
             });
     }
     getRomaniaLatestData() {
-        return fetch("http://10.0.2.2:2020/api/latest/countries?name=romania", this.requestOptions)
+        return fetch(`http://${this.IP}:${this.HOST}/api/latest/countries?name=romania`, this.requestOptions)
+            .then((response) => response.json())
+            .then((json) => {
+                return json;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    getWorldLatestData() {
+        return fetch(`http://${this.IP}:${this.HOST}/api/latest/world`, this.requestOptions)
             .then((response) => response.json())
             .then((json) => {
                 return json;

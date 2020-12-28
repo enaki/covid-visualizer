@@ -1,7 +1,7 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from "react-native";
+import {ScrollView, StyleSheet, ActivityIndicator, Text} from "react-native";
 import PieGraphComponent from "../graphs/PieGraphComponent";
-import WorldGraphComponent from "../graphs/WorldGraphComponent";
+import LineGraphComponent from "../graphs/LineGraphComponent";
 import colors from "../../config/colors";
 import ConnectorService from "../../services/ConnectorService";
 
@@ -17,32 +17,38 @@ class RomaniaStatisticsScreen extends React.Component{
     async componentDidMount() {
         try{
             const data = await ConnectorService.getRomaniaLatestData();
-            this.setState({romaniaLatestData: data, loading: false});
+            this.setState({romaniaLatestData: data[0], loading: false});
+            console.log("\n[RomaniaStatisticsScreen] - componentDidMount executed.");
         }
         catch (err){
             console.log("[RomaniaStatisticsScreen] - Error fetching data:" + err);
         }
-        this.romaniaLatestData = await ConnectorService.getRomaniaLatestData();
     }
 
     render() {
         console.log("[RomaniaStatisticsScreen] - Render method executed.");
-        console.log(this.romaniaLatestData);
         return (
-
-            this.state.loading ? <View/> : this.renderComponent()
-
+            this.state.loading ? <ActivityIndicator
+                size="large"
+                color="#bc2b78"
+                style={styles.activityIndicator}
+            /> : this.renderComponent()
         );
     }
 
     renderComponent(){
+        console.log("[RomaniaStatisticsScreen] - renderComponent method executed. Render the primary component after data was fetched.");
         return(
             <ScrollView
                 contentContainerStyle={styles.container}
             >
-                <PieGraphComponent/>
-                <WorldGraphComponent/>
-                <WorldGraphComponent/>
+                {
+                    console.log(this.state.romaniaLatestData)
+                }
+                <PieGraphComponent
+                    data={this.state.romaniaLatestData}
+                />
+                <LineGraphComponent/>
             </ScrollView>
         );
     }
@@ -55,6 +61,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    activityIndicator: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 100,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 });
 
 export default RomaniaStatisticsScreen;

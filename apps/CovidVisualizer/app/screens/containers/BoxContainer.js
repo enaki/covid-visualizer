@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         borderWidth:2,
         borderColor:"red",
-        flexGrow: 1,
+        flex: 1,
         justifyContent: "center",
-        alignContent: "center",
+        alignContent: "center"
     }
 });
 

@@ -5,7 +5,7 @@ import { ActivityIndicator, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 
-const ConnectorService = require('../../services/ConnectorService');
+import ConnectorService from "../../services/ConnectorService";
 import worldColorService from '../../services/color/MapWorldColorService';
 
 const height = Dimensions.get('window').height;
@@ -17,9 +17,9 @@ class WorldMapScreen extends React.Component {
         console.log("\n[WorldMapScreen] - Constructor");
         super(props);
         this.state = {
-            dataIsReturned: false
+            loadingData: true,
+            loadingMap: true
         };
-        this.componentDidMount().then( () => {console.log('[WorldMapScreen] - componentDidMount executed.');});
     }
 
     async componentDidMount() {
@@ -51,6 +51,7 @@ class WorldMapScreen extends React.Component {
                 data = localData["data"];
             }
             worldColorService.setData(data);
+            this.setState({ loadingData: false });
         } catch (err) {
             throw err;
         }
@@ -62,10 +63,16 @@ class WorldMapScreen extends React.Component {
         return (
             <View style={{}}>
                 {
-                    this.renderMap()
+                    this.state.loadingData ?
+                        <ActivityIndicator
+                            size="large"
+                            color="#bc2b78"
+                            style={styles.activityIndicator}
+                        />:
+                        this.renderMap()
                 }
                 {
-                    !this.state.dataIsReturned ?
+                    this.state.loadingMap ?
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
@@ -91,7 +98,7 @@ class WorldMapScreen extends React.Component {
                 showsTraffic={false}
                 showsIndoors={false}
                 rotateEnabled={false}
-                onMapReady={ () => {this.setState({ dataIsReturned: true });}}
+                onMapReady={ () => {this.setState({ loadingMap: false });}}
             >
                 {
                     Object.keys(geoMaps).map(key => (

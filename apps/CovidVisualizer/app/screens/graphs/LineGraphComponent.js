@@ -3,17 +3,14 @@ import {Dimensions} from "react-native";
 import {
     VictoryAxis,
     VictoryChart,
-    VictoryLabel,
     VictoryLine,
     VictoryStack,
     VictoryTheme,
-    VictoryZoomContainer,
-    VictoryScatter
+    VictoryZoomContainer
 } from "victory-native";
 import BoxContainer from "../containers/BoxContainer";
 import tableStyles from "../../config/tables/tablestyles";
 import GraphTitle from "../containers/titles/GraphTitle";
-import GraphPicker from "./GraphPicker";
 
 const styles = tableStyles;
 
@@ -47,22 +44,7 @@ const dateCovid = [
     { month: new Date(2020,11, 1, 3), cases: 39000 },
 ];
 
-const mortiCovid = [
-    { month: new Date(2020,0, 1, 3), cases: 2000 },
-    { month: new Date(2020,1, 1, 3), cases: 6000 },
-    { month: new Date(2020,2, 1, 3), cases: 4200 },
-    { month: new Date(2020,3, 1, 3), cases: 9000 },
-    { month: new Date(2020,4, 1, 3), cases: 1000 },
-    { month: new Date(2020,5, 1, 3), cases: 1000 },
-    { month: new Date(2020,6, 1, 3), cases: 2000 },
-    { month: new Date(2020,7,1, 3), cases: 1500 },
-    { month: new Date(2020,8, 1, 3), cases: 9000 },
-    { month: new Date(2020,9, 1, 3), cases: 5000 },
-    { month: new Date(2020,10, 1, 3), cases: 2000 },
-    { month: new Date(2020,11, 1, 3), cases: 1000 },
-];
-
-export default class WorldGraphComponent extends React.Component {
+export default class LineGraphComponent extends React.Component {
     render() {
         let dates = [];
         initMonths(dates);
