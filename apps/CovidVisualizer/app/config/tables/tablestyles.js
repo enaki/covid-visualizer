@@ -20,6 +20,12 @@ const styles={
         angle: -45,
         padding: Platform.OS === 'android' ? 10 : 20
     },
+    tableTicksXStyleLarger:{
+        fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
+        fontSize: 14,
+        angle: -45,
+        padding: 25
+    },
     tableTicksYStyle:{
         fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
         letterSpacing: 1,
@@ -46,7 +52,7 @@ const styles={
         "RED": "red",
         "GREEN": "green",
         "BLUE": "blue"
-    }
+    },
 };
 
 export default styles;

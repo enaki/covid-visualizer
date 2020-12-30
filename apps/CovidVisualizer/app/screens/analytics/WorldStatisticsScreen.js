@@ -2,9 +2,10 @@ import React from 'react';
 import {StyleSheet, ScrollView, Text, ActivityIndicator} from 'react-native'
 
 import colors from '../../config/colors'
-import LineGraphComponent from "../graphs/LineGraphComponent";
+import GroupedLineGraphComponent from "../graphs/GroupedLineGraphComponent";
 import PieGraphComponent from "../graphs/PieGraphComponent";
 import ConnectorService from "../../services/ConnectorService";
+import GroupedAreaGraphComponent from "../graphs/GroupedAreaGraphComponent";
 
 
 class WorldStatisticsScreen extends React.Component {
@@ -48,8 +49,12 @@ class WorldStatisticsScreen extends React.Component {
                 <PieGraphComponent
                     data={this.state.worldLatestData}
                 />
-                <LineGraphComponent/>
-                <LineGraphComponent/>
+                <GroupedAreaGraphComponent
+                    data={this.state.worldLatestData}
+                />
+                <GroupedLineGraphComponent
+                    data={this.state.worldLatestData}
+                />
             </ScrollView>
         );
     }

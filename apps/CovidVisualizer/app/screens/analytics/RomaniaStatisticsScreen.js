@@ -1,9 +1,10 @@
 import React from 'react';
 import {ScrollView, StyleSheet, ActivityIndicator, Text} from "react-native";
 import PieGraphComponent from "../graphs/PieGraphComponent";
-import LineGraphComponent from "../graphs/LineGraphComponent";
+import GroupedLineGraphComponent from "../graphs/GroupedLineGraphComponent";
 import colors from "../../config/colors";
 import ConnectorService from "../../services/ConnectorService";
+import GroupedAreaGraphComponent from "../graphs/GroupedAreaGraphComponent";
 
 class RomaniaStatisticsScreen extends React.Component{
     constructor(props) {
@@ -48,7 +49,12 @@ class RomaniaStatisticsScreen extends React.Component{
                 <PieGraphComponent
                     data={this.state.romaniaLatestData}
                 />
-                <LineGraphComponent/>
+                <GroupedAreaGraphComponent
+                    data={this.state.romaniaLatestData}
+                />
+                <GroupedLineGraphComponent
+                    data={this.state.romaniaLatestData}
+                />
             </ScrollView>
         );
     }

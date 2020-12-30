@@ -4,11 +4,11 @@ import NumberFormatter from "../../services/NumberFormatterService";
 import {
     VictoryPie
 } from "victory-native";
-import tableStyles from "../../config/tables/tablestyles";
+import imageStyle from "../../config/imagestyle";
+import textStyle from "../../config/textstyles";
+import colorStyle from "../../config/colors";
 import GraphTitle from "../containers/titles/GraphTitle";
-import {Image, StyleSheet, Text} from "react-native";
-
-const styles = tableStyles;
+import {Image, Text} from "react-native";
 
 export default class WorldGraphComponent extends React.Component {
     constructor(props) {
@@ -24,15 +24,17 @@ export default class WorldGraphComponent extends React.Component {
         return (
             <BoxContainer>
                 <GraphTitle
-                    text={this.props.data["name"] != null ? `${this.props.data["name"]} Covid-19 stats` : "Worldwide Covid-19 stats"}
+                    text={this.props.data["name"] != null ?
+                        `${this.props.data["name"]} Covid-19 stats (${this.props.data["iso2"]}, ${this.props.data["iso3"]}) \n Updated: ${this.props.data["today"]["update"]}` :
+                        `Worldwide Covid-19 stats \n Updated: ${this.props.data["today"]["update"]}`}
                 />
                 {
                     this.props.data["flag"] != null ?
-                    <Image
-                        style={logoStyles.flag}
-                        source={{uri: this.props.data["flag"]}}
-                    />
-                    : null
+                        <Image
+                            style={imageStyle.flags.normal}
+                            source={{uri: this.props.data["flag"]}}
+                        />
+                        : null
                 }
                 <VictoryPie
                     data={[
@@ -49,42 +51,33 @@ export default class WorldGraphComponent extends React.Component {
                     }}
                     labels={({ datum }) => `${datum.x}: ${datum.y}%`}
                     labelPlacement={"parallel"}
-                    colorScale={styles.chartStyle.WARM}
+                    colorScale={[
+                        colorStyle.graphColors.deathsColor,
+                        colorStyle.graphColors.recoveredColor,
+                        colorStyle.graphColors.activeColor
+                    ]}
                     padding={{ top: 30, bottom: 50, left: -20, right: 0 }}
                 />
                 <Text
-                    style={infoTextStyle}
+                    style={textStyle.infoTextStyle}
                 >
+                    Today{"\n"}
                     Total cases: {NumberFormatter.formatNumber(this.props.data["today"]["cases"]) + "\n"}
                     Active cases: {NumberFormatter.formatNumber(this.props.data["today"]["active"])+ "\n"}
                     Death cases: {NumberFormatter.formatNumber(this.props.data["today"]["deaths"]) + "\n"}
                     Recovered cases: {NumberFormatter.formatNumber(this.props.data["today"]["recovered"]) + "\n"}
+                    {"\n\n\n"}Yesterday{"\n"}
+                    Total cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["cases"]) + "\n"}
+                    Active cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["active"])+ "\n"}
+                    Death cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["deaths"]) + "\n"}
+                    Recovered cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["recovered"]) + "\n"}
+                    {"\n\n\n"}Two days ago{"\n"}
+                    Total cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["cases"]) + "\n"}
+                    Active cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["active"])+ "\n"}
+                    Death cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["deaths"]) + "\n"}
+                    Recovered cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["recovered"]) + "\n"}
                 </Text>
             </BoxContainer>
         );
     }
-}
-
-const logoStyles = StyleSheet.create({
-    tinyLogo: {
-        width: 50,
-        height: 50
-    },
-    flag: {
-        width: 100,
-        height: 50,
-        alignSelf: "center",
-        marginTop:10
-    }
-});
-
-const infoTextStyle = {
-    textAlign:"center",
-    fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
-    fontSize: 20,
-    fontWeight: "bold",
-    color:"#5283ff",
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: {width: 1, height: 1},
-    textShadowRadius: 1,
 }
