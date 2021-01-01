@@ -3,33 +3,45 @@ import {
     VictoryArea,
     VictoryChart,
     VictoryAxis,VictoryScatter,
-    VictoryGroup
+    VictoryGroup,
+    VictoryStack
 } from 'victory-native';
 import BoxContainer from "../containers/BoxContainer";
 import GraphTitle from "../containers/titles/GraphTitle";
 import colorStyle from "../../config/colors";
 import tableStyles from "../../config/tables/tablestyles";
 import {Dimensions, Text} from "react-native";
-import textStyle from "../../config/textstyles";
+import textStyle from "../../config/styles/textstyles";
 import NumberFormatter from "../../services/NumberFormatterService";
 
 class GroupedAreaGraphComponent extends React.Component{
     constructor(props) {
         super(props);
-        this.deaths = [
-            {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_deaths"]},
-            {x: "yesterday", y: this.props.data["yesterday"]["today_deaths"]},
-            {x: "today", y: this.props.data["today"]["today_deaths"]}
-        ];
-        this.recovered = [
-            {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_recovered"]},
-            {x: "yesterday", y: this.props.data["yesterday"]["today_recovered"]},
-            {x: "today", y: this.props.data["today"]["today_recovered"]}
-        ];
-        this.active = [
-            {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_cases"]},
-            {x: "yesterday", y: this.props.data["yesterday"]["today_cases"]},
-            {x: "today", y: this.props.data["today"]["today_cases"]}
+        this.dataLast3Days= [
+            {
+                data: [
+                    {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_recovered"]},
+                    {x: "yesterday", y: this.props.data["yesterday"]["today_recovered"]},
+                    {x: "today", y: this.props.data["today"]["today_recovered"]}
+                ],
+                style: colorStyle.graphColors.recoveredColor
+            },
+            {
+                data: [
+                    {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_cases"]},
+                    {x: "yesterday", y: this.props.data["yesterday"]["today_cases"]},
+                    {x: "today", y: this.props.data["today"]["today_cases"]}
+                ],
+                style: colorStyle.graphColors.activeColor
+            },
+            {
+                data: [
+                    {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_deaths"]},
+                    {x: "yesterday", y: this.props.data["yesterday"]["today_deaths"]},
+                    {x: "today", y: this.props.data["today"]["today_deaths"]}
+                ],
+                style: colorStyle.graphColors.deathsColor
+            }
         ];
     }
     render(){
@@ -52,50 +64,32 @@ class GroupedAreaGraphComponent extends React.Component{
                             tickLabels: tableStyles.tableTicksYStyle,
                         }}
                     />
-                    <VictoryGroup>
-                        <VictoryArea
-                            data={this.recovered}
-                            style={{
-                                data:
-                                    {
-                                        fill: colorStyle.graphColors.recoveredColor
-                                    }
-                            }}
-                        />
-                        <VictoryScatter
-                            style={{ data: { fill: "black" } }}
-                            size={4}
-                            data={this.recovered}
-                        />
-                        <VictoryArea
-                            data={this.active}
-                            style={{
-                                data:
-                                    {
-                                        fill: colorStyle.graphColors.activeColor
-                                    }
-                            }}
-                        />
-                        <VictoryScatter
-                            style={{ data: { fill: "black" } }}
-                            size={4}
-                            data={this.active}
-                        />
-                        <VictoryArea
-                            style={{
-                                data:
-                                    {
-                                        fill: colorStyle.graphColors.deathsColor
-                                    }
-                            }}
-                            data={this.deaths}
-                        />
-                        <VictoryScatter
-                            style={{ data: { fill: "black" } }}
-                            size={4}
-                            data={this.deaths}
-                        />
-                    </VictoryGroup>
+                    <VictoryStack>
+                        {
+                            this.dataLast3Days.map( (item, idx) => {
+                                return(
+                                    <VictoryGroup key={idx}>
+                                        <VictoryArea
+                                            data={item.data}
+                                            key={idx}
+                                            style={{
+                                                data:
+                                                    {
+                                                        fill: item.style
+                                                    }
+                                            }}
+                                        />
+                                        <VictoryScatter
+                                            style={{ data: { fill: "black" } }}
+                                            size={4}
+                                            data={item.data}
+                                            key={idx}
+                                        />
+                                    </VictoryGroup>
+                                )
+                            })
+                        }
+                    </VictoryStack>
                 </VictoryChart>
                 <Text
                     style={textStyle.infoTextStyle}

@@ -4,8 +4,8 @@ import NumberFormatter from "../../services/NumberFormatterService";
 import {
     VictoryPie
 } from "victory-native";
-import imageStyle from "../../config/imagestyle";
-import textStyle from "../../config/textstyles";
+import imageStyle from "../../config/styles/imagestyle";
+import textStyle from "../../config/styles/textstyles";
 import colorStyle from "../../config/colors";
 import GraphTitle from "../containers/titles/GraphTitle";
 import {Image, Text} from "react-native";

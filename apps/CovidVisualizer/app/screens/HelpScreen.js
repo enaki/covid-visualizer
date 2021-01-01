@@ -1,71 +1,172 @@
 import React from 'react';
-import {StyleSheet, ScrollView, NativeModules} from 'react-native'
+import {
+    Text,
+    ScrollView,
+    NativeModules,
+    StyleSheet,
+    Linking,
+    Image,
+    View
+} from 'react-native'
 import colors from '../config/colors'
+import textStyles from '../config/styles/textstyles';
+import staticText from '../config/staticText/helpStaticText';
+import imageStyles from '../config/styles/imagestyle';
 import BoxContainer from "./containers/BoxContainer";
 import ContainerTitle from "./containers/titles/ContainerTitle";
 import ContainerText from "./containers/text/ContainerText";
 const {StatusBarManager} = NativeModules;
-const HelpScreen = () => {
-    return (
-        <ScrollView
-            contentContainerStyle={styles.container}
-        >
-            <BoxContainer>
-                <ContainerTitle
-                    text={"Cum ai fost infectat?"}
-                    containerStyle={containerTitleStyle}
-                    titleStyle={titleStyle}
-                />
-                <ContainerText
-                    text={"1. Principala cale de transmisie a virusului este calea respiratorie" +
-                    "sau prin contactul cu persoane infectate."}
-                />
-                <ContainerText
-                    text={"2. Cand stranuti sau tusesti, produci particule de fluid " +
-                    "care provin din nas sau din gura."}
-                />
-                <ContainerText
-                    text={"3. Aceste particule pot contine infectia care poate fi imprastiata apoi " +
-                    "altor persoane prin contactul cu ochii, nasul sau gura. " +
-                    "Aceasta este calea prin care raceala si multi alti virusi sunt raspanditi."}
-                />
-                <ContainerText
-                    text={"4. De obicei, trebuie sa te aflii in proximitatea unei persoane de aproximativ 1.5 metrii pentru " +
-                    "a da sansa virusului sa se raspandeasca."}
-                />
-                <ContainerText
-                    text={"5. Exista posibilitatea de transmisie prin aerosoli, prin perioade indelungate de timp in " +
-                    "medii inchise."}
-                />
-                <ContainerText
-                    text={"6. Organizatia WHO(World Health Organization) sustine faptul ca riscul de raspandire a " +
-                    "viruslui de la o persoana " +
-                    "fara simptome este \"foarte mica\", iar sansele de transmisie prin fecale sunt \"mici\"."}
-                />
-            </BoxContainer>
-            <BoxContainer>
-                <ContainerTitle
-                    text={"Cum pot sa ma protejez?"}
-                    containerStyle={containerTitleStyle}
-                    titleStyle={titleStyle}
-                />
-                <ContainerText
-                    text={"1. Nu calatori in zone afectate."}
-                />
-                <ContainerText
-                    text={"2. Cand stranuti sau tusesti, acopera-ti gura cu un servetel sau cu cotul." +
-                    " Evita sa stranuti sau sa tusesti in palme."}
-                />
-                <ContainerText
-                    text={"3. Spala-te pe maini frecvent, minim 20 de secunde, cu apa si sapun."}
-                />
-                <ContainerText
-                    text={"4. Evita oamenii in mod evident bolnavi si locurile aglomerate."}
-                />
-            </BoxContainer>
-        </ScrollView>
-    );
+class HelpScreen extends React.Component{
+    render() {
+        return (
+            <ScrollView
+                contentContainerStyle={styles.container}
+            >
+                <BoxContainer>
+                    <ContainerTitle
+                        text={"Cum ai fost infectat?"}
+                        containerStyle={containerTitleStyle}
+                        titleStyle={textStyles.containerTitleStyle}
+                    />
+                    <ContainerText >
+                        <Text style={textStyles.containerTextStyle}>
+                            {
+                                staticText.infectedText.map( (text, index) => {
+                                    return(
+                                        index === staticText.infectedText.length - 1 ?
+                                            <Text key={index+1}>
+                                                {index+1}. {text}
+                                            </Text>
+                                            :
+                                            <Text key={index+1}>
+                                                {index+1}. {text}{"\n\n"}
+                                            </Text>
+                                    )
+                                })
+                            }
+                        </Text>
+                    </ContainerText>
+                </BoxContainer>
+                <BoxContainer>
+                    <ContainerTitle
+                        text={"Cum pot sa ma protejez?"}
+                        containerStyle={containerTitleStyle}
+                        titleStyle={textStyles.containerTitleStyle}
+                    />
+                    <ContainerText>
+                        <Text style={textStyles.containerTextStyle}>
+                            {
+                                staticText.protectionText.map( (text, index) => {
+                                    return(
+                                        index === staticText.protectionText.length - 1 ?
+                                            <Text key={index+1}>
+                                                {index+1}. {text}
+                                            </Text>
+                                            :
+                                            <Text key={index+1}>
+                                                {index+1}. {text}{"\n\n"}
+                                            </Text>
+                                    )
+                                })
+                            }
+                        </Text>
+                    </ContainerText>
+                </BoxContainer>
+                <BoxContainer>
+                    <ContainerTitle
+                        text={"Sfaturi pentru dezinfectare"}
+                        containerStyle={containerTitleStyle}
+                        titleStyle={textStyles.containerTitleStyle}
+                    />
+                    <ContainerText>
+                        <Text style={textStyles.containerTextStyle}>
+                            {
+                                staticText.tipsText.map( (text, index) => {
+                                    return(
+                                        index === staticText.tipsText.length - 1 ?
+                                            <Text
+                                                key={index+1}
+                                            >
+                                                {index+1}. {text}
+                                            </Text>
+                                            :
+                                            <Text
+                                                key={index+1}
+                                            >
+                                                {index+1}. {text}{"\n\n"}
+                                            </Text>
+                                    )
+                                })
+                            }
+                        </Text>
+                    </ContainerText>
+                </BoxContainer>
+                <BoxContainer>
+                    <ContainerTitle
+                        text={"Procesul de vaccinare în România"}
+                        containerStyle={containerTitleStyle}
+                        titleStyle={textStyles.containerTitleStyle}
+                    />
+                    <ContainerText>
+                        <Text style={textStyles.containerTextStyle}>
+                            <Text>
+                                <Text style={{fontWeight: "bold"}}>Etapa I:</Text>{"\n"}
+                                <Text style={{fontWeight: "bold"}}>Cât durează?</Text> Timpul de execuție va fi stabilit în
+                                funcție de schema de vaccinare aleasă, care poate cuprinde una sau două doze;{"\n"}
+                                <Text style={{fontWeight: "bold"}}>Cine?</Text> Persoanele incluse în categoria lucrătorilor
+                                din domeniile sănătății și social – sistem public și privat;{"\n"}
+                                <Text style={{fontWeight: "bold"}}>Cum?</Text> Vaccinarea se va realiza prin intermediul unităților
+                                sanitare sau a centrelor de vaccinare ori a echipelor mobile de vaccinare – în funcție de situație.
+                            </Text>
+                            {"\n\n\n"}
+                            <Text>
+                                <Text style={{fontWeight: "bold"}}>Etapa a II-a:{"\n"}</Text>
+                                <Text style={{fontWeight: "bold"}}>Cât durează?</Text> Timpul de execuție va fi stabilit în
+                                funcție de schema de vaccinare aleasă, care poate cuprinde una sau două doze;{"\n"}
+                                <Text style={{fontWeight: "bold"}}>Cine?</Text> Include populația cu grad de risc și lucrători
+                                care desfășoară activități în domenii-cheie, esențiale;{"\n"}
+                                <Text style={{fontWeight: "bold"}}>Cum?</Text> Se derulează prin rețeaua de centre de
+                                vaccinare/echipe mobile de vaccinare/medicină de familie, după caz.
+                            </Text>
+                            {"\n\n\n"}
+                            <Text>
+                                <Text style={{fontWeight: "bold"}}>Etapa a III-a:{"\n"}</Text>
+                                <Text style={{fontWeight: "bold"}}>Cât durează?</Text> Timpul de execuție va fi stabilit în
+                                funcție de schema de vaccinare aleasă, care poate cuprinde una sau două doze;{"\n"}
+                                <Text style={{fontWeight: "bold"}}>Cine?</Text> Include populația generală;{"\n"}
+                                <Text style={{fontWeight: "bold"}}>Cum?</Text> Se derulează prin rețeaua de centre de vaccinare/echipe
+                                mobile de vaccinare/medicină de familie/centre de vaccinare drive-through, după caz.
+                            </Text>
+                        </Text>
+                    </ContainerText>
+                </BoxContainer>
+                <Text
+                    style={textStyles.generalTextStyle}
+                >
+                    Aceste informatii sunt prezentate de pe site-ul de stiri oficiale.{"\n"}
+                    <Text
+                        style={textStyles.hyperlinkStyle}
+                        onPress={ () => {Linking.openURL('https://stirioficiale.ro/informatii');}}
+                    >www.stirioficiale.ro/informatii
+                    </Text>
+                </Text>
+                <View
+                    style={containerImageLine}
+                >
+                    <Image
+                        style={imageStyles.photos.tiny}
+                        source={require('../config/images/dsu-logo.png')}
+                    />
+                    <Image
+                        style={imageStyles.photos.tiny}
+                        source={require('../config/images/guv-logo.png')}
+                    />
+                </View>
+            </ScrollView>
+        );
+    }
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -74,18 +175,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HelpScreen;
-
-const titleStyle = {
-    textAlign:"center",
-    fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
-    fontSize: 20,
-    fontWeight: "bold",
-    color:"white",
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10,
-}
+const containerImageLine = {
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    flexDirection:'row',
+    margin: 10
+};
 
 const containerTitleStyle = {
     backgroundColor: "grey",
@@ -93,3 +188,5 @@ const containerTitleStyle = {
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12
 };
+
+export default HelpScreen;
