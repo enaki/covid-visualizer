@@ -2,7 +2,7 @@ from flask import Flask, make_response, request, jsonify
 from unidecode import unidecode
 
 from db_updater import query
-from routes.mappers import world_latest_mapper, country_latest_mapper, counties_latest_mapper
+from routes.mappers import world_latest_mapper, country_latest_mapper, counties_latest_mapper, country_history_mapper
 
 app = Flask(__name__)
 
@@ -86,3 +86,25 @@ def get_ro_counties_latest_data():
     data = query(script, (), database_path)
     data = counties_latest_mapper(data)
     return make_response(data)
+
+
+@app.route("/api/history/countries")
+def get_countries_history_data():
+    script = """SELECT c.id, c.name, c.iso2, c.iso3, c.flag, ch.date, ch.cases, ch.recovered, ch.deaths FROM countries_history ch, countries c WHERE ch.id = c.id"""
+    if len(request.args) > 0:
+        if 'name' in request.args:
+            script = """SELECT c.id, c.name, c.iso2, c.iso3, c.flag, ch.date, ch.cases, ch.recovered, ch.deaths FROM countries_history ch, countries c WHERE ch.id = c.id AND lower(c.name) LIKE lower(?)"""
+            data = query(script, (request.args["name"],), database_path)
+        elif 'iso2' in request.args:
+            script = """SELECT c.id, c.name, c.iso2, c.iso3, c.flag, ch.date, ch.cases, ch.recovered, ch.deaths FROM countries_history ch, countries c WHERE ch.id = c.id AND c.iso2 = ?"""
+            data = query(script, (request.args["iso2"],), database_path)
+        elif 'iso3' in request.args:
+            script = """SELECT c.id, c.name, c.iso2, c.iso3, c.flag, ch.date, ch.cases, ch.recovered, ch.deaths FROM countries_history ch, countries c WHERE ch.id = c.id AND c.iso3 = ?"""
+            data = query(script, (request.args["iso3"],), database_path)
+        else:
+            data = query(script, (), database_path)
+    else:
+        data = query(script, (), database_path)
+
+    data = country_history_mapper(data)
+    return make_response(jsonify(data))

@@ -127,6 +127,43 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Countries History Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2020/api/history/countries?name=romania",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"history",
+						"countries"
+					],
+					"query": [
+						{
+							"key": "iso2",
+							"value": "RO",
+							"disabled": true
+						},
+						{
+							"key": "iso3",
+							"value": "ROU",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "romania"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -100,3 +100,31 @@ def counties_latest_mapper(county_tuples):
             "date": county[8],
         })
     return counties_dict
+
+
+
+def country_history_mapper(country_tuples):
+    countries_dict = {}
+    for country in country_tuples:
+        if country[1] not in countries_dict:
+            countries_dict[country[1]] = OrderedDict({
+                "id": country[0],
+                "name": country[1],
+                "iso2": country[2],
+                "iso3": country[3],
+                "flag": country[4],
+                "history": [{
+                    "date": country[5],
+                    "cases": country[6],
+                    "recovered": country[7],
+                    "deaths": country[8],
+                }]
+            })
+        else:
+            countries_dict[country[1]]["history"].append({
+                    "date": country[5],
+                    "cases": country[6],
+                    "recovered": country[7],
+                    "deaths": country[8],
+                })
+    return list(countries_dict.values())
