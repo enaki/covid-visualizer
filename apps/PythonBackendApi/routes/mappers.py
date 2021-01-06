@@ -82,6 +82,37 @@ def country_latest_mapper(country_tuples):
     return list(countries_dict.values())
 
 
+def top_country_latest_mapper(country_tuples):
+    countries_dict = {}
+    for country in country_tuples:
+        if country[4] == 'yesterday':
+            countries_dict[country[0]] = OrderedDict({
+                "id": country[22],
+                "name": country[0],
+                "iso2": country[1],
+                "iso3": country[2],
+                "flag": country[3],
+                "update": milliseconds_to_date(country[5]),
+                "cases": country[6],
+                "today_cases": country[7],
+                "deaths": country[8],
+                "today_deaths": country[9],
+                "recovered": country[10],
+                "today_recovered": country[11],
+                "active": country[12],
+                "critical": country[13],
+                "cases_per_one_million": country[14],
+                "deaths_per_one_million": country[15],
+                "tests": country[16],
+                "tests_per_one_million": country[17],
+                "population": country[18],
+                "active_per_one_million": country[19],
+                "recovered_per_one_million": country[20],
+                "critical_per_one_million": country[21],
+            })
+    return list(countries_dict.values())
+
+
 def counties_latest_mapper(county_tuples):
     counties_dict = OrderedDict({
             "country": "Romania",

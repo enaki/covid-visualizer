@@ -164,6 +164,39 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Countries TOP Latest Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2020/api/latest/countries/top?number=16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"latest",
+						"countries",
+						"top"
+					],
+					"query": [
+						{
+							"key": "number",
+							"value": "16"
+						},
+						{
+							"key": "sortBy",
+							"value": "active",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

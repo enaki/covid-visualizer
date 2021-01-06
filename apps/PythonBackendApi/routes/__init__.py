@@ -2,7 +2,8 @@ from flask import Flask, make_response, request, jsonify
 from unidecode import unidecode
 
 from db_updater import query
-from routes.mappers import world_latest_mapper, country_latest_mapper, counties_latest_mapper, country_history_mapper
+from routes.mappers import world_latest_mapper, country_latest_mapper, counties_latest_mapper, country_history_mapper, \
+    top_country_latest_mapper
 
 app = Flask(__name__)
 
@@ -78,6 +79,32 @@ def get_countries_latest_data():
 
     data = country_latest_mapper(data)
     return make_response(jsonify(data))
+
+
+@app.route("/api/latest/countries/top")
+def get_countries_top_latest_data():
+    countries_number = -1
+    script = """SELECT c.name, c.iso2, c.iso3, c.flag, cl.date, cl.updated, cl.cases, cl.today_cases, cl.deaths, cl.today_deaths, cl.recovered, cl.today_recovered, cl.active, cl.critical, cl.cases_per_one_million,
+                        cl.deaths_per_one_million, cl.tests, cl.tests_per_one_million, cl.population, cl.active_per_one_million, cl.recovered_per_one_million, cl.critical_per_one_million, c.id
+                        FROM countries_latest cl, countries c WHERE cl.id = c.id;"""
+    data = query(script, (), database_path)
+    data = top_country_latest_mapper(data)
+    possible_sort_by = ['cases', 'deaths', 'recovered', 'critical', 'active']
+    sort_by = 'cases'
+    if len(request.args) > 0:
+        if 'number' in request.args:
+            try:
+                countries_number = int(request.args["number"])
+            except ValueError:
+                pass
+        if 'sortBy' in request.args:
+            try:
+                if request.args["sortBy"] in possible_sort_by:
+                    sort_by = request.args["sortBy"]
+            except ValueError:
+                pass
+    data = sorted(data, key=lambda country: country[sort_by], reverse=True)
+    return make_response(jsonify(data[:countries_number]))
 
 
 @app.route("/api/latest/ro/counties")
