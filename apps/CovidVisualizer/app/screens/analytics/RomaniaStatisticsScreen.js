@@ -1,25 +1,22 @@
 import React from 'react';
 import {ScrollView, StyleSheet, ActivityIndicator, Text} from "react-native";
-import PieGraphComponent from "../graphs/PieGraphComponent";
-import StackedLineGraphComponent from "../graphs/StackedLineGraphComponent";
 import colors from "../../config/colors";
 import ConnectorService from "../../services/ConnectorService";
-import StackedAreaGraphComponent from "../graphs/StackedAreaGraphComponent";
-import BarGraphComponent from "../graphs/BarGraphComponent";
+import BoxContainer from "../containers/BoxContainer";
 
 class RomaniaStatisticsScreen extends React.Component{
     constructor(props) {
         console.log("\n[RomaniaStatisticsScreen] - Constructor");
         super(props);
         this.state = {
-            romaniaLatestData: null,
+            romaniaCountiesLatest: null,
             loading: true
         }
     }
     async componentDidMount() {
         try{
-            const data = await ConnectorService.getRomaniaLatestData();
-            this.setState({romaniaLatestData: data[0], loading: false});
+            const data = await ConnectorService.getRomaniaCountyLatest();
+            this.setState({romaniaCountiesLatest: data, loading: false});
             console.log("\n[RomaniaStatisticsScreen] - componentDidMount executed.");
         }
         catch (err){
@@ -44,21 +41,17 @@ class RomaniaStatisticsScreen extends React.Component{
             <ScrollView
                 contentContainerStyle={styles.container}
             >
-                {
-                    console.log(this.state.romaniaLatestData)
-                }
-                <PieGraphComponent
-                    data={this.state.romaniaLatestData}
-                />
-                <StackedAreaGraphComponent
-                    data={this.state.romaniaLatestData}
-                />
-                <StackedLineGraphComponent
-                    data={this.state.romaniaLatestData}
-                />
-                <BarGraphComponent
-                    data={this.state.romaniaLatestData}
-                />
+                <BoxContainer>
+                    {
+                        this.state.romaniaCountiesLatest["counties"].map( (item, idx) => {
+                            return(<Text
+                                key={idx}
+                            >
+                                {item["cases"] + "\t" + item["name"]}
+                            </Text>)
+                        })
+                    }
+                </BoxContainer>
             </ScrollView>
         );
     }

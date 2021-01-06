@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
     Text,
     ScrollView,
@@ -6,9 +7,10 @@ import {
     ActivityIndicator,
     View,
     StyleSheet,
+    Linking,
     TouchableNativeFeedback
 } from 'react-native'
-
+import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import colors from '../config/colors'
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -19,7 +21,7 @@ import NewsCardContainer from './containers/NewsCardContainer';
 const { StatusBarManager } = NativeModules;
 
 class NewsScreen extends React.Component {
-    constructor(props) {
+    constructor(props){
         console.log("\n[NewsScreen] - Constructor");
         super(props);
         this.state = {
@@ -102,6 +104,5 @@ const styles = StyleSheet.create({
         textShadowRadius: 3
     }
 });
-
 
 export default NewsScreen;

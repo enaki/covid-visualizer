@@ -14,6 +14,16 @@ class ConnectorService {
         this.NEWS = `https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=${this.NEWS_API_KEY}&pageSize=100&page=1&language=en&sources=bbc-news,nbc-news,new-scientist`;
 
     }
+    getRomaniaCountyLatest(){
+        return fetch(`http://${this.IP}:${this.HOST}/api/latest/ro/counties`, this.requestOptions)
+            .then((response) => response.json())
+            .then((json) => {
+                return json;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
     getCountriesActivePerMillion() {
         return fetch(`http://${this.IP}:${this.HOST}/api/maps/countries`, this.requestOptions)
             .then((response) => response.json())

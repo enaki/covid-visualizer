@@ -20,7 +20,6 @@ export default class StackedLineGraphComponent extends React.Component {
     constructor(props) {
         console.log("[StackedLineGraphComponent] - Constructor");
         super(props);
-        console.log(this.props.data);
         this.deaths = [
             {x: "Two days ago", y: this.props.data["twoDaysAgo"]["deaths"]},
             {x: "Yesterday", y: this.props.data["yesterday"]["deaths"]},
@@ -46,11 +45,8 @@ export default class StackedLineGraphComponent extends React.Component {
             inferiorLimit = Object.values(this.deaths[i])[1]+ inferiorLimit;
             this.dataValues.push(inferiorLimit);
         }
-
-        console.log(this.dataValues);
         this.minValue = Math.min.apply(null, this.dataValues) -10000;
         this.maxValue = Math.max.apply(null, this.dataValues) +10000;
-        console.log(`${this.minValue} ${this.maxValue}`);
     }
     render() {
         console.log("[StackedLineGraphComponent] - Render method");
