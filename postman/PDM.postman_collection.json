@@ -197,6 +197,183 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "NEWS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=ceb5a8887632471d959280cb3f31fd55&pageSize=100&page=1&language=en&sources=bbc-news,nbc-news,new-scientist",
+					"protocol": "https",
+					"host": [
+						"newsapi",
+						"org"
+					],
+					"path": [
+						"v2",
+						"everything"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "covid"
+						},
+						{
+							"key": "from",
+							"value": "2020-03-16",
+							"disabled": true
+						},
+						{
+							"key": "sortBy",
+							"value": "publishedAt"
+						},
+						{
+							"key": "apiKey",
+							"value": "ceb5a8887632471d959280cb3f31fd55"
+						},
+						{
+							"key": "pageSize",
+							"value": "100"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "language",
+							"value": "en"
+						},
+						{
+							"key": "sources",
+							"value": "bbc-news,nbc-news,new-scientist"
+						},
+						{
+							"key": "country",
+							"value": "ro",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This endpoint provides live top and breaking headlines for a country, specific category in a country, single source, or multiple sources. You can also search with keywords. Articles are sorted by the earliest date published first."
+			},
+			"response": []
+		},
+		{
+			"name": "NEWS Romania",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=ceb5a8887632471d959280cb3f31fd55&pageSize=100&page=1&language=ro",
+					"protocol": "https",
+					"host": [
+						"newsapi",
+						"org"
+					],
+					"path": [
+						"v2",
+						"everything"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "covid"
+						},
+						{
+							"key": "from",
+							"value": "2020-03-16",
+							"disabled": true
+						},
+						{
+							"key": "sortBy",
+							"value": "publishedAt"
+						},
+						{
+							"key": "apiKey",
+							"value": "ceb5a8887632471d959280cb3f31fd55"
+						},
+						{
+							"key": "pageSize",
+							"value": "100"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "language",
+							"value": "ro"
+						},
+						{
+							"key": "sources",
+							"value": "bbc-news,nbc-news,new-scientist",
+							"disabled": true
+						},
+						{
+							"key": "country",
+							"value": "ro",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This endpoint provides live top and breaking headlines for a country, specific category in a country, single source, or multiple sources. You can also search with keywords. Articles are sorted by the earliest date published first."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Countries Latest Data By Coordinate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2020/api/latest/countries/coordinates?latitude=25.594023552508407&longitude=85.13756080147536",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"latest",
+						"countries",
+						"coordinates"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "25.594023552508407"
+						},
+						{
+							"key": "longitude",
+							"value": "85.13756080147536"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
