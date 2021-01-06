@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
-import { ActivityIndicator, View} from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 
@@ -44,7 +44,7 @@ class WorldMapScreen extends React.Component {
             console.log("[WorldMapScreen] - Checked data in AsyncStorage. NeedUpdate? " + needUpdate);
             if (needUpdate) {
                 data = await ConnectorService.getCountriesActivePerMillion();
-                AsyncStorage.setItem("WorldMap", JSON.stringify({"data": data, "updated": moment().valueOf()}));
+                AsyncStorage.setItem("WorldMap", JSON.stringify({ "data": data, "updated": moment().valueOf() }));
 
                 console.log("\n\t***AsyncStorage: Setting data WorldMap on " + moment().format('MMMM Do YYYY, HH:mm:ss'));
             } else {
@@ -68,7 +68,7 @@ class WorldMapScreen extends React.Component {
                             size="large"
                             color="#bc2b78"
                             style={styles.activityIndicator}
-                        />:
+                        /> :
                         this.renderMap()
                 }
                 {
@@ -77,7 +77,7 @@ class WorldMapScreen extends React.Component {
                             size="large"
                             color="#bc2b78"
                             style={styles.activityIndicator}
-                        />: null
+                        /> : null
                 }
             </View>
         );
@@ -98,7 +98,23 @@ class WorldMapScreen extends React.Component {
                 showsTraffic={false}
                 showsIndoors={false}
                 rotateEnabled={false}
-                onMapReady={ () => {this.setState({ loadingMap: false });}}
+                onMapReady={() => { this.setState({ loadingMap: false }); }}
+                onPress={async (event) => {
+                    console.log(event.nativeEvent.coordinate);
+                    var coordinates = {
+                        lat: event.nativeEvent.coordinate.latitude,
+                        long: event.nativeEvent.coordinate.longitude
+                    };
+
+                    try {
+                        console.log(coordinates)
+                        const res = await ConnectorService.getCountryLatestDataByLatAndLong(coordinates.lat, coordinates.long);
+                        console.log(res);
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
+                }}
             >
                 {
                     Object.keys(geoMaps).map(key => (
