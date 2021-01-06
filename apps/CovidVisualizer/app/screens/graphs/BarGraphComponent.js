@@ -29,7 +29,9 @@ class BarGraphComponent extends React.Component{
                 "Today": this.props.data["today"]["tests"],
             }
         ];
-
+        this.testsValues = this.testsData.map( (item) => {
+            return Object.values(item)[0];
+        });
     }
     render(){
         console.log("[BarGraphComponent] - Render method");
@@ -45,6 +47,9 @@ class BarGraphComponent extends React.Component{
                     <VictoryAxis
                         fixLabelOverlap={true}
                         standalone={false}
+                        style={{
+                            tickLabels: tableStyles.tableTicksXStyle
+                        }}
                     />
                     <VictoryAxis
                         dependentAxis={true}
@@ -52,14 +57,16 @@ class BarGraphComponent extends React.Component{
                             return NumberFormatter.numberAbbreviation(x);
                         }}
                         style={{
-                            tickLabels: tableStyles.tableTicksYStyle,
+                            tickLabels: tableStyles.tableTicksYStyle
                         }}
                     />
                     <VictoryBar
-                        barRatio={0.5}
                         style={{
                             data: { fill: "#c43a31" }
                         }}
+                        domain={{y: [Math.min.apply(null, this.testsValues) - 1000,
+                                Math.max.apply(null, this.testsValues) + 1000]}}
+                        barWidth={40}
                         data={this.testsData.map( (item) =>{
                             return { x:Object.keys(item)[0], y: Object.values(item)[0]}
                         })}

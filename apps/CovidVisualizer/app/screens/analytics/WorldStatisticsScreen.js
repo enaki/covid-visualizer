@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet, ScrollView, Text, ActivityIndicator} from 'react-native'
 
 import colors from '../../config/colors'
-import GroupedLineGraphComponent from "../graphs/GroupedLineGraphComponent";
+import StackedLineGraphComponent from "../graphs/StackedLineGraphComponent";
 import PieGraphComponent from "../graphs/PieGraphComponent";
 import ConnectorService from "../../services/ConnectorService";
-import GroupedAreaGraphComponent from "../graphs/GroupedAreaGraphComponent";
+import StackedAreaGraphComponent from "../graphs/StackedAreaGraphComponent";
 import BarGraphComponent from "../graphs/BarGraphComponent";
 
 
@@ -50,10 +50,10 @@ class WorldStatisticsScreen extends React.Component {
                 <PieGraphComponent
                     data={this.state.worldLatestData}
                 />
-                <GroupedAreaGraphComponent
+                <StackedAreaGraphComponent
                     data={this.state.worldLatestData}
                 />
-                <GroupedLineGraphComponent
+                <StackedLineGraphComponent
                     data={this.state.worldLatestData}
                 />
                 <BarGraphComponent

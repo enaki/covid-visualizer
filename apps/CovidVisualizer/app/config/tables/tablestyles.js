@@ -17,7 +17,6 @@ const styles={
         fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
         letterSpacing: 1,
         fontSize: 14,
-        angle: -45,
         padding: Platform.OS === 'android' ? 10 : 20
     },
     tableTicksXStyleLarger:{
@@ -30,6 +29,7 @@ const styles={
         fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
         letterSpacing: 1,
         fontSize: 14,
+        padding: -4
     },
     chartPadding:{
         left:50,

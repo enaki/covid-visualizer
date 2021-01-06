@@ -9,6 +9,7 @@ import textStyle from "../../config/styles/textstyles";
 import colorStyle from "../../config/colors";
 import GraphTitle from "../containers/titles/GraphTitle";
 import {Image, Text} from "react-native";
+import TextFormatterService from "../../services/TextFormatterService";
 
 export default class PieGraphComponent extends React.Component {
     constructor(props) {
@@ -20,6 +21,72 @@ export default class PieGraphComponent extends React.Component {
             this.recoveredPercentage = Math.round(this.props.data["today"]["recovered"] / this.props.data["today"]["cases"] * 1000) / 10;
             this.activePercentage = Math.round(this.props.data["today"]["active"] / this.props.data["today"]["cases"] * 1000) / 10;
         }
+
+        this.dataLast3DaysText = [
+            {
+                data: [
+                    {
+                        type: "Total",
+                        value: this.props.data["today"]["cases"]
+                    },
+                    {
+                        type: "Recovered",
+                        value: this.props.data["today"]["recovered"]
+                    },
+                    {
+                        type: "Active",
+                        value: this.props.data["today"]["active"]
+                    },
+                    {
+                        type: "Deaths",
+                        value: this.props.data["today"]["deaths"]
+                    }
+                ],
+                type: "Today"
+            },
+            {
+                data: [
+                    {
+                        type: "Total",
+                        value: this.props.data["yesterday"]["cases"]
+                    },
+                    {
+                        type: "Recovered",
+                        value: this.props.data["yesterday"]["recovered"]
+                    },
+                    {
+                        type: "Active",
+                        value: this.props.data["yesterday"]["active"]
+                    },
+                    {
+                        type: "Deaths",
+                        value: this.props.data["yesterday"]["deaths"]
+                    }
+                ],
+                type: "Yesterday"
+            },
+            {
+                data: [
+                    {
+                        type: "Total",
+                        value: this.props.data["twoDaysAgo"]["cases"]
+                    },
+                    {
+                        type: "Recovered",
+                        value: this.props.data["twoDaysAgo"]["recovered"]
+                    },
+                    {
+                        type: "Active",
+                        value: this.props.data["twoDaysAgo"]["active"]
+                    },
+                    {
+                        type: "Deaths",
+                        value: this.props.data["twoDaysAgo"]["deaths"]
+                    }
+                ],
+                type: "Two days ago"
+            }
+        ];
     }
     render() {
         console.log("[PieGraphComponent] - Render method");
@@ -63,21 +130,9 @@ export default class PieGraphComponent extends React.Component {
                 <Text
                     style={textStyle.infoTextStyle}
                 >
-                    Today{"\n"}
-                    Total cases: {NumberFormatter.formatNumber(this.props.data["today"]["cases"]) + "\n"}
-                    Active cases: {NumberFormatter.formatNumber(this.props.data["today"]["active"])+ "\n"}
-                    Death cases: {NumberFormatter.formatNumber(this.props.data["today"]["deaths"]) + "\n"}
-                    Recovered cases: {NumberFormatter.formatNumber(this.props.data["today"]["recovered"]) + "\n"}
-                    {"\n\n\n"}Yesterday{"\n"}
-                    Total cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["cases"]) + "\n"}
-                    Active cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["active"])+ "\n"}
-                    Death cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["deaths"]) + "\n"}
-                    Recovered cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["recovered"]) + "\n"}
-                    {"\n\n\n"}Two days ago{"\n"}
-                    Total cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["cases"]) + "\n"}
-                    Active cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["active"])+ "\n"}
-                    Death cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["deaths"]) + "\n"}
-                    Recovered cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["recovered"]) + "\n"}
+                    {
+                        TextFormatterService.formatLast3DaysText(this.dataLast3DaysText)
+                    }
                 </Text>
             </BoxContainer>
         );

@@ -13,40 +13,94 @@ import tableStyles from "../../config/tables/tablestyles";
 import {Dimensions, Text} from "react-native";
 import textStyle from "../../config/styles/textstyles";
 import NumberFormatter from "../../services/NumberFormatterService";
+import TextFormatterService from "../../services/TextFormatterService";
 
-class GroupedAreaGraphComponent extends React.Component{
+class StackedAreaGraphComponent extends React.Component{
     constructor(props) {
-        console.log("[GroupedAreaGraphComponent] - Constructor");
+        console.log("[StackedAreaGraphComponent] - Constructor");
         super(props);
         this.dataLast3Days= [
             {
                 data: [
-                    {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_recovered"]},
-                    {x: "yesterday", y: this.props.data["yesterday"]["today_recovered"]},
-                    {x: "today", y: this.props.data["today"]["today_recovered"]}
+                    {x: "Two days ago", y: this.props.data["twoDaysAgo"]["today_recovered"]},
+                    {x: "Yesterday", y: this.props.data["yesterday"]["today_recovered"]},
+                    {x: "Today", y: this.props.data["today"]["today_recovered"]}
                 ],
                 style: colorStyle.graphColors.recoveredColor
             },
             {
                 data: [
-                    {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_cases"]},
-                    {x: "yesterday", y: this.props.data["yesterday"]["today_cases"]},
-                    {x: "today", y: this.props.data["today"]["today_cases"]}
+                    {x: "Two days ago", y: this.props.data["twoDaysAgo"]["today_cases"]},
+                    {x: "Yesterday", y: this.props.data["yesterday"]["today_cases"]},
+                    {x: "Today", y: this.props.data["today"]["today_cases"]}
                 ],
                 style: colorStyle.graphColors.activeColor
             },
             {
                 data: [
-                    {x: "two days ago", y: this.props.data["twoDaysAgo"]["today_deaths"]},
-                    {x: "yesterday", y: this.props.data["yesterday"]["today_deaths"]},
-                    {x: "today", y: this.props.data["today"]["today_deaths"]}
+                    {x: "Two days ago", y: this.props.data["twoDaysAgo"]["today_deaths"]},
+                    {x: "Yesterday", y: this.props.data["yesterday"]["today_deaths"]},
+                    {x: "Today", y: this.props.data["today"]["today_deaths"]}
                 ],
                 style: colorStyle.graphColors.deathsColor
             }
         ];
+        this.dataLast3DaysText = [
+            {
+                data: [
+                    {
+                        type: "Recovered",
+                        value: this.props.data["today"]["today_recovered"]
+                    },
+                    {
+                        type: "Active",
+                        value: this.props.data["today"]["today_cases"]
+                    },
+                    {
+                        type: "Deaths",
+                        value: this.props.data["today"]["today_deaths"]
+                    }
+                ],
+                type: "Today"
+            },
+            {
+                data: [
+                    {
+                        type: "Recovered",
+                        value: this.props.data["yesterday"]["today_recovered"]
+                    },
+                    {
+                        type: "Active",
+                        value: this.props.data["yesterday"]["today_cases"]
+                    },
+                    {
+                        type: "Deaths",
+                        value: this.props.data["yesterday"]["today_deaths"]
+                    }
+                ],
+                type: "Yesterday"
+            },
+            {
+                data: [
+                    {
+                        type: "Recovered",
+                        value: this.props.data["twoDaysAgo"]["today_recovered"]
+                    },
+                    {
+                        type: "Active",
+                        value: this.props.data["twoDaysAgo"]["today_cases"]
+                    },
+                    {
+                        type: "Deaths",
+                        value: this.props.data["twoDaysAgo"]["today_deaths"]
+                    }
+                ],
+                type: "Two days ago"
+            }
+        ];
     }
     render(){
-        console.log("[GroupedAreaGraphComponent] - Render method");
+        console.log("[StackedAreaGraphComponent] - Render method");
         return(
             <BoxContainer>
                 <GraphTitle text={"Last 3 days evolution"}/>
@@ -59,13 +113,13 @@ class GroupedAreaGraphComponent extends React.Component{
                     <VictoryAxis
                         fixLabelOverlap={true}
                         standalone={false}
+                        style={{
+                            tickLabels: tableStyles.tableTicksXStyle
+                        }}
                     />
                     <VictoryAxis
                         dependentAxis={true}
                         tickFormat={(x) => {return NumberFormatter.numberAbbreviation(x);}}
-                        style={{
-                            tickLabels: tableStyles.tableTicksYStyle,
-                        }}
                     />
                     <VictoryStack>
                         {
@@ -97,18 +151,9 @@ class GroupedAreaGraphComponent extends React.Component{
                 <Text
                     style={textStyle.infoTextStyle}
                 >
-                    Today{"\n"}
-                    New active cases: {NumberFormatter.formatNumber(this.props.data["today"]["today_cases"])+ "\n"}
-                    New death cases: {NumberFormatter.formatNumber(this.props.data["today"]["today_deaths"]) + "\n"}
-                    New recovered cases: {NumberFormatter.formatNumber(this.props.data["today"]["today_recovered"]) + "\n"}
-                    {"\n\n"}Yesterday{"\n"}
-                    New active cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["today_cases"])+ "\n"}
-                    New death cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["today_deaths"]) + "\n"}
-                    New recovered cases: {NumberFormatter.formatNumber(this.props.data["yesterday"]["today_recovered"]) + "\n"}
-                    {"\n\n"}Two days ago{"\n"}
-                    New active cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["today_cases"])+ "\n"}
-                    New death cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["today_deaths"]) + "\n"}
-                    New recovered cases: {NumberFormatter.formatNumber(this.props.data["twoDaysAgo"]["today_recovered"]) + "\n"}
+                    {
+                        TextFormatterService.formatLast3DaysText(this.dataLast3DaysText)
+                    }
                 </Text>
             </BoxContainer>
         );
@@ -117,4 +162,4 @@ class GroupedAreaGraphComponent extends React.Component{
 
 
 
-export default GroupedAreaGraphComponent;
+export default StackedAreaGraphComponent;
