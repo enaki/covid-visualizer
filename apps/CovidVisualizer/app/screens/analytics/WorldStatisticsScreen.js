@@ -44,9 +44,6 @@ class WorldStatisticsScreen extends React.Component {
             <ScrollView
                 contentContainerStyle={styles.container}
             >
-                {
-                    console.log(this.state.worldLatestData)
-                }
                 <PieGraphComponent
                     data={this.state.worldLatestData}
                 />

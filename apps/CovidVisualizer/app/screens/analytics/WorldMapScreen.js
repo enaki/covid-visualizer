@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, Alert } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
 import { ActivityIndicator, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -99,20 +99,26 @@ class WorldMapScreen extends React.Component {
                 showsIndoors={false}
                 rotateEnabled={false}
                 onMapReady={() => { this.setState({ loadingMap: false }); }}
-                onPress={async (event) => {
-                    console.log(event.nativeEvent.coordinate);
-                    var coordinates = {
+                onLongPress={async (event) => {
+                    const coordinates = {
                         lat: event.nativeEvent.coordinate.latitude,
                         long: event.nativeEvent.coordinate.longitude
                     };
-
                     try {
-                        console.log(coordinates)
                         const res = await ConnectorService.getCountryLatestDataByLatAndLong(coordinates.lat, coordinates.long);
-                        console.log(res);
+                        if(res.length === 0)
+                        {
+                            throw 'Invalid country';
+                        }
+                        this.props.navigation.navigate('Country Statistics',
+                            {data: res[0]});
                     }
                     catch (err) {
-                        console.log(err);
+                        console.log("[WorldMapScreen] - Error: " + err);
+                        Alert.alert(
+                            "Error",
+                            err
+                        );
                     }
                 }}
             >
