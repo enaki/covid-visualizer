@@ -10,8 +10,9 @@ import colorStyle from "../../config/colors";
 import GraphTitle from "../containers/titles/GraphTitle";
 import {Image, Text} from "react-native";
 
-export default class WorldGraphComponent extends React.Component {
+export default class PieGraphComponent extends React.Component {
     constructor(props) {
+        console.log("[PieGraphComponent] - Constructor");
         super(props);
         if(this.props.data != null )
         {
@@ -21,6 +22,7 @@ export default class WorldGraphComponent extends React.Component {
         }
     }
     render() {
+        console.log("[PieGraphComponent] - Render method");
         return (
             <BoxContainer>
                 <GraphTitle

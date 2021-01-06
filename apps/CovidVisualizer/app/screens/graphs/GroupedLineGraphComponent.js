@@ -10,11 +10,13 @@ import {
 import BoxContainer from "../containers/BoxContainer";
 import tableStyles from "../../config/tables/tablestyles";
 import GraphTitle from "../containers/titles/GraphTitle";
+import NumberFormatter from "../../services/NumberFormatterService";
 
 const styles = tableStyles;
 
 export default class GroupedLineGraphComponent extends React.Component {
     constructor(props) {
+        console.log("[GroupedLineGraphComponent] - Constructor");
         super(props);
         console.log(this.props.data);
         this.deaths = [
@@ -34,6 +36,7 @@ export default class GroupedLineGraphComponent extends React.Component {
         ];
     }
     render() {
+        console.log("[GroupedLineGraphComponent] - Render method");
         return (
             <BoxContainer>
                 <GraphTitle text={"Last 3 days overall statistics"}/>
@@ -52,7 +55,7 @@ export default class GroupedLineGraphComponent extends React.Component {
                     />
                     <VictoryAxis
                         dependentAxis={true}
-                        tickFormat={(x) => {return `${x / 1000}k`;}}
+                        tickFormat={(x) => {return NumberFormatter.numberAbbreviation(x);}}
                         style={{
                             tickLabels: styles.tableTicksYStyle,
                         }}

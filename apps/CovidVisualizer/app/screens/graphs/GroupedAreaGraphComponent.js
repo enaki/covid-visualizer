@@ -16,6 +16,7 @@ import NumberFormatter from "../../services/NumberFormatterService";
 
 class GroupedAreaGraphComponent extends React.Component{
     constructor(props) {
+        console.log("[GroupedAreaGraphComponent] - Constructor");
         super(props);
         this.dataLast3Days= [
             {
@@ -45,6 +46,7 @@ class GroupedAreaGraphComponent extends React.Component{
         ];
     }
     render(){
+        console.log("[GroupedAreaGraphComponent] - Render method");
         return(
             <BoxContainer>
                 <GraphTitle text={"Last 3 days evolution"}/>
@@ -60,6 +62,7 @@ class GroupedAreaGraphComponent extends React.Component{
                     />
                     <VictoryAxis
                         dependentAxis={true}
+                        tickFormat={(x) => {return NumberFormatter.numberAbbreviation(x);}}
                         style={{
                             tickLabels: tableStyles.tableTicksYStyle,
                         }}

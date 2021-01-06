@@ -6,6 +6,7 @@ import GroupedLineGraphComponent from "../graphs/GroupedLineGraphComponent";
 import PieGraphComponent from "../graphs/PieGraphComponent";
 import ConnectorService from "../../services/ConnectorService";
 import GroupedAreaGraphComponent from "../graphs/GroupedAreaGraphComponent";
+import BarGraphComponent from "../graphs/BarGraphComponent";
 
 
 class WorldStatisticsScreen extends React.Component {
@@ -53,6 +54,9 @@ class WorldStatisticsScreen extends React.Component {
                     data={this.state.worldLatestData}
                 />
                 <GroupedLineGraphComponent
+                    data={this.state.worldLatestData}
+                />
+                <BarGraphComponent
                     data={this.state.worldLatestData}
                 />
             </ScrollView>
