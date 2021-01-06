@@ -1,13 +1,22 @@
 import React from 'react';
-import { Text, ActivityIndicator, View, StyleSheet, Linking, TouchableNativeFeedback } from 'react-native'
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import {
+    Text,
+    ScrollView,
+    NativeModules,
+    ActivityIndicator,
+    View,
+    StyleSheet,
+    TouchableNativeFeedback
+} from 'react-native'
+
 import colors from '../config/colors'
 import AsyncStorage from '@react-native-community/async-storage';
 
 import ConnectorService from "../services/ConnectorService";
 import moment from 'moment';
 import { SafeAreaView } from 'react-native';
-
+import NewsCardContainer from './containers/NewsCardContainer';
+const { StatusBarManager } = NativeModules;
 
 class NewsScreen extends React.Component {
     constructor(props) {
@@ -47,9 +56,10 @@ class NewsScreen extends React.Component {
             const defaultImg = 'https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-Images-HD-Diamond-Pattern-PIC-WPB009691.jpg';
         }
 */
-        const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
         return (
-            <SafeAreaView>
+            <ScrollView
+                contentContainerStyle={styles.container}
+            >
                 {
                     this.state.loadingData ?
                         <ActivityIndicator
@@ -57,26 +67,12 @@ class NewsScreen extends React.Component {
                             color="#bc2b78"
                             style={styles.activityIndicator}
                         /> :
+                        <NewsCardContainer data={{}} />
 
-                        <TouchableNativeFeedback
-                            useForeground
-                            onPress={() => Linking.openURL(url)}
-                        >
 
-                            <Card>
-                                <Card.Title title="Card Title" subtitle="Card Subtitle" />
-                                <Card.Content>
-                                    <Title>Card title</Title>
-                                    <Paragraph>Card content</Paragraph>
-                                </Card.Content>
-                                <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-
-                            </Card>
-
-                        </TouchableNativeFeedback>
                 }
 
-            </SafeAreaView>
+            </ScrollView>
             /*<View style={styles.container}>
                 <Text style={{ fontSize: 30 }}>News Screen</Text>
                 <Text style={{ fontSize: 20 }}>
@@ -90,10 +86,8 @@ class NewsScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: colors.primaryBackground,
-        alignItems: 'center',
-        justifyContent: 'center',
+        paddingTop: StatusBarManager.HEIGHT
     },
     noteStyle: {
         margin: 5,
