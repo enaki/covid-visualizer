@@ -2,6 +2,7 @@ BEGIN TRANSACTION;
 DROP TABLE IF EXISTS "county_latest";
 DROP TABLE IF EXISTS "counties_history";
 DROP TABLE IF EXISTS "counties";
+DROP TABLE IF EXISTS "counties_latest";
 DROP TABLE IF EXISTS "countries_latest";
 DROP TABLE IF EXISTS "countries_history";
 DROP TABLE IF EXISTS "countries";

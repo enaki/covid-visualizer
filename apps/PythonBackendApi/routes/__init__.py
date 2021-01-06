@@ -130,6 +130,7 @@ def get_ro_counties_latest_data():
     script = "SELECT c.id, c.county_code, c.name, c.population, cl.cases, cl.today_cases, cl.deaths, cl.recovered, cl.date FROM counties c, counties_latest cl WHERE cl.id = c.id"
     data = query(script, (), database_path)
     data = counties_latest_mapper(data)
+    data["counties"] = sorted(data["counties"], key=lambda county: county["cases"], reverse=True)
     return make_response(data)
 
 

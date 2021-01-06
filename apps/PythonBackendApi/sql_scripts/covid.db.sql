@@ -126,6 +126,6 @@ CREATE TABLE IF NOT EXISTS "counties_latest" (
 	"deaths"	INTEGER NOT NULL,
 	"recovered"	INTEGER NOT NULL,
 	FOREIGN KEY ("id") REFERENCES "countries"("id"),
-	UNIQUE("date","id")
+	UNIQUE("id")
 );
 COMMIT;
