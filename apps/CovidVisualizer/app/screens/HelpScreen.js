@@ -7,7 +7,7 @@ import {
     Linking,
     Image,
     View
-} from 'react-native'
+} from 'react-native';
 import colors from '../config/colors'
 import textStyles from '../config/styles/textstyles';
 import staticText from '../config/staticText/helpStaticText';

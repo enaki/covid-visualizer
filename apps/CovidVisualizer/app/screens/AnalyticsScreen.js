@@ -1,7 +1,7 @@
 import React from 'react';
-import WorldMapScreen from './analytics/WorldMapScreen'
-import WorldStatisticsScreen from './analytics/WorldStatisticsScreen'
-import AnalyticsHomeScreen from './analytics/AnalyticsHomeScreen'
+import WorldMapScreen from './analytics/WorldMapScreen';
+import WorldStatisticsScreen from './analytics/WorldStatisticsScreen';
+import AnalyticsHomeScreen from './analytics/AnalyticsHomeScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import RomaniaMapScreen from './analytics/RomaniaMapScreen';
 import RomaniaStatisticsScreen from "./analytics/RomaniaStatisticsScreen";
