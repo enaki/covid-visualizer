@@ -81,7 +81,8 @@ class BarGraphComponent extends React.Component{
                                 <Text
                                     key={index}
                                 >
-                                    {Object.keys(item)[0]}: {NumberFormatter.formatNumber(Object.values(item)[0])} tests{"\n"}
+                                    {Object.keys(item)[0]}: {NumberFormatter.formatNumber(Object.values(item)[0])} tests
+                                    { index === this.testsData.length - 1 ? null : "\n"}
                                 </Text>
                             )
                         })

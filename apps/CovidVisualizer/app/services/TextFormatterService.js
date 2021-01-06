@@ -13,6 +13,7 @@ class TextFormatterService{
                     >
                         <Text
                             key={idx * 10}
+                            style={ {color: "#42cab3"}}
                         >{item["type"] + "\n"}
                         </Text>
                         {
@@ -26,12 +27,12 @@ class TextFormatterService{
                                             style={textStyle.textStyleTypes[Object.values(token)[0]]}
                                             key={idx * 10}
                                         >{NumberFormatter.formatNumber(token["value"])}</Text>
-                                        {"\n"}
+                                        { idx === item["data"].length - 1? null : "\n"}
                                     </Text>
                                 )
                             })
                         }
-                        {"\n"}
+                        { idx === data.length -1 ? null : "\n\n"}
                     </Text>
                 );
             })

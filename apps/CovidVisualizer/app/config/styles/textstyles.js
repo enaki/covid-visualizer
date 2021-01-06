@@ -8,6 +8,7 @@ const styles={
         textShadowColor: 'rgba(0, 0, 0, 0.2)',
         textShadowOffset: {width: 1, height: 1},
         textShadowRadius: 1,
+        margin: 10
     },
     textStyleTypes : {
         "Deaths": {
@@ -55,7 +56,7 @@ const styles={
         textAlign:"left",
         fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
         fontSize: 20,
-        margin: 20,
+        margin: 30,
     },
     containerTitleStyle : {
         textAlign:"center",

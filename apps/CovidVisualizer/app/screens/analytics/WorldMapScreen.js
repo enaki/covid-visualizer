@@ -99,7 +99,7 @@ class WorldMapScreen extends React.Component {
                 showsIndoors={false}
                 rotateEnabled={false}
                 onMapReady={() => { this.setState({ loadingMap: false }); }}
-                onLongPress={async (event) => {
+                onPress={async (event) => {
                     const coordinates = {
                         lat: event.nativeEvent.coordinate.latitude,
                         long: event.nativeEvent.coordinate.longitude
