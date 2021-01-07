@@ -2,31 +2,49 @@ import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph, IconButton } from 'react-native-paper';
 import { Linking, TouchableNativeFeedback } from 'react-native';
+import ContainerText from './text/ContainerText';
+import moment from 'moment';
+import genericColorService from '../../services/color/GenericColorService';
 
-const NewsCardContainer = props => {
-    //const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
-    return (
-        <TouchableNativeFeedback
-            useForeground
-            onPress={() => Linking.openURL(url)}
-        >
+class NewsCardContainer extends React.Component {
 
-            <Card style={styles.boxContainer}>
-                <Card.Title style={styles.content}
-                    title="Card Title"
-                    subtitle="Card Subtitle"
-                    right={() => <Avatar.Image size={36} source={require('../../assets/images/news_icon.png')} />}
-                />
-                <Card.Content>
-                    <Title style={styles.noteStyle}>Card title</Title>
-                    <Paragraph>Card content</Paragraph>
-                </Card.Content>
-                <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+    constructor(props) {
+        super(props);
+        this.article = props.article;
+        this.selectedColor = genericColorService.randomRainbowColor();
+    }
 
-            </Card>
+    render() {
+        //const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
+        //console.log("[NewsCardContainer] - render");
+        let article = this.article;
+        const defaultImg = 'https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-Images-HD-Diamond-Pattern-PIC-WPB009691.jpg';
+        const time = moment(article.publishedAt || moment.now()).fromNow();
+        const selectedColor = this.selectedColor;
+        return (
+            <TouchableNativeFeedback
+                useForeground
+                onPress={() => Linking.openURL(article.url)}
+            >
+                <Card style={styles.boxContainer}>
+                    <Card.Title
+                        title={article.source.name}
+                        subtitle={time}
+                        right={() => <Avatar.Image style={styles.avatar} source={require('../../assets/images/news_icon.png')} />}
+                    />
+                    <Card.Content>
+                        <Title style={{
+                            fontSize: 14,
+                            color: selectedColor
+                        }}>{article.title}</Title>
+                        <Paragraph style={styles.noteStyle}>{article.description}</Paragraph>
+                    </Card.Content>
+                    <Card.Cover style={styles.avatar} source={{ uri: article.urlToImage || defaultImg }} />
+                </Card>
+            </TouchableNativeFeedback >
+        );
+    }
 
-        </TouchableNativeFeedback>
-    );
 };
 
 const styles = StyleSheet.create({
@@ -39,11 +57,24 @@ const styles = StyleSheet.create({
         borderColor: "blue",
         flex: 1,
         justifyContent: "center",
-        alignContent: "center"
+        alignContent: "center",
+        color: 'red'
     },
     content: {
         justifyContent: "center",
         alignContent: "center"
+    },
+    avatar: {
+        alignContent: "center",
+        margin: 10,
+    },
+    noteStyle: {
+        margin: 3,
+        color: '#1e0000fa',
+        fontSize: 10
+    },
+    featuredTitleStyle: {
+        fontSize: 14,
     }
 });
 
