@@ -5,13 +5,16 @@ import textStyles from "../../config/styles/textstyles";
 import ConnectorService from "../../services/ConnectorService";
 import BoxContainer from "../containers/BoxContainer";
 import { Table, Row, Rows } from 'react-native-table-component';
+import LoadDataService from "../../services/LoadDataService";
+import PieGraphComponent from "../graphs/PieGraphComponent";
 
 class RomaniaStatisticsScreen extends React.Component{
     constructor(props) {
-        console.log("\n[RomaniaStatisticsScreen] - Constructor");
+        console.log("[RomaniaStatisticsScreen] - Constructor");
         super(props);
         this.state = {
             romaniaCountiesLatest: null,
+            romaniaLatestData: null,
             loading: true
         }
         this.tableHead = ["City", "Population", "Cases", "Today's cases", "Deaths", "Recovered"];
@@ -19,9 +22,10 @@ class RomaniaStatisticsScreen extends React.Component{
     }
     async componentDidMount() {
         try{
-            const data = await ConnectorService.getRomaniaCountyLatest();
-            this.setState({romaniaCountiesLatest: data, loading: false});
-            console.log("\n[RomaniaStatisticsScreen] - componentDidMount executed.");
+            const data = await LoadDataService.getData("RoCountyLatest", ConnectorService.getRomaniaCountyLatest);
+            const dataLatest = await LoadDataService.getData("RoLatestData", ConnectorService.getRomaniaLatestData);
+            this.setState({romaniaCountiesLatest: data, romaniaLatestData: dataLatest, loading: false});
+            console.log("[RomaniaStatisticsScreen] - componentDidMount executed.");
         }
         catch (err){
             console.log("[RomaniaStatisticsScreen] - Error fetching data:" + err);
@@ -49,6 +53,9 @@ class RomaniaStatisticsScreen extends React.Component{
             <ScrollView
                 contentContainerStyle={styles.container}
             >
+                <PieGraphComponent
+                    data={this.state.romaniaLatestData[0]}
+                />
                 <BoxContainer>
                     <Text style={textStyles.infoTextStyle}>Romania counties information</Text>
                     <ScrollView

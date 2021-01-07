@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import ConnectorService from "../../services/ConnectorService";
 import roCountyColorService from '../../services/color/MapRoCountyColorService';
+import LoadDataService from "../../services/LoadDataService";
 
 const height = Dimensions.get('window').height;
 const roCountiesGeoMaps = require('../../assets/data/parsed.ro_counties.geo.json');
@@ -14,7 +15,7 @@ const roCountiesGeoMaps = require('../../assets/data/parsed.ro_counties.geo.json
 class RomaniaMapScreen extends React.Component {
 
     constructor(props) {
-        console.log("\n[RomaniaMapScreen] - Constructor");
+        console.log("[RomaniaMapScreen] - Constructor");
         super(props);
         this.state = {
             loadingData: true,
@@ -24,37 +25,9 @@ class RomaniaMapScreen extends React.Component {
 
     async componentDidMount() {
         console.log("[RomaniaMapScreen] - componentDidMount");
-        let data;
-        try {
-            let localData = JSON.parse(await AsyncStorage.getItem("RoMap"));
-            let needUpdate = false;
-            if (localData == null) {
-                needUpdate = true;
-            } else {
-                if (localData["updated"] == null || localData["data"] == null) {
-                    needUpdate = true;
-                } else {
-                    let seconds = moment().diff(moment(localData["updated"]), 'seconds');
-                    console.log("[RomaniaMapScreen] - Seconds passed since the last update: " + seconds);
-                    if (seconds > 3600) { //o ora
-                        needUpdate = true;
-                    }
-                }
-            }
-            console.log("[RomaniaMapScreen] - Checked data in AsyncStorage. NeedUpdate? " + needUpdate);
-            if (needUpdate) {
-                data = await ConnectorService.getRoCountiesActivePerOneHundred();
-                AsyncStorage.setItem("RoMap", JSON.stringify({"data": data, "updated": moment().valueOf()}));
-
-                console.log("\n\t***AsyncStorage: Setting data RoMap on " + moment().format('MMMM Do YYYY, HH:mm:ss'));
-            } else {
-                data = localData["data"];
-            }
-            roCountyColorService.setData(data);
-            this.setState({ loadingData: false });
-        } catch (err) {
-            throw err;
-        }
+        let data = await LoadDataService.getData("RoMap", ConnectorService.getRoCountiesActivePerOneHundred);
+        roCountyColorService.setData(data);
+        this.setState({ loadingData: false });
         console.log("[RomaniaMapScreen] - Data Loaded");
     }
 

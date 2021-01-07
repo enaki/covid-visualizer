@@ -7,11 +7,12 @@ import PieGraphComponent from "../graphs/PieGraphComponent";
 import ConnectorService from "../../services/ConnectorService";
 import StackedAreaGraphComponent from "../graphs/StackedAreaGraphComponent";
 import BarGraphComponent from "../graphs/BarGraphComponent";
+import LoadDataService from "../../services/LoadDataService";
 
 
 class WorldStatisticsScreen extends React.Component {
     constructor(props) {
-        console.log("\n[WorldStatisticsScreen] - Constructor");
+        console.log("[WorldStatisticsScreen] - Constructor");
         super(props);
         this.state = {
             worldLatestData: null,
@@ -20,9 +21,9 @@ class WorldStatisticsScreen extends React.Component {
     }
     async componentDidMount() {
         try{
-            const data = await ConnectorService.getWorldLatestData();
+            const data = await LoadDataService.getData("WorldStatistics", ConnectorService.getWorldLatestData);
             this.setState({worldLatestData: data, loading: false});
-            console.log("\n[WorldStatisticsScreen] - componentDidMount executed.");
+            console.log("[WorldStatisticsScreen] - componentDidMount executed.");
         }
         catch (err){
             console.log("[WorldStatisticsScreen] - Error fetching data:" + err);

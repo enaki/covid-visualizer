@@ -7,21 +7,19 @@ import {
     Switch,
     View,
     Text,
-    Dimensions,
-    StatusBar
+    Dimensions
 } from 'react-native'
 import { Title } from 'react-native-paper';
 import colors from '../config/colors'
 import AsyncStorage from '@react-native-community/async-storage';
 import ConnectorService from "../services/ConnectorService";
 import NewsCardContainer from './containers/NewsCardContainer';
-import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 import { SafeAreaView } from 'react-navigation';
 
 
 class NewsScreen extends React.Component {
     constructor(props) {
-        console.log("\n[NewsScreen] - Constructor");
+        console.log("[NewsScreen] - Constructor");
         super(props);
         this.state = {
             loadingData: true,
@@ -33,36 +31,36 @@ class NewsScreen extends React.Component {
 
     async componentDidMount() {
         console.log("[NewsScreen] - componentDidMount");
-        this.fetchNews();
+        this.fetchNews().then( (r) => {});
     }
 
     async fetchNews() {
         let data;
         try {
             if (!this.state.isEnglishEnabled) {
-                console.log("Fetch Romania news");
+                console.log("[NewsScreen] - Fetch Romania news");
 
                 data = await ConnectorService.getRomaniaCovidNews();
                 AsyncStorage.setItem("RomaniaNews", JSON.stringify({ "data": data }));
                 this.data = data;
             } else {
-                console.log("Fetch World news");
+                console.log("[NewsScreen] - Fetch World news");
                 data = await ConnectorService.getWorldCovidNews();
                 AsyncStorage.setItem("WorldNews", JSON.stringify({ "data": data }));
                 this.data = data;
             }
 
         } catch (err) {
-            console.log("Error");
-            let localData = null;
+            console.log(`[NewsScreen] - Error: ${err}`);
+            let localData;
             if (!this.state.isEnglishEnabled) {
                 localData = JSON.parse(await AsyncStorage.getItem("RomaniaNews"));
             } else {
                 localData = JSON.parse(await AsyncStorage.getItem("WorldNews"));
             }
             if (localData != null) {
-                console("News from localStorage");
-                data = localData["data"];
+                console.log("[NewsScreen] - News from localStorage");
+                this.data = localData["data"];
             }
         }
         this.setState({ loadingData: false, refreshing: false });

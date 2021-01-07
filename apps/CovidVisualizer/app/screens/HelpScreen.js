@@ -20,7 +20,7 @@ import ContainerText from "./containers/text/ContainerText";
 const { StatusBarManager } = NativeModules;
 class HelpScreen extends React.Component {
     constructor(props) {
-        console.log("\n[HelpScreen] - Constructor");
+        console.log("[HelpScreen] - Constructor");
         super(props);
         this.state = {
             isEnglishEnabled: true

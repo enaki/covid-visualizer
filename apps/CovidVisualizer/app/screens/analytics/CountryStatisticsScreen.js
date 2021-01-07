@@ -8,7 +8,7 @@ import colors from "../../config/colors";
 
 class CountryStatisticsScreen extends React.Component{
     constructor(props) {
-        console.log("\n[CountryStatisticsScreen] - Constructor");
+        console.log("[CountryStatisticsScreen] - Constructor");
         super(props);
     }
 

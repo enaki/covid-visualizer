@@ -1,98 +1,40 @@
-class ConnectorService {
-    constructor(props) {
-        this.requestOptions = {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': "application/json; charset=utf-8"
-            }
-        }
-        this.IP = "10.0.2.2";
-        this.HOST = "2020";
-        this.NEWS_API_KEY = "ceb5a8887632471d959280cb3f31fd55"
-        this.RO_NEWS = `https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=${this.NEWS_API_KEY}&pageSize=100&page=1&language=ro`;
-        this.NEWS = `https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=${this.NEWS_API_KEY}&pageSize=100&page=1&language=en&sources=bbc-news,nbc-news,new-scientist`;
+import WebInfo from "./WebInfo";
 
+class ConnectorService {
+    constructor() {
     }
+
     getRomaniaCountyLatest(){
-        return fetch(`http://${this.IP}:${this.HOST}/api/latest/ro/counties`, this.requestOptions)
-            .then((response) => response.json())
-            .then((json) => {
-                return json;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("[ConnectorService] - getRomaniaCountryLatest fetch data");
+        return WebInfo.fetchMethod(`http://${WebInfo.IP}:${WebInfo.HOST}/api/latest/ro/counties`);
     }
     getCountriesActivePerMillion() {
-        return fetch(`http://${this.IP}:${this.HOST}/api/maps/countries`, this.requestOptions)
-            .then((response) => response.json())
-            .then((json) => {
-                return json;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("[ConnectorService] - getCountriesActivePerMillion fetch data");
+        return WebInfo.fetchMethod(`http://${WebInfo.IP}:${WebInfo.HOST}/api/maps/countries`);
     }
     getRoCountiesActivePerOneHundred() {
-        return fetch(`http://${this.IP}:${this.HOST}/api/maps/regions/ro`, this.requestOptions)
-            .then((response) => response.json())
-            .then((json) => {
-                return json;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("[ConnectorService] - getRoCountiesActivePerOneHundred fetch data");
+        return WebInfo.fetchMethod(`http://${WebInfo.IP}:${WebInfo.HOST}/api/maps/regions/ro`);
     }
     getRomaniaLatestData() {
-        return fetch(`http://${this.IP}:${this.HOST}/api/latest/countries?name=romania`, this.requestOptions)
-            .then((response) => response.json())
-            .then((json) => {
-                return json;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("[ConnectorService] - getRomaniaCountryLatest fetch data");
+        return WebInfo.fetchMethod(`http://${WebInfo.IP}:${WebInfo.HOST}/api/latest/countries?name=romania`);
     }
     getWorldLatestData() {
-        return fetch(`http://${this.IP}:${this.HOST}/api/latest/world`, this.requestOptions)
-            .then((response) => response.json())
-            .then((json) => {
-                return json;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("[ConnectorService] - getWorldLatestData fetch data");
+        return WebInfo.fetchMethod(`http://${WebInfo.IP}:${WebInfo.HOST}/api/latest/world`);
     }
     getCountryLatestDataByLatAndLong(latitude, longitude) {
-        return fetch(`http://${this.IP}:${this.HOST}/api/latest/countries/coordinates?latitude=${latitude}&longitude=${longitude}`, this.requestOptions)
-            .then((response) => response.json())
-            .then((json) => {
-                return json;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("[ConnectorService] - getCountryLatestDataByLatAndLong fetch data");
+        return WebInfo.fetchMethod(`http://${WebInfo.IP}:${WebInfo.HOST}/api/latest/countries/coordinates?latitude=${latitude}&longitude=${longitude}`);
     }
     getWorldCovidNews() {
-        return fetch(`${this.NEWS}`, this.requestOptions)
-            .then((response) => response.json())
-            .then((json) => {
-                return json;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("[ConnectorService] - getWorldCovidNews fetch data");
+        return WebInfo.fetchMethod(`${WebInfo.NEWS}`);
     }
     getRomaniaCovidNews() {
-        return fetch(`${this.RO_NEWS}`, this.requestOptions)
-            .then((response) => response.json())
-            .then((json) => {
-                return json;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("[ConnectorService] - getRomaniaCovidNews fetch data");
+        return WebInfo.fetchMethod(`${WebInfo.RO_NEWS}`);
     }
 }
 

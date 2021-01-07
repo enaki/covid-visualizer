@@ -10,7 +10,7 @@ const BoxContainer = props => {
 
 const styles = StyleSheet.create({
     boxContainer:{
-        backgroundColor: "#fff3c7", // #fff3c7
+        backgroundColor: "#fff5f5", // #fff3c7
         width: Dimensions.get(`window`).width * 95 /100,
         margin: 10,
         borderRadius: 15,

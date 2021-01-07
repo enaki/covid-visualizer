@@ -15,8 +15,8 @@ class HomeScreen extends React.Component {
                 errorMessage: 'Permission to access location was denied',
             });
         }
-        let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
-        console.log(location);
+        // let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
+        // console.log(location);
     }
 
     render() {
