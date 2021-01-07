@@ -13,12 +13,14 @@ import tableStyles from "../../config/tables/tablestyles";
 import colorStyles from "../../config/colors";
 import GraphTitle from "../containers/titles/GraphTitle";
 import NumberFormatter from "../../services/NumberFormatterService";
+import LoggerService from "../../services/LoggerService";
 
 const styles = tableStyles;
 
 export default class StackedLineGraphComponent extends React.Component {
     constructor(props) {
-        console.log("[StackedLineGraphComponent] - Constructor");
+        LoggerService.formatLog("StackedLineGraphComponent", "Render method.");
+
         super(props);
         this.deaths = [
             {x: "Two days ago", y: this.props.data["twoDaysAgo"]["deaths"]},
@@ -49,7 +51,7 @@ export default class StackedLineGraphComponent extends React.Component {
         this.maxValue = Math.max.apply(null, this.dataValues) +10000;
     }
     render() {
-        console.log("[StackedLineGraphComponent] - Render method");
+        LoggerService.formatLog(this.constructor.name, "Render method.");
         return (
             <BoxContainer>
                 <GraphTitle text={"Last 3 days overall statistics"}/>

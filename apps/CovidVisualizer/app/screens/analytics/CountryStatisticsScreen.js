@@ -5,15 +5,16 @@ import StackedAreaGraphComponent from "../graphs/StackedAreaGraphComponent";
 import StackedLineGraphComponent from "../graphs/StackedLineGraphComponent";
 import BarGraphComponent from "../graphs/BarGraphComponent";
 import colors from "../../config/colors";
+import LoggerService from "../../services/LoggerService";
 
 class CountryStatisticsScreen extends React.Component{
     constructor(props) {
-        console.log("[CountryStatisticsScreen] - Constructor");
+        LoggerService.formatLog("CountryStatisticsScreen", "Constructor.");
         super(props);
     }
 
     render() {
-        console.log("[CountryStatisticsScreen] - Render method executed.");
+        LoggerService.formatLog(this.constructor.name, "Render method executed.");
         return (
             <ScrollView
                 contentContainerStyle={styles.container}

@@ -10,16 +10,17 @@ import {
     Dimensions
 } from 'react-native'
 import { Title } from 'react-native-paper';
-import colors from '../config/colors'
-import AsyncStorage from '@react-native-community/async-storage';
 import ConnectorService from "../services/ConnectorService";
 import NewsCardContainer from './containers/NewsCardContainer';
-import { SafeAreaView } from 'react-navigation';
+import LoggerService from "../services/LoggerService";
+import LoadDataService from "../services/LoadDataService";
+import textStyles from "../config/styles/textstyles";
+import containerStyles from "../config/styles/containerstyles";
 
 
 class NewsScreen extends React.Component {
     constructor(props) {
-        console.log("[NewsScreen] - Constructor");
+        LoggerService.formatLog("NewsScreen", "Constructor.");
         super(props);
         this.state = {
             loadingData: true,
@@ -30,38 +31,17 @@ class NewsScreen extends React.Component {
     }
 
     async componentDidMount() {
-        console.log("[NewsScreen] - componentDidMount");
+        LoggerService.formatLog(this.constructor.name, "componentDidMount method.");
         this.fetchNews().then( (r) => {});
     }
 
     async fetchNews() {
-        let data;
-        try {
-            if (!this.state.isEnglishEnabled) {
-                console.log("[NewsScreen] - Fetch Romania news");
-
-                data = await ConnectorService.getRomaniaCovidNews();
-                AsyncStorage.setItem("RomaniaNews", JSON.stringify({ "data": data }));
-                this.data = data;
-            } else {
-                console.log("[NewsScreen] - Fetch World news");
-                data = await ConnectorService.getWorldCovidNews();
-                AsyncStorage.setItem("WorldNews", JSON.stringify({ "data": data }));
-                this.data = data;
-            }
-
-        } catch (err) {
-            console.log(`[NewsScreen] - Error: ${err}`);
-            let localData;
-            if (!this.state.isEnglishEnabled) {
-                localData = JSON.parse(await AsyncStorage.getItem("RomaniaNews"));
-            } else {
-                localData = JSON.parse(await AsyncStorage.getItem("WorldNews"));
-            }
-            if (localData != null) {
-                console.log("[NewsScreen] - News from localStorage");
-                this.data = localData["data"];
-            }
+        if (!this.state.isEnglishEnabled) {
+            LoggerService.formatLog(this.constructor.name, "Fetch Romania news.");
+            this.data = await LoadDataService.getData("RomaniaNews", ConnectorService.getRomaniaCovidNews);
+        } else {
+            LoggerService.formatLog(this.constructor.name, "Fetch World news.");
+            this.data = await LoadDataService.getData("WorldNews", ConnectorService.getWorldCovidNews)
         }
         this.setState({ loadingData: false, refreshing: false });
     }
@@ -81,27 +61,27 @@ class NewsScreen extends React.Component {
     }
 
     render() {
+        LoggerService.formatLog(this.constructor.name, `render method.`);
         return (
-            <SafeAreaView
-                contentContainerStyle={styles.container}
+            <View
+                style={containerStyles.container}
             >
-                <Title style={styles.title}>COVID News Page</Title>
-                <View style={styles.languageSwitch}>
-                    <Text style={styles.languageText}>Romanian</Text>
+                <Title style={textStyles.title}>COVID News Page</Title>
+                <View style={containerStyles.languageSwitch}>
+                    <Text style={textStyles.languageText}>Romanian</Text>
                     <Switch
                         trackColor={{ false: "#c3cfe4", true: "#c3cfe4" }}
                         thumbColor={this.state.isEnglishEnabled ? "orange" : "#f5dd4b"}
                         value={this.state.isEnglishEnabled}
                         onValueChange={this.toggleSwitch}
                     />
-                    <Text style={styles.languageText}>English</Text>
+                    <Text style={textStyles.languageText}>English</Text>
                 </View >
                 {
                     this.state.loadingData ?
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
-                            size='large'
                             style={styles.activityIndicator}
                         />
                         :
@@ -111,36 +91,15 @@ class NewsScreen extends React.Component {
                             keyExtractor={item => item.url}
                             refreshing={this.state.refreshing}
                             onRefresh={this.handleRefresh.bind(this)}
-
                         />
                 }
-            </SafeAreaView>
+            </View>
         );
     }
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: colors.primaryBackground,
-        justifyContent: "center",
-        alignContent: "center"
-    },
-    title: {
-        marginTop: 30,
-        marginBottom: 10,
-        textAlign: 'center',
-    },
-    languageSwitch: {
-        flexDirection: 'row',
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        margin: 10
-    },
-    languageText: {
-        fontWeight: 'bold'
-    },
     loading: {
         position: 'absolute',
         left: 0,

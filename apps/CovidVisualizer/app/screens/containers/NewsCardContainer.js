@@ -15,8 +15,6 @@ class NewsCardContainer extends React.Component {
     }
 
     render() {
-        //const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
-        //console.log("[NewsCardContainer] - render");
         let article = this.article;
         const defaultImg = 'https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-Images-HD-Diamond-Pattern-PIC-WPB009691.jpg';
         const time = moment(article.publishedAt || moment.now()).fromNow();

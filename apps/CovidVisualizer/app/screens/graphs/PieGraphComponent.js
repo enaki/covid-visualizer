@@ -10,10 +10,11 @@ import colorStyle from "../../config/colors";
 import GraphTitle from "../containers/titles/GraphTitle";
 import {Image, Text} from "react-native";
 import TextFormatterService from "../../services/TextFormatterService";
+import LoggerService from "../../services/LoggerService";
 
 export default class PieGraphComponent extends React.Component {
     constructor(props) {
-        console.log("[PieGraphComponent] - Constructor");
+        LoggerService.formatLog("PieGraphComponent", "Constructor.");
         super(props);
         if(this.props.data != null )
         {
@@ -89,7 +90,7 @@ export default class PieGraphComponent extends React.Component {
         ];
     }
     render() {
-        console.log("[PieGraphComponent] - Render method");
+        LoggerService.formatLog(this.constructor.name, "Render method.");
         return (
             <BoxContainer>
                 <GraphTitle

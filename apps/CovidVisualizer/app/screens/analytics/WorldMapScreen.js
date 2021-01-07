@@ -5,6 +5,8 @@ import { ActivityIndicator, View } from 'react-native';
 import ConnectorService from "../../services/ConnectorService";
 import worldColorService from '../../services/color/MapWorldColorService';
 import LoadDataService from '../../services/LoadDataService';
+import LoggerService from "../../services/LoggerService";
+import containerStyles from "../../config/styles/containerstyles";
 
 const height = Dimensions.get('window').height;
 const geoMaps = require('../../assets/data/parsed.low.geo.json');
@@ -12,7 +14,7 @@ const geoMaps = require('../../assets/data/parsed.low.geo.json');
 
 class WorldMapScreen extends React.Component {
     constructor(props) {
-        console.log("[WorldMapScreen] - Constructor");
+        LoggerService.formatLog("WorldMapScreen", "Constructor.");
         super(props);
         this.state = {
             loadingData: true,
@@ -21,15 +23,15 @@ class WorldMapScreen extends React.Component {
     }
 
     async componentDidMount() {
-        console.log("[WorldMapScreen] - componentDidMount");
+        LoggerService.formatLog(this.constructor.name, "componentDidMount method called.");
         let data = await LoadDataService.getData("WorldMap", ConnectorService.getCountriesActivePerMillion);
         worldColorService.setData(data);
         this.setState({ loadingData: false });
-        console.log("[WorldMapScreen] - Data Loaded");
+        LoggerService.formatLog(this.constructor.name, "Data Loaded.");
     }
 
     render() {
-        console.log("[WorldMapScreen] - IN render callback");
+        LoggerService.formatLog(this.constructor.name, "In render callback.");
         return (
             <View style={{}}>
                 {
@@ -37,7 +39,7 @@ class WorldMapScreen extends React.Component {
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
-                            style={styles.activityIndicator}
+                            style={containerStyles.activityIndicator}
                         /> :
                         this.renderMap()
                 }
@@ -46,7 +48,7 @@ class WorldMapScreen extends React.Component {
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
-                            style={styles.activityIndicator}
+                            style={containerStyles.activityIndicator}
                         /> : null
                 }
             </View>
@@ -70,6 +72,7 @@ class WorldMapScreen extends React.Component {
                 rotateEnabled={false}
                 onMapReady={() => { this.setState({ loadingMap: false }); }}
                 onPress={async (event) => {
+                    LoggerService.formatLog(this.constructor.name, `onPress method.`);
                     const coordinates = {
                         lat: event.nativeEvent.coordinate.latitude,
                         long: event.nativeEvent.coordinate.longitude
@@ -84,7 +87,7 @@ class WorldMapScreen extends React.Component {
                             {data: res[0]});
                     }
                     catch (err) {
-                        console.log("[WorldMapScreen] - Error: " + err);
+                        LoggerService.formatLog(this.constructor.name `Error: \n ${err}`);
                         Alert.alert(
                             "Error",
                             err

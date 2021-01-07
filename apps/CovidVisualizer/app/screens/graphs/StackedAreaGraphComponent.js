@@ -14,10 +14,11 @@ import {Dimensions, Text} from "react-native";
 import textStyle from "../../config/styles/textstyles";
 import NumberFormatter from "../../services/NumberFormatterService";
 import TextFormatterService from "../../services/TextFormatterService";
+import LoggerService from "../../services/LoggerService";
 
 class StackedAreaGraphComponent extends React.Component{
     constructor(props) {
-        console.log("[StackedAreaGraphComponent] - Constructor");
+        LoggerService.formatLog("StackedAreaGraphComponent", "Constructor.");
         super(props);
         this.dataLast3Days= [
             {
@@ -100,7 +101,7 @@ class StackedAreaGraphComponent extends React.Component{
         ];
     }
     render(){
-        console.log("[StackedAreaGraphComponent] - Render method");
+        LoggerService.formatLog(this.constructor.name, "Render method.");
         return(
             <BoxContainer>
                 <GraphTitle text={"Last 3 days evolution"}/>

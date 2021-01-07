@@ -13,10 +13,11 @@ import {
 import BoxContainer from "../containers/BoxContainer";
 import textStyle from "../../config/styles/textstyles";
 import tableStyles from "../../config/tables/tablestyles";
+import LoggerService from "../../services/LoggerService";
 
 class BarGraphComponent extends React.Component{
     constructor(props) {
-        console.log("[BarGraphComponent] - Constructor");
+        LoggerService.formatLog("BarGraphComponent", "Constructor.");
         super(props);
         this.testsData = [
             {
@@ -34,7 +35,7 @@ class BarGraphComponent extends React.Component{
         });
     }
     render(){
-        console.log("[BarGraphComponent] - Render method");
+        LoggerService.formatLog(this.constructor.name, "Render method.");
         return(
             <BoxContainer>
                 <GraphTitle

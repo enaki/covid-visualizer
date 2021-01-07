@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ActivityIndicator, View } from 'react-native'
 import MapView, { Geojson } from 'react-native-maps'
-import AsyncStorage from '@react-native-community/async-storage';
-import moment from 'moment';
 
 import ConnectorService from "../../services/ConnectorService";
 import roCountyColorService from '../../services/color/MapRoCountyColorService';
 import LoadDataService from "../../services/LoadDataService";
+import LoggerService from "../../services/LoggerService";
+import containerStyles from "../../config/styles/containerstyles";
 
 const height = Dimensions.get('window').height;
 const roCountiesGeoMaps = require('../../assets/data/parsed.ro_counties.geo.json');
@@ -15,7 +15,7 @@ const roCountiesGeoMaps = require('../../assets/data/parsed.ro_counties.geo.json
 class RomaniaMapScreen extends React.Component {
 
     constructor(props) {
-        console.log("[RomaniaMapScreen] - Constructor");
+        LoggerService.formatLog("RomaniaMapScreen", `Constructor.`);
         super(props);
         this.state = {
             loadingData: true,
@@ -24,16 +24,16 @@ class RomaniaMapScreen extends React.Component {
     }
 
     async componentDidMount() {
-        console.log("[RomaniaMapScreen] - componentDidMount");
+        LoggerService.formatLog(this.constructor.name, `componentDidMount.`);
         let data = await LoadDataService.getData("RoMap", ConnectorService.getRoCountiesActivePerOneHundred);
         roCountyColorService.setData(data);
         this.setState({ loadingData: false });
-        console.log("[RomaniaMapScreen] - Data Loaded");
+        LoggerService.formatLog(this.constructor.name, `Data Loaded.`);
     }
 
 
     render() {
-        console.log("[RomaniaMapScreen] - Call render method ");
+        LoggerService.formatLog(this.constructor.name, `Call render method.`);
         return (
             <View style={{}}>
                 {
@@ -41,7 +41,7 @@ class RomaniaMapScreen extends React.Component {
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
-                            style={styles.activityIndicator}
+                            style={containerStyles.activityIndicator}
                         />:
                         this.renderMap()
                 }
@@ -50,7 +50,7 @@ class RomaniaMapScreen extends React.Component {
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
-                            style={styles.activityIndicator}
+                            style={containerStyles.activityIndicator}
                         />: null
                 }
             </View>

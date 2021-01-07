@@ -1,16 +1,17 @@
 import React from 'react';
-import {ScrollView, StyleSheet, ActivityIndicator, Text } from "react-native";
+import {ScrollView, StyleSheet, ActivityIndicator, Text} from "react-native";
 import colors from "../../config/colors";
-import textStyles from "../../config/styles/textstyles";
 import ConnectorService from "../../services/ConnectorService";
-import BoxContainer from "../containers/BoxContainer";
-import { Table, Row, Rows } from 'react-native-table-component';
 import LoadDataService from "../../services/LoadDataService";
 import PieGraphComponent from "../graphs/PieGraphComponent";
+import LoggerService from "../../services/LoggerService";
+import HorizontalScrollTable from "../tables/HorizontalScrollTable";
+import textStyles from "../../config/styles/textstyles";
+import containerStyles from "../../config/styles/containerstyles";
 
 class RomaniaStatisticsScreen extends React.Component{
     constructor(props) {
-        console.log("[RomaniaStatisticsScreen] - Constructor");
+        LoggerService.formatLog("RomaniaStatisticsScreen", `Constructor.`);
         super(props);
         this.state = {
             romaniaCountiesLatest: null,
@@ -25,27 +26,28 @@ class RomaniaStatisticsScreen extends React.Component{
             const data = await LoadDataService.getData("RoCountyLatest", ConnectorService.getRomaniaCountyLatest);
             const dataLatest = await LoadDataService.getData("RoLatestData", ConnectorService.getRomaniaLatestData);
             this.setState({romaniaCountiesLatest: data, romaniaLatestData: dataLatest, loading: false});
-            console.log("[RomaniaStatisticsScreen] - componentDidMount executed.");
+            LoggerService.formatLog(this.constructor.name, `componentDidMount executed.`);
         }
         catch (err){
-            console.log("[RomaniaStatisticsScreen] - Error fetching data:" + err);
+            LoggerService.formatLog(this.constructor.name, `Error fetching data: \n ${err}`);
         }
     }
 
     render() {
-        console.log("[RomaniaStatisticsScreen] - Render method executed.");
+        LoggerService.formatLog(this.constructor.name, `Render method executed.`);
         return (
             this.state.loading ? <ActivityIndicator
                 size="large"
                 color="#bc2b78"
-                style={styles.activityIndicator}
+                style={containerStyles.activityIndicator}
             /> : this.renderComponent()
         );
     }
 
 
     renderComponent(){
-        console.log("[RomaniaStatisticsScreen] - renderComponent method executed. Render the primary component after data was fetched.");
+        LoggerService.formatLog(this.constructor.name,
+            `renderComponent method executed. Render the primary component after data was fetched.`);
         this.tableData.push.apply(this.tableData, this.state.romaniaCountiesLatest["counties"].map( (item) => {
             return [item["name"], item["population"],item["cases"], item["today_cases"], item["deaths"], item["recovered"] ]
         }));
@@ -56,18 +58,12 @@ class RomaniaStatisticsScreen extends React.Component{
                 <PieGraphComponent
                     data={this.state.romaniaLatestData[0]}
                 />
-                <BoxContainer>
-                    <Text style={textStyles.infoTextStyle}>Romania counties information</Text>
-                    <ScrollView
-                        style={styles.dataWrapper}
-                        horizontal={true}
-                    >
-                        <Table borderStyle={{borderWidth: 1}}>
-                            <Row data={this.tableHead} style={styles.head} textStyle={styles.text}/>
-                            <Rows data={this.tableData} style={styles.row} textStyle={styles.text}/>
-                        </Table>
-                    </ScrollView>
-                </BoxContainer>
+                <HorizontalScrollTable
+                    tableHead={this.tableHead}
+                    tableData={this.tableData}
+                >
+                    <Text style={textStyles.infoTextStyle}>Romania current information</Text>
+                </HorizontalScrollTable>
             </ScrollView>
         );
     }
@@ -89,17 +85,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    head: {  height: 40,  backgroundColor: '#f1f8ff', width: 650  },
-    wrapper: { flexDirection: 'row' },
-    title: { flex: 1, backgroundColor: '#f6f8fa' },
-    row: {  height: 28,backgroundColor: '#F7F6E7', width: 650  },
-    text: {  margin: 5, fontWeight: '300', textAlign: 'center', fontSize: 15 },
-    dataWrapper: {
-        marginTop: 10,
-        marginBottom:10,
-        marginLeft:5,
-        marginRight:5
-    }
 });
 
 export default RomaniaStatisticsScreen;

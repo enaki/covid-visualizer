@@ -2,25 +2,23 @@ import React from 'react';
 import {
     Text,
     ScrollView,
-    NativeModules,
-    StyleSheet,
     Linking,
     Image,
     View,
     Switch
 } from 'react-native';
 import { Title } from 'react-native-paper';
-import colors from '../config/colors'
 import textStyles from '../config/styles/textstyles';
 import staticText from '../config/staticText/helpStaticText';
 import imageStyles from '../config/styles/imagestyle';
 import BoxContainer from "./containers/BoxContainer";
 import ContainerTitle from "./containers/titles/ContainerTitle";
 import ContainerText from "./containers/text/ContainerText";
-const { StatusBarManager } = NativeModules;
+import LoggerService from "../services/LoggerService";
+import containerStyles from "../config/styles/containerstyles";
 class HelpScreen extends React.Component {
     constructor(props) {
-        console.log("[HelpScreen] - Constructor");
+        LoggerService.formatLog("HelpScreen", "Constructor.");
         super(props);
         this.state = {
             isEnglishEnabled: true
@@ -32,42 +30,45 @@ class HelpScreen extends React.Component {
     }
 
     render() {
+        LoggerService.formatLog(this.constructor.name, "Render method.");
         return (
-            <ScrollView
-                contentContainerStyle={styles.container}
+            <View
+                style={containerStyles.container}
             >
-                <Title style={styles.title}>COVID Help Page</Title>
-                <View style={styles.languageSwitch}>
-                    <Text style={styles.languageText}>Romanian</Text>
+                <Title style={textStyles.title}>COVID Help Page</Title>
+                <View style={containerStyles.languageSwitch}>
+                    <Text style={textStyles.languageText}>Romanian</Text>
                     <Switch
                         trackColor={{ false: "#c3cfe4", true: "#c3cfe4" }}
                         thumbColor={this.state.isEnglishEnabled ? "orange" : "#f5dd4b"}
                         value={this.state.isEnglishEnabled}
                         onValueChange={this.toggleSwitch}
                     />
-                    <Text style={styles.languageText}>English</Text>
+                    <Text style={textStyles.languageText}>English</Text>
                 </View>
-                {
-                    this.state.isEnglishEnabled ? this.renderEn() : this.renderRo()
-                }
-
-                <View
-                    style={containerImageLine}
-                >
-                    <Image
-                        style={imageStyles.photos.tiny}
-                        source={require('../config/images/dsu-logo.png')}
-                    />
-                    <Image
-                        style={imageStyles.photos.tiny}
-                        source={require('../config/images/guv-logo.png')}
-                    />
-                </View>
-            </ScrollView>
+                <ScrollView>
+                    {
+                        this.state.isEnglishEnabled ? this.renderEn() : this.renderRo()
+                    }
+                    <View
+                        style={containerImageLine}
+                    >
+                        <Image
+                            style={imageStyles.photos.tiny}
+                            source={require('../config/images/dsu-logo.png')}
+                        />
+                        <Image
+                            style={imageStyles.photos.tiny}
+                            source={require('../config/images/guv-logo.png')}
+                        />
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 
     renderRo() {
+        LoggerService.formatLog(this.constructor.name, "RenderRo method.");
         return (
             <View>
                 <BoxContainer>
@@ -203,6 +204,7 @@ class HelpScreen extends React.Component {
     }
 
     renderEn() {
+        LoggerService.formatLog(this.constructor.name, "RenderEn method.");
         return (
             <View>
                 <BoxContainer>
@@ -295,30 +297,30 @@ class HelpScreen extends React.Component {
                             <Text>
                                 <Text style={{ fontWeight: "bold" }}>Stage I:</Text>{"\n"}
                                 <Text style={{ fontWeight: "bold" }}>How long?</Text> Execution time will be set in
-                                 depending on the vaccination schedule chosen, which may include one or two doses;{"\n"}
+                                depending on the vaccination schedule chosen, which may include one or two doses;{"\n"}
                                 <Text style={{ fontWeight: "bold" }}>Who?</Text> Persons included in the category of workers
-                                 in the fields of health and social - public and private system;{"\n"}
+                                in the fields of health and social - public and private system;{"\n"}
                                 <Text style={{ fontWeight: "bold" }}>How?</Text> Vaccination will be carried out through the units
-                                 or vaccination centers or mobile vaccination teams - depending on the situation.
+                                or vaccination centers or mobile vaccination teams - depending on the situation.
                             </Text>
                             {"\n\n\n"}
                             <Text>
                                 <Text style={{ fontWeight: "bold" }}>Stage II:{"\n"}</Text>
                                 <Text style={{ fontWeight: "bold" }}>How long?</Text> Execution time will be set in
-                                 depending on the vaccination schedule chosen, which may include one or two doses;{"\n"}
+                                depending on the vaccination schedule chosen, which may include one or two doses;{"\n"}
                                 <Text style={{ fontWeight: "bold" }}>Who?</Text> Includes at-risk population and workers
-                                 carrying out activities in key, key areas;{"\n"}
+                                carrying out activities in key, key areas;{"\n"}
                                 <Text style={{ fontWeight: "bold" }}>How?</Text> It runs through the network of centers
-                                 vaccination / mobile vaccination teams / family medicine, as appropriate.
+                                vaccination / mobile vaccination teams / family medicine, as appropriate.
                             </Text>
                             {"\n\n\n"}
                             <Text>
                                 <Text style={{ fontWeight: "bold" }}>Stage III:{"\n"}</Text>
                                 <Text style={{ fontWeight: "bold" }}>How long?</Text> Execution time will be set in
-                                 depending on the vaccination schedule chosen, which may include one or two doses;{"\n"}
+                                depending on the vaccination schedule chosen, which may include one or two doses;{"\n"}
                                 <Text style={{ fontWeight: "bold" }}>Who?</Text> Includes the general population;{"\n"}
                                 <Text style={{ fontWeight: "bold" }}>How?</Text> It runs through the network of vaccination centers / teams
-                                 mobile vaccination / family medicine / drive-through vaccination centers, as appropriate.
+                                mobile vaccination / family medicine / drive-through vaccination centers, as appropriate.
                             </Text>
                         </Text>
                     </ContainerText>
@@ -337,29 +339,6 @@ class HelpScreen extends React.Component {
         )
     }
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: colors.primaryBackground,
-        paddingTop: StatusBarManager.HEIGHT
-    },
-    title: {
-        marginTop: 30,
-        marginBottom: 10,
-        textAlign: 'center',
-    },
-    languageSwitch: {
-        flexDirection: 'row',
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        margin: 10
-    },
-    languageText: {
-        fontWeight: 'bold'
-    }
-});
 
 const containerImageLine = {
     flexWrap: 'wrap',
