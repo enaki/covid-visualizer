@@ -1,107 +1,165 @@
 import React from 'react';
 
 import {
-    Text,
-    ScrollView,
-    NativeModules,
     ActivityIndicator,
-    View,
     StyleSheet,
-    Linking,
-    TouchableNativeFeedback
+    FlatList,
+    Switch,
+    View,
+    Text,
+    Dimensions,
+    StatusBar
 } from 'react-native'
-import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+import { Title } from 'react-native-paper';
 import colors from '../config/colors'
 import AsyncStorage from '@react-native-community/async-storage';
-
 import ConnectorService from "../services/ConnectorService";
-import moment from 'moment';
-import { SafeAreaView } from 'react-native';
 import NewsCardContainer from './containers/NewsCardContainer';
-const { StatusBarManager } = NativeModules;
+import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
+import { SafeAreaView } from 'react-navigation';
+
 
 class NewsScreen extends React.Component {
-    constructor(props){
+    constructor(props) {
         console.log("\n[NewsScreen] - Constructor");
         super(props);
         this.state = {
             loadingData: true,
-            articles: []
+            refreshing: true,
+            isEnglishEnabled: true
         };
+        this.data = { 'articles': [] };
     }
 
     async componentDidMount() {
         console.log("[NewsScreen] - componentDidMount");
+        this.fetchNews();
+    }
+
+    async fetchNews() {
         let data;
-        let needUpdate = true;
         try {
-            if (needUpdate) {
+            if (!this.state.isEnglishEnabled) {
+                console.log("Fetch Romania news");
+
                 data = await ConnectorService.getRomaniaCovidNews();
-                console.log(data);
+                AsyncStorage.setItem("RomaniaNews", JSON.stringify({ "data": data }));
+                this.data = data;
             } else {
+                console.log("Fetch World news");
+                data = await ConnectorService.getWorldCovidNews();
+                AsyncStorage.setItem("WorldNews", JSON.stringify({ "data": data }));
+                this.data = data;
+            }
+
+        } catch (err) {
+            console.log("Error");
+            let localData = null;
+            if (!this.state.isEnglishEnabled) {
+                localData = JSON.parse(await AsyncStorage.getItem("RomaniaNews"));
+            } else {
+                localData = JSON.parse(await AsyncStorage.getItem("WorldNews"));
+            }
+            if (localData != null) {
+                console("News from localStorage");
                 data = localData["data"];
             }
-            this.setState({ loadingData: false, articles: data });
-        } catch (err) {
-            throw err;
         }
+        this.setState({ loadingData: false, refreshing: false });
+    }
 
-        console.log("[NewsScreen] - Data Loaded");
+    handleRefresh() {
+        this.setState(
+            {
+                refreshing: true,
+                loadingData: true
+            },
+            () => this.fetchNews()
+        );
+    }
+
+    toggleSwitch = () => {
+        this.setState({ isEnglishEnabled: !this.state.isEnglishEnabled, loadingData: true }, () => this.fetchNews())
     }
 
     render() {
-        /*
-        if (!this.state.loadingData) {
-            console.log(this.articles);
-            publishedAt = moment.now();
-            const time = moment(publishedAt || moment.now()).fromNow();
-            const defaultImg = 'https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-Images-HD-Diamond-Pattern-PIC-WPB009691.jpg';
-        }
-*/
         return (
-            <ScrollView
+            <SafeAreaView
                 contentContainerStyle={styles.container}
             >
+                <Title style={styles.title}>COVID News Page</Title>
+                <View style={styles.languageSwitch}>
+                    <Text style={styles.languageText}>Romanian</Text>
+                    <Switch
+                        trackColor={{ false: "#c3cfe4", true: "#c3cfe4" }}
+                        thumbColor={this.state.isEnglishEnabled ? "orange" : "#f5dd4b"}
+                        value={this.state.isEnglishEnabled}
+                        onValueChange={this.toggleSwitch}
+                    />
+                    <Text style={styles.languageText}>English</Text>
+                </View >
                 {
                     this.state.loadingData ?
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
+                            size='large'
                             style={styles.activityIndicator}
-                        /> :
-                        <NewsCardContainer data={{}} />
+                        />
+                        :
+                        <FlatList
+                            data={this.data.articles}
+                            renderItem={({ item }) => <NewsCardContainer article={item} />}
+                            keyExtractor={item => item.url}
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.handleRefresh.bind(this)}
 
-
+                        />
                 }
-
-            </ScrollView>
-            /*<View style={styles.container}>
-                <Text style={{ fontSize: 30 }}>News Screen</Text>
-                <Text style={{ fontSize: 20 }}>
-                    <Text style={{ fontWeight: 'bold' }}>Today News: </Text>
-                    News
-                </Text>
-            </View>*/
+            </SafeAreaView>
         );
     }
+
 }
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.primaryBackground,
-        paddingTop: StatusBarManager.HEIGHT
+        justifyContent: "center",
+        alignContent: "center"
     },
-    noteStyle: {
-        margin: 5,
-        fontStyle: 'italic',
-        color: '#b2bec3',
-        fontSize: 10
+    title: {
+        marginTop: 30,
+        marginBottom: 10,
+        textAlign: 'center',
     },
-    featuredTitleStyle: {
-        marginHorizontal: 5,
-        textShadowColor: '#00000f',
-        textShadowOffset: { width: 3, height: 3 },
-        textShadowRadius: 3
+    languageSwitch: {
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 10
+    },
+    languageText: {
+        fontWeight: 'bold'
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    activityIndicator: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: Dimensions.get(`window`).width,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
