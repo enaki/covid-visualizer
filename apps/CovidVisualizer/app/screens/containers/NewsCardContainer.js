@@ -1,8 +1,7 @@
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
-import { Avatar, Button, Card, Title, Paragraph, IconButton } from 'react-native-paper';
+import { Avatar, Card, Title, Paragraph} from 'react-native-paper';
 import { Linking, TouchableNativeFeedback } from 'react-native';
-import ContainerText from './text/ContainerText';
 import moment from 'moment';
 import genericColorService from '../../services/color/GenericColorService';
 

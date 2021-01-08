@@ -13,15 +13,17 @@ const styles = {
     },
     languageSwitch: {
         flexDirection: 'row',
-        flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        margin: 10,
-        paddingBottom: 10
+        margin: 5,
+        height: '5%'
     },
     container: {
         backgroundColor: colors.primaryBackground,
         marginTop: StatusBar.currentHeight,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
         height: '93%'
     },
     containerScroll: {
@@ -29,6 +31,18 @@ const styles = {
         flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    containerTitleStyle: {
+        backgroundColor: "grey",
+        padding: 10,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12
+    },
+    containerImageLine: {
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        margin: 10
     }
 };
 

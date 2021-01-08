@@ -51,7 +51,7 @@ class HelpScreen extends React.Component {
                         this.state.isEnglishEnabled ? this.renderEn() : this.renderRo()
                     }
                     <View
-                        style={containerImageLine}
+                        style={containerStyles.containerImageLine}
                     >
                         <Image
                             style={imageStyles.photos.tiny}
@@ -74,7 +74,7 @@ class HelpScreen extends React.Component {
                 <BoxContainer>
                     <ContainerTitle
                         text={"Cum ai fost infectat?"}
-                        containerStyle={containerTitleStyle}
+                        containerStyle={containerStyles.containerTitleStyle}
                         titleStyle={textStyles.containerTitleStyle}
                     />
                     <ContainerText >
@@ -99,7 +99,7 @@ class HelpScreen extends React.Component {
                 <BoxContainer>
                     <ContainerTitle
                         text={"Cum pot sa ma protejez?"}
-                        containerStyle={containerTitleStyle}
+                        containerStyle={containerStyles.containerTitleStyle}
                         titleStyle={textStyles.containerTitleStyle}
                     />
                     <ContainerText>
@@ -124,7 +124,7 @@ class HelpScreen extends React.Component {
                 <BoxContainer>
                     <ContainerTitle
                         text={"Sfaturi pentru dezinfectare"}
-                        containerStyle={containerTitleStyle}
+                        containerStyle={containerStyles.containerTitleStyle}
                         titleStyle={textStyles.containerTitleStyle}
                     />
                     <ContainerText>
@@ -153,7 +153,7 @@ class HelpScreen extends React.Component {
                 <BoxContainer>
                     <ContainerTitle
                         text={"Procesul de vaccinare în România"}
-                        containerStyle={containerTitleStyle}
+                        containerStyle={containerStyles.containerTitleStyle}
                         titleStyle={textStyles.containerTitleStyle}
                     />
                     <ContainerText>
@@ -210,7 +210,7 @@ class HelpScreen extends React.Component {
                 <BoxContainer>
                     <ContainerTitle
                         text={"How you got infected?"}
-                        containerStyle={containerTitleStyle}
+                        containerStyle={containerStyles.containerTitleStyle}
                         titleStyle={textStyles.containerTitleStyle}
                     />
                     <ContainerText >
@@ -235,7 +235,7 @@ class HelpScreen extends React.Component {
                 <BoxContainer>
                     <ContainerTitle
                         text={"How can I protect myself?"}
-                        containerStyle={containerTitleStyle}
+                        containerStyle={containerStyles.containerTitleStyle}
                         titleStyle={textStyles.containerTitleStyle}
                     />
                     <ContainerText>
@@ -260,7 +260,7 @@ class HelpScreen extends React.Component {
                 <BoxContainer>
                     <ContainerTitle
                         text={"Disinfection tips"}
-                        containerStyle={containerTitleStyle}
+                        containerStyle={containerStyles.containerTitleStyle}
                         titleStyle={textStyles.containerTitleStyle}
                     />
                     <ContainerText>
@@ -289,7 +289,7 @@ class HelpScreen extends React.Component {
                 <BoxContainer>
                     <ContainerTitle
                         text={"The vaccination process in Romania"}
-                        containerStyle={containerTitleStyle}
+                        containerStyle={containerStyles.containerTitleStyle}
                         titleStyle={textStyles.containerTitleStyle}
                     />
                     <ContainerText>
@@ -339,19 +339,5 @@ class HelpScreen extends React.Component {
         )
     }
 }
-
-const containerImageLine = {
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    margin: 10
-};
-
-const containerTitleStyle = {
-    backgroundColor: "grey",
-    padding: 10,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12
-};
 
 export default HelpScreen;

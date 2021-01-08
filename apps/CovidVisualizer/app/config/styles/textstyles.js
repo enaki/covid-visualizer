@@ -81,7 +81,6 @@ const styles={
         fontWeight: 'bold'
     },
     title: {
-        marginBottom: 10,
         textAlign: 'center',
         fontSize: 20,
     }

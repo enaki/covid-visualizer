@@ -2,12 +2,10 @@ import React from 'react';
 
 import {
     ActivityIndicator,
-    StyleSheet,
     FlatList,
     Switch,
     View,
-    Text,
-    Dimensions
+    Text
 } from 'react-native'
 import { Title } from 'react-native-paper';
 import ConnectorService from "../services/ConnectorService";
@@ -66,7 +64,11 @@ class NewsScreen extends React.Component {
             <View
                 style={containerStyles.container}
             >
-                <Title style={textStyles.title}>COVID News Page</Title>
+                <Title
+                    style={textStyles.title}
+                >
+                    COVID News Page
+                </Title>
                 <View style={containerStyles.languageSwitch}>
                     <Text style={textStyles.languageText}>Romanian</Text>
                     <Switch
@@ -82,7 +84,7 @@ class NewsScreen extends React.Component {
                         <ActivityIndicator
                             size="large"
                             color="#bc2b78"
-                            style={styles.activityIndicator}
+                            style={containerStyles.activityIndicator}
                         />
                         :
                         <FlatList
@@ -98,26 +100,5 @@ class NewsScreen extends React.Component {
     }
 
 }
-
-const styles = StyleSheet.create({
-    loading: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    activityIndicator: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: Dimensions.get(`window`).width,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});
 
 export default NewsScreen;

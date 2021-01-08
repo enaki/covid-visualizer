@@ -10,6 +10,7 @@ import NumberFormatterService from "../services/NumberFormatterService";
 import textStyles from "../config/styles/textstyles";
 import PieGraphComponent from "./graphs/PieGraphComponent";
 import containerStyles from "../config/styles/containerstyles";
+import { Title } from 'react-native-paper';
 
 class HomeScreen extends React.Component {
     constructor(props) {
@@ -42,9 +43,13 @@ class HomeScreen extends React.Component {
     renderComponent(){
         return(
             <View
-                styles={containerStyles.container}
+                style={containerStyles.container}
             >
-                <Text style={textStyles.title}>Home page</Text>
+                <Title
+                    style={textStyles.title}
+                >
+                    Your location
+                </Title>
                 <ScrollView
                 >
                     <PieGraphComponent

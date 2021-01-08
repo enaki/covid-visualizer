@@ -1,6 +1,5 @@
 import React from "react";
 import BoxContainer from "../containers/BoxContainer";
-import NumberFormatter from "../../services/NumberFormatterService";
 import {
     VictoryPie
 } from "victory-native";
