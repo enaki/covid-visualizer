@@ -1,29 +1,20 @@
 import React from 'react';
-import {Text} from "react-native";
+import {Text, View} from "react-native";
 
 export default class ContainerTitle extends React.Component{
     render() {
         return(
-            <Text
-                style={containerTitleStyle}
+            <View
+                style={this.props.containerStyle}
             >
-                {this.props.text}
-            </Text>
+                <Text
+                    style={this.props.titleStyle}
+                >
+                    {this.props.text}
+                </Text>
+            </View>
         );
     }
 }
 
-const containerTitleStyle = {
-    textAlign:"center",
-    fontFamily: Platform.OS === 'android' ? "sans-serif": "Arial",
-    fontSize: 20,
-    fontWeight: "bold",
-    color:"white",
-    borderTopLeftRadius: 13,
-    borderTopRightRadius: 13,
-    backgroundColor: "grey",
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10,
-    paddingBottom: 7
-};
+

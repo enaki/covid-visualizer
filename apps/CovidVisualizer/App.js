@@ -1,15 +1,15 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 
-import HomeScreen from './app/screens/HomeScreen'
-import AnalyticsScreen from './app/screens/AnalyticsScreen'
-import NewsScreen from './app/screens/NewsScreen'
+import HomeScreen from './app/screens/HomeScreen';
+import AnalyticsScreen from './app/screens/AnalyticsScreen';
+import NewsScreen from './app/screens/NewsScreen';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { View } from 'react-native'
+import { View } from 'react-native';
 
-import colors from './app/config/colors'
+import colors from './app/config/colors';
 import { NavigationContainer } from "@react-navigation/native";
 import HelpScreen from "./app/screens/HelpScreen";
 

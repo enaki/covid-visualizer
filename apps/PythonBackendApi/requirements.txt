@@ -3,3 +3,5 @@ urllib3>=1.26.2
 beautifulsoup4>=4.9.3
 selenium>=3.141.0
 unidecode>=1.1.1
+geographiclib>=1.50
+geopy>=2.1.0

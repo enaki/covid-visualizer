@@ -13,5 +13,10 @@ export default {
                 help: '#b80022',
             },
         }
+    },
+    graphColors: {
+        activeColor: '#2f54ba',
+        recoveredColor: '#2fba54',
+        deathsColor: '#ba2f2f'
     }
 }
