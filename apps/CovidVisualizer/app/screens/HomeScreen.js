@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, ActivityIndicator, ScrollView} from 'react-native'
+import { Text, View, ActivityIndicator, ScrollView } from 'react-native'
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 import LoggerService from "../services/LoggerService";
@@ -18,7 +18,7 @@ class HomeScreen extends React.Component {
         super(props);
         this.state = {
             data: null,
-            currentLocationData:null,
+            currentLocationData: null,
             loading: true
         }
     }
@@ -31,30 +31,44 @@ class HomeScreen extends React.Component {
             });
         }
         let data = await LoadDataService.getData("WorldTop15Country", ConnectorService.getWorldTopCountryList);
-        data = data.map( (item, idx) =>{
-            return [idx + 1 ,item["name"], NumberFormatterService.formatNumber(item["active"]), NumberFormatterService.formatNumber(item["cases"]),
-                NumberFormatterService.formatNumber(item["tests"])]
+        data = data.map((item, idx) => {
+            return [idx + 1, item["name"], NumberFormatterService.formatNumber(item["active"]), NumberFormatterService.formatNumber(item["cases"]),
+            NumberFormatterService.formatNumber(item["tests"])]
         });
-        let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
-        const res = await ConnectorService.getCountryLatestDataByLatAndLong(location.coords.latitude, location.coords.longitude);
-        this.setState({data: data, currentLocationData: res[0], loading: false});
+        if (status === 'granted') {
+            let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Highest });
+            const res = await ConnectorService.getCountryLatestDataByLatAndLong(location.coords.latitude, location.coords.longitude);
+            this.setState({ data: data, currentLocationData: res[0], loading: false });
+        } else {
+            this.setState({ data: data, currentLocationData: null, loading: false });
+        }
     }
 
-    renderComponent(){
-        return(
+    renderComponent() {
+        return (
             <View
                 style={containerStyles.container}
             >
-                <Title
-                    style={textStyles.title}
-                >
-                    Your location
-                </Title>
+                {
+                    (this.state.currentLocationData !== null) ?
+                        <Title style={textStyles.title}>
+                            Your location
+                        </Title> :
+                        <Title style={textStyles.title}>
+                            Home Page
+                        </Title>
+                }
+
                 <ScrollView
                 >
-                    <PieGraphComponent
-                        data={this.state.currentLocationData}
-                    />
+                    {
+                        this.state.currentLocationData !== null ?
+                            <PieGraphComponent
+                                data={this.state.currentLocationData}
+                            /> :
+                            null
+                    }
+
                     <HorizontalScrollTable
                         tableHead={["", "Country", "Active", "Total cases", "Tests"]}
                         tableData={this.state.data}
