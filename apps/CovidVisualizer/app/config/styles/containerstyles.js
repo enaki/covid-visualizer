@@ -1,5 +1,5 @@
 import colors from "../colors";
-import {StatusBar} from "react-native";
+import { StatusBar } from "react-native";
 
 const styles = {
     activityIndicator: {
@@ -24,7 +24,7 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'column',
-        height: '93%'
+        height: '97%'
     },
     containerScroll: {
         backgroundColor: colors.secondaryBackground,

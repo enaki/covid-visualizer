@@ -79,15 +79,14 @@ class WorldMapScreen extends React.Component {
                     };
                     try {
                         const res = await ConnectorService.getCountryLatestDataByLatAndLong(coordinates.lat, coordinates.long);
-                        if(res.length === 0)
-                        {
+                        if (res.length === 0) {
                             throw 'Invalid country';
                         }
                         this.props.navigation.navigate('Country Statistics',
-                            {data: res[0]});
+                            { data: res[0] });
                     }
                     catch (err) {
-                        LoggerService.formatLog(this.constructor.name `Error: \n ${err}`);
+                        LoggerService.formatLog(this.constructor.name, `Error: \n ${err}`);
                         Alert.alert(
                             "Error",
                             err

@@ -30,16 +30,27 @@ class NewsScreen extends React.Component {
 
     async componentDidMount() {
         LoggerService.formatLog(this.constructor.name, "componentDidMount method.");
-        this.fetchNews().then( (r) => {});
+        this.fetchNewsWithStorage().then((r) => { });
     }
 
-    async fetchNews() {
+    async fetchNewsWithStorage() {
         if (!this.state.isEnglishEnabled) {
             LoggerService.formatLog(this.constructor.name, "Fetch Romania news.");
             this.data = await LoadDataService.getData("RomaniaNews", ConnectorService.getRomaniaCovidNews);
         } else {
             LoggerService.formatLog(this.constructor.name, "Fetch World news.");
             this.data = await LoadDataService.getData("WorldNews", ConnectorService.getWorldCovidNews)
+        }
+        this.setState({ loadingData: false, refreshing: false });
+    }
+
+    async fetchNews() {
+        if (!this.state.isEnglishEnabled) {
+            LoggerService.formatLog(this.constructor.name, "Fetch Romania news direct.");
+            this.data = await ConnectorService.getRomaniaCovidNews();
+        } else {
+            LoggerService.formatLog(this.constructor.name, "Fetch World news direct.");
+            this.data = await ConnectorService.getWorldCovidNews();
         }
         this.setState({ loadingData: false, refreshing: false });
     }
