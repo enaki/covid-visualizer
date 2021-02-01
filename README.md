@@ -18,6 +18,8 @@ the user.
 The mobile application was written in __react-native__ and the backend server was written in __Python__ using __Flask__.
 The database used is __SQLite__.
 
+A demo presentation can be found [here](https://www.youtube.com/watch?v=Wqyr6M6Gwf4).
+
 ## Application Architecture 
 
 ![Mobile Pages](https://github.com/enaky/covid-visualiser/blob/main/documentation/diagram/architecture-diagram.png) 
@@ -32,23 +34,25 @@ __The latest data__ is updated by 1 process each 20 minutes and __the brief hist
 
 `Note`: Romania's data is parsed using the [mozzila geckodriver](https://github.com/mozilla/geckodriver/releases) (Scripted page is loaded, then html is parsed)
 
-#### E-R Diagram
+### E-R Diagram
 
 ![ER diagram](https://github.com/enaky/covid-visualiser/blob/main/documentation/database/er-diagram_2.png) 
+
 
 
 ## Mobile Pages
 
 ![Mobile Pages](https://github.com/enaky/covid-visualiser/blob/main/documentation/diagram/app_views.png) 
 
-#### Home Page
+
+### Home Page
 
 When starting the application, it will request user's location. If user accepts then in this page will be displayed user's country location information about covid and the top 15 countries sorted by active cases. Otherwise, only the top-15 countries will be displayed.
 
 ![Home Page](https://github.com/enaky/covid-visualiser/blob/main/documentation/mobile_views/home_united.png)
 
  
-#### Analytics Page
+### Analytics Page
 
 The analytics page retrieves and displays latest covid data. 
 
@@ -57,7 +61,7 @@ The retrieved data are put in the Async Storage and are updated only if they are
 ![Analytics Page](https://github.com/enaky/covid-visualiser/blob/main/documentation/mobile_views/analytics/analytics_1.png)
 
 
-##### Maps
+#### Maps
 
 The package used for maps is [react-native-maps](https://github.com/react-native-maps/react-native-maps)
 
@@ -80,7 +84,7 @@ If the country is invalid, a pop-up message will be displayed.
 ![Maps](https://github.com/enaky/covid-visualiser/blob/main/documentation/mobile_views/maps_united.png)
 
 
-##### Statistics
+#### Statistics
 
 The package used for maps is [Victory Native](https://formidable.com/open-source/victory/docs/native/)
 
@@ -92,9 +96,9 @@ Statistics displayed:
 ![Statistics](https://github.com/enaky/covid-visualiser/blob/main/documentation/mobile_views/statistics_united.png)
 
  
-#### News Page
+### News Page
 
-News are retrieved from a news API with covid related topic in english and romanian. 
+News are retrieved from a news API with covid related topic in english and in romanian. 
 
 Fetched news are put in Async Storage and are used next time accessing the news page if they are not older than an hour.
 
@@ -104,20 +108,21 @@ Fetched news are put in Async Storage and are used next time accessing the news 
 ![News Page](https://github.com/enaky/covid-visualiser/blob/main/documentation/mobile_views/news_united.png)
 
 
-#### Help Page
+### Help Page
 
-Here are displayed useful information about covid-19 in english and romanian.
+Here are displayed useful information about covid-19 in english and in romanian.
 
 ![Help Page](https://github.com/enaky/covid-visualiser/blob/main/documentation/mobile_views/help_united.png)
+
 
 
 ## How to run the project
 
 First you will need to install [expo](https://docs.expo.io/get-started/installation/).
 
-Second, you will need to create a mobile [emulator](https://developer.android.com/studio/run/managing-avds)
+Second, you will need to create a mobile [emulator](https://developer.android.com/studio/run/managing-avds).
 
-In order to run the app on your own device (not on an emulator), you will need to change the Backend IP Address from WebInfo.js to your private local machine IP. (example 192.168.1.113)
+In order to run the app on your own device (not on an emulator), you will need to change the Backend IP Address from WebInfo.js to your private local machine IP. _(example 192.168.1.113)_
 
 In order to run the application, you need to:
 1. **Run the python3 server**
